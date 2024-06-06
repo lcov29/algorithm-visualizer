@@ -1,0 +1,21 @@
+{
+  "name": "@algorithm-visualizer/app",
+  "version": "1.0.0",
+  "main": "./src/index.tsx",
+  "description": "Application",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcov29/algorithm-visualizer.git"
+  },
+  "keywords": [
+    "algorithm",
+    "visualization",
+    "application"
+  ],
+  "author": "lcov29",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/lcov29/algorithm-visualizer/issues"
+  },
+  "homepage": "https://github.com/lcov29/algorithm-visualizer#readme"
+}

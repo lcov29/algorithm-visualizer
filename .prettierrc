@@ -1,0 +1,10 @@
+{
+  "arrowParens": "avoid",
+  "bracketSameLine": true,
+  "endOfLine": "lf",
+  "importOrder": ["^@algorithm-visualizer/(.*)$", "^[./]", "(.*)$"],
+  "importOrderSeparation": true,
+  "importOrderSortSpecifiers": true,
+  "plugins": ["@trivago/prettier-plugin-sort-imports"],
+  "singleQuote": true
+}

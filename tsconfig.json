@@ -1,0 +1,23 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist/",
+    "baseUrl": "./node_modules",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "target": "esnext",
+    "jsx": "react",
+    "lib": ["dom", "esnext"],
+    "sourceMap": true,
+    "strict": true,
+    "pretty": true,
+    "allowJs": true,
+    "allowSyntheticDefaultImports": true,
+    "allowUnreachableCode": false,
+    "resolveJsonModule": true,
+    "paths": {
+      // prevent VS Code autocompletion to display relative module paths
+      "@algorithm-visualizer/app": ["../packages/app"]
+    }
+  },
+  "include": ["./packages/**/*"]
+}
