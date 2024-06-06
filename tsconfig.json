@@ -16,7 +16,8 @@
     "resolveJsonModule": true,
     "paths": {
       // prevent VS Code autocompletion to display relative module paths
-      "@algorithm-visualizer/app": ["../packages/app"]
+      "@algorithm-visualizer/app": ["../packages/app"],
+      "@algorithm-visualizer/random": ["../packages/random"]
     }
   },
   "include": ["./packages/**/*"]
