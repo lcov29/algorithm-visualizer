@@ -10,6 +10,7 @@
 - [Algorithm Visualizer](#algorithm-visualizer)
   - [Table Of Contents](#table-of-contents)
   - [About This Project](#about-this-project)
+  - [Status](#status)
   - [Tech Stack](#tech-stack)
 
 <br>
@@ -21,6 +22,14 @@
 <br>
 
 This is a prototype of a web application that explains and visually demonstrates the central ideas of different algorithms.
+
+<br>
+<br>
+<br>
+
+## Status
+
+`Work in progress`
 
 <br>
 <br>
