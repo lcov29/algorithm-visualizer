@@ -1,0 +1,25 @@
+{
+  "name": "@algorithm-visualizer/event-handling",
+  "version": "1.0.0",
+  "description": "Event handling utilities",
+  "main": "./index.ts",
+  "author": "lcov29",
+  "license": "GNU GPLv3",
+  "private": true,
+  "keywords": [
+    "algorithm",
+    "visualization",
+    "events"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcov29/algorithm-visualizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lcov29/algorithm-visualizer/issues"
+  },
+  "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
+  "scripts": {
+    "test-jest": "npx jest --config=../../jest.config.ts --roots=./packages/events --watchAll"
+  }
+}

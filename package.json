@@ -1,11 +1,11 @@
 {
   "name": "algorithm-visualizer",
   "version": "1.0.0",
+  "description": "A tool to visualize different algorithms",
   "main": "./packages/app/src/index.tsx",
   "author": "lcov29",
   "license": "GNU GPLv3",
   "private": true,
-  "description": "A tool to visualize different algorithms",
   "keywords": [
     "algorithm",
     "visualization"

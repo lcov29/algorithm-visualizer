@@ -17,7 +17,8 @@
     "paths": {
       // prevent VS Code autocompletion to display relative module paths
       "@algorithm-visualizer/app": ["../packages/app"],
-      "@algorithm-visualizer/random": ["../packages/random"]
+      "@algorithm-visualizer/random": ["../packages/random"],
+      "@algorithm-visualizer/event-handling": ["../packages/event-handling"]
     }
   },
   "include": ["./packages/**/*"]
