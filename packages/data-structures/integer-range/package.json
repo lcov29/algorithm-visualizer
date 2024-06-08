@@ -1,0 +1,25 @@
+{
+  "name": "@algorithm-visualizer/data-structures/integer-range",
+  "version": "1.0.0",
+  "description": "Data structure representing a range of integers",
+  "main": "./index.ts",
+  "author": "lcov29",
+  "license": "GNU GPLv3",
+  "private": true,
+  "keywords": [
+    "algorithm",
+    "visualization",
+    "integer range"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcov29/algorithm-visualizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lcov29/algorithm-visualizer/issues"
+  },
+  "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
+  "scripts": {
+    "test-jest": "npx jest --config=../../../jest.config.ts --roots=./packages/data-structures/integer-range --watchAll"
+  }
+}
