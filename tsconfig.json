@@ -21,6 +21,9 @@
       "@algorithm-visualizer/event-handling": ["../packages/event-handling"],
       "@algorithm-visualizer/data-structures/integer-range": [
         "../packages/data-structures/integer-range"
+      ],
+      "@algorithm-visualizer/data-structures/graph": [
+        "../packages/data-structures/graph"
       ]
     }
   },
