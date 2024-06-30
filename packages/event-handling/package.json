@@ -20,6 +20,6 @@
   },
   "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
   "scripts": {
-    "test-jest": "npx jest --config=../../jest.config.ts --roots=./packages/events --watchAll"
+    "test-jest": "npx jest --config=../../jest.config.ts --roots=./packages/event-handling --watchAll"
   }
 }

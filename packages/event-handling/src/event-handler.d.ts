@@ -1,1 +1,1 @@
-export type EventHandler<Event> = (event: Event) => boolean;
+export type EventHandler<Arguments> = (args: Arguments) => boolean;
