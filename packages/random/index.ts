@@ -9,6 +9,6 @@ export {
 } from './src/random-boolean-generator';
 
 export {
-  RandomEntryItemSelector as RandomListItemSelector,
-  selectRandomEntryFrom as selectRandomItemFrom,
-} from './src/random-list-entry-selector';
+  RandomListItemSelector,
+  getRandomListItem,
+} from './src/random-list-item-selector';

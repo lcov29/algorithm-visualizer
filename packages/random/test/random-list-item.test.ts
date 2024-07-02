@@ -1,15 +1,15 @@
-import { selectRandomEntryFrom } from '../src/random-list-entry-selector';
+import { getRandomListItem } from '../src/random-list-item-selector';
 
-describe('selectRandomItemFrom()', () => {
+describe('getRandomListItem()', () => {
   const list = [1, 2, 3, 4];
 
   it('returns a random item from the list', () => {
-    const item = selectRandomEntryFrom(list);
+    const item = getRandomListItem(list);
     expect(list.includes(item!)).toBe(true);
   });
 
   it('returns null if the specified list is empty', () => {
-    const item = selectRandomEntryFrom([]);
+    const item = getRandomListItem([]);
     expect(item).toBeNull();
   });
 
@@ -37,7 +37,7 @@ describe('selectRandomItemFrom()', () => {
       resultCount <= expectedDistributionRange.max;
 
     for (let i = 0; i < executionNumber; i++) {
-      const item = selectRandomEntryFrom(list)!;
+      const item = getRandomListItem(list)!;
       const counter = resultCounter.get(item)!;
       resultCounter.set(item, counter + 1);
     }
