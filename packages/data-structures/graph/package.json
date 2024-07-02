@@ -24,6 +24,8 @@
     "test-jest": "npx jest --config=../../../jest.config.ts --roots=./packages/data-structures/graph --watchAll"
   },
   "dependencies": {
-    "@algorithm-visualizer/event-handling": "1.0.0"
+    "@algorithm-visualizer/data-structures/integer-range": "1.0.0",
+    "@algorithm-visualizer/event-handling": "1.0.0",
+    "@algorithm-visualizer/random": "1.0.0"
   }
 }
