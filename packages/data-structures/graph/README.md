@@ -52,3 +52,19 @@ This directory contains all events that can be dispatched to a `Graph` instance 
 - [`NodeAddedEvent`](./src/events/node-added-event.ts)
 - [`NodeDeletedEvent`](./src/events/node-deleted-event.ts)
 - [`NodeLabelChangedEvent`](./src/events/node-label-changed-event.ts)
+
+<br>
+<br>
+
+## Generator <!-- omit in toc -->
+
+This directory contains the implementation of a random graph generator.
+
+```mermaid
+flowchart LR
+  A[GraphConfiguration]
+  B["generateGraph()"]
+  C[Graph]
+  A -- passed to --> B
+  B -- returns --> C
+```
