@@ -12,7 +12,9 @@ export interface IBaseList<Item extends INode | IEdge> {
   };
 }
 
-export class BaseList<Item extends INode | IEdge> implements IBaseList<Item> {
+export abstract class BaseList<Item extends INode | IEdge>
+  implements IBaseList<Item>
+{
   private _items: Item[];
   private _nextAvailableItemId: number;
 
