@@ -1,4 +1,4 @@
-import { IIntegerRange } from '@algorithm-visualizer/data-structures/integer-range';
+import { IIntegerRange } from '@algorithm-visualizer/integer-range';
 
 export type DirectionOption = 'unidirectional' | 'bidirectional';
 

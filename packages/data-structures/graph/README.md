@@ -1,4 +1,4 @@
-# @algorithm-visualizer/data-structures/graph
+# @algorithm-visualizer/graph
 
 This package contains the graph data structure and related functionalities.
 

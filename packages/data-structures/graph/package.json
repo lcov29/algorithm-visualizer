@@ -1,5 +1,5 @@
 {
-  "name": "@algorithm-visualizer/data-structures/graph",
+  "name": "@algorithm-visualizer/graph",
   "version": "1.0.0",
   "description": "Graph data structure",
   "main": "./index.ts",
@@ -24,7 +24,7 @@
     "test-jest": "npx jest --config=../../../jest.config.ts --roots=./packages/data-structures/graph --watchAll"
   },
   "dependencies": {
-    "@algorithm-visualizer/data-structures/integer-range": "1.0.0",
+    "@algorithm-visualizer/integer-range": "1.0.0",
     "@algorithm-visualizer/event-handling": "1.0.0",
     "@algorithm-visualizer/random": "1.0.0"
   }
