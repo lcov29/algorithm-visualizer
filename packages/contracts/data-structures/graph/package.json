@@ -1,0 +1,31 @@
+{
+  "name": "@algorithm-visualizer/graph-contract",
+  "version": "1.0.0",
+  "description": "Contract for the graph data structure",
+  "main": "./index.ts",
+  "author": "lcov29",
+  "license": "GNU GPLv3",
+  "private": true,
+  "keywords": [
+    "algorithm",
+    "visualization",
+    "data structure",
+    "graph",
+    "contract"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcov29/algorithm-visualizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lcov29/algorithm-visualizer/issues"
+  },
+  "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
+  "scripts": {
+    "test-jest": "npx jest --config=../../../../jest.config.ts --roots=./packages/contracts/data-structures/graph --watchAll"
+  },
+  "dependencies": {
+    "@algorithm-visualizer/event-handling-contract": "1.0.0",
+    "@algorithm-visualizer/integer-range-contract": "1.0.0"
+  }
+}
