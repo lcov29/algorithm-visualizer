@@ -17,6 +17,12 @@
     "paths": {
       // prevent VS Code autocompletion to display relative module paths
       "@algorithm-visualizer/app": ["../packages/app"],
+      "@algorithm-visualizer/data-validation": [
+        "../packages/implementations/data-validation"
+      ],
+      "@algorithm-visualizer/data-validation-contract": [
+        "../packages/contracts/data-validation"
+      ],
       "@algorithm-visualizer/event-handling": [
         "../packages/implementations/event-handling"
       ],

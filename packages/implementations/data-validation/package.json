@@ -1,0 +1,29 @@
+{
+  "name": "@algorithm-visualizer/data-validation",
+  "version": "1.0.0",
+  "description": "Data validation",
+  "main": "./index.ts",
+  "author": "lcov29",
+  "license": "GNU GPLv3",
+  "private": true,
+  "keywords": [
+    "algorithm",
+    "visualization",
+    "data",
+    "validation"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lcov29/algorithm-visualizer.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lcov29/algorithm-visualizer/issues"
+  },
+  "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
+  "scripts": {
+    "test-jest": "npx jest --config=../../../jest.config.ts --roots=./packages/implementations/data-validation --watchAll"
+  },
+  "dependencies": {
+    "@algorithm-visualizer/data-validation-contract": "1.0.0"
+  }
+}
