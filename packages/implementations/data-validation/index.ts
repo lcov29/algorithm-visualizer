@@ -1,1 +1,1 @@
-export { IntegerValidator } from './src/integer-validator';
+export * from './src';
