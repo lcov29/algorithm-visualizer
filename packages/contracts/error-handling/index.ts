@@ -1,1 +1,1 @@
-export { InvalidArgumentError } from './src/error/invalid-argument-error';
+export * from './src/error';
