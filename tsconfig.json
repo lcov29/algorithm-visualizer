@@ -23,6 +23,9 @@
       "@algorithm-visualizer/data-validation-contract": [
         "../packages/contracts/data-validation"
       ],
+      "@algorithm-visualizer/error-handling-contract": [
+        "../packages/contracts/error-handling"
+      ],
       "@algorithm-visualizer/event-handling": [
         "../packages/implementations/event-handling"
       ],
