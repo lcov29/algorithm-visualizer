@@ -1,3 +1,8 @@
+import {
+  InvalidArgumentError,
+  InvalidOperationError,
+} from '@algorithm-visualizer/error-handling-contract';
+
 export class IntegerRange {
   private _min: number;
   private _max: number;
@@ -17,23 +22,38 @@ export class IntegerRange {
     return this._max;
   }
 
+  set min(input: number) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property min is forbidden',
+    });
+  }
+
+  set max(input: number) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property max is forbidden',
+    });
+  }
+
   private _validate(min: number, max: number) {
-    if (typeof min !== 'number' || typeof max !== 'number') {
-      throw new TypeError('Arguments must be of types number');
+    if (!Number.isInteger(min)) {
+      throw new InvalidArgumentError({
+        message: 'Argument min is not an integer',
+        args: [min],
+      });
     }
 
-    if (!Number.isInteger(min) || !Number.isInteger(max)) {
-      throw new RangeError('Arguments must be integers');
-    }
-
-    if (min < 0 || max < 0) {
-      throw new RangeError('Arguments must be positive numbers');
+    if (!Number.isInteger(max)) {
+      throw new InvalidArgumentError({
+        message: 'Argument max is not an integer',
+        args: [max],
+      });
     }
 
     if (min > max) {
-      throw new RangeError(
-        'Argument min must be greater or equal to argument max',
-      );
+      throw new InvalidArgumentError({
+        message: 'Argument min is greater than argument max',
+        args: [min, max],
+      });
     }
   }
 }

@@ -22,5 +22,8 @@
   "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
   "scripts": {
     "test-jest": "npx jest --config=../../../../jest.config.ts --roots=./packages/contracts/data-structures/integer-range --watchAll"
+  },
+  "dependencies": {
+    "@algorithm-visualizer/error-handling-contract": "1.0.0"
   }
 }

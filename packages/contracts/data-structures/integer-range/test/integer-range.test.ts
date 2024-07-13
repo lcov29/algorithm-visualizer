@@ -1,3 +1,8 @@
+import {
+  InvalidArgumentError,
+  InvalidOperationError,
+} from '@algorithm-visualizer/error-handling-contract';
+
 import { IntegerRange } from '../src/integer-range';
 
 describe('IntegerRange', () => {
@@ -10,37 +15,42 @@ describe('IntegerRange', () => {
       [
         'the min argument is not a number',
         { min: 'foo', max: 10 },
-        new TypeError('Arguments must be of types number'),
+        new InvalidArgumentError({
+          message: 'Argument min is not an integer',
+          args: ['foo'],
+        }),
       ],
       [
         'the max argument is not a number',
         { min: 5, max: 'foo' },
-        new TypeError('Arguments must be of types number'),
+        new InvalidArgumentError({
+          message: 'Argument max is not an integer',
+          args: ['foo'],
+        }),
       ],
       [
         'the min argument is not an integer',
         { min: 3.1415, max: 10 },
-        new RangeError('Arguments must be integers'),
+        new InvalidArgumentError({
+          message: 'Argument min is not an integer',
+          args: [3.1415],
+        }),
       ],
       [
         'the max argument is not an integer',
         { min: 1, max: 3.1415 },
-        new RangeError('Arguments must be integers'),
-      ],
-      [
-        'the min argument is a negative integer',
-        { min: -1, max: 10 },
-        new RangeError('Arguments must be positive numbers'),
-      ],
-      [
-        'the max argument is a negative integer',
-        { min: 1, max: -1 },
-        new RangeError('Arguments must be positive numbers'),
+        new InvalidArgumentError({
+          message: 'Argument max is not an integer',
+          args: [3.1415],
+        }),
       ],
       [
         'the min argument is greater than the max argument',
         { min: 3, max: 2 },
-        new RangeError('Argument min must be greater or equal to argument max'),
+        new InvalidArgumentError({
+          message: 'Argument min is greater than argument max',
+          args: [3, 2],
+        }),
       ],
     ])('throws an error when %s', (_, range, error) => {
       expect(() => new IntegerRange(range as unknown as IntegerRange)).toThrow(
@@ -49,17 +59,32 @@ describe('IntegerRange', () => {
     });
   });
 
-  describe('min()', () => {
-    it('returns the valid min argument', () => {
-      const range = new IntegerRange({ min: 1, max: 4 });
-      expect(range.min).toBe(1);
+  describe('getter methods', () => {
+    const range = new IntegerRange({ min: 1, max: 4 });
+
+    describe.each([
+      ['min', 1],
+      ['max', 4],
+    ])('%s()', (methodName, expectedValue) => {
+      it(`returns the ${methodName} value`, () => {
+        // @ts-expect-error reference to a method by its string name
+        expect(range[methodName]).toBe(expectedValue);
+      });
     });
   });
 
-  describe('max()', () => {
-    it('returns the valid max argument', () => {
-      const range = new IntegerRange({ min: 1, max: 4 });
-      expect(range.max).toBe(4);
+  describe('setter methods', () => {
+    const range = new IntegerRange({ min: 1, max: 4 });
+
+    describe.each([['min'], ['max']])('%s()', methodName => {
+      it('throws an invalid operation error', () => {
+        // @ts-expect-error reference to a method by its string name
+        expect(() => (range[methodName] = 7)).toThrow(
+          new InvalidOperationError({
+            message: `Writing to readonly property ${methodName} is forbidden`,
+          }),
+        );
+      });
     });
   });
 });
