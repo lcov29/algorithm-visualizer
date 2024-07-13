@@ -24,4 +24,14 @@ flowchart RL
 
 ## Data Transfer Objects
 
+<br>
+
+### Errors
+
+- [`EventHandlingError`](./src/errors/event-handling-error.ts)
+
+<br>
+
+### Other
+
 - [`BaseEvent`](./src/other/base-event.ts)
