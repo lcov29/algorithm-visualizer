@@ -39,6 +39,7 @@ flowchart RL
 - [`EdgeAddedEvent`](./src/events/edge-added-event.ts)
 - [`EdgeDeletedEvent`](./src/events/edge-deleted-event.ts)
 - [`EdgeWeightChangedEvent`](./src/events/edge-weight-changed-event.ts)
+- [`GraphCreatedEvent`](./src/events/graph-created-event.ts)
 - [`NodeAddedEvent`](./src/events/node-added-event.ts)
 - [`NodeDeletedEvent`](./src/events/node-deleted-event.ts)
 - [`NodeLabelChangedEvent`](./src/events/node-label-changed-event.ts)

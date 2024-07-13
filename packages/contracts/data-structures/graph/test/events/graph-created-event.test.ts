@@ -1,17 +1,20 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { NodeLabelChangedEvent } from '../../src/events/node-label-changed-event';
+import { GraphCreatedEvent } from '../../src/events';
+import { IEdgeList, INodeList } from '../../src/interfaces';
 
-describe('NodeLabelChangedEvent', () => {
-  const nodeLabelChangedEvent = new NodeLabelChangedEvent({
-    nodeId: 3,
-    label: 'new',
+describe('GraphCreatedEvent', () => {
+  const mockNodeList = 'mockNodeList' as unknown as INodeList;
+  const mockEdgeList = 'mockEdgeList' as unknown as IEdgeList;
+  const nodeLabelChangedEvent = new GraphCreatedEvent({
+    nodes: mockNodeList,
+    edges: mockEdgeList,
   });
 
   describe('getters', () => {
     it.each([
-      ['nodeId', 3],
-      ['label', 'new'],
+      ['nodes', mockNodeList],
+      ['edges', mockEdgeList],
     ])('%s() returns specified value', (methodName, expectedValue) => {
       // @ts-expect-error reference to a method by its string name
       expect(nodeLabelChangedEvent[methodName]).toBe(expectedValue);
@@ -20,8 +23,8 @@ describe('NodeLabelChangedEvent', () => {
 
   describe('setters', () => {
     it.each([
-      ['nodeId', 4],
-      ['label', 'test'],
+      ['nodes', mockNodeList],
+      ['edges', mockEdgeList],
     ])(
       'throws an invalid operation error when trying to write to the %s property',
       (methodName, newValue) => {
