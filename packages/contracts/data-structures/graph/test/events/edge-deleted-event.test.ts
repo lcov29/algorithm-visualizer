@@ -1,3 +1,5 @@
+import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
+
 import { EdgeDeletedEvent } from '../../src/events';
 
 describe('EdgeDeletedEvent', () => {
@@ -9,19 +11,20 @@ describe('EdgeDeletedEvent', () => {
     edgeDeletedEvent = new EdgeDeletedEvent({ edgeId });
   });
 
-  describe('edgeId()', () => {
+  describe('getter edgeId()', () => {
     it('returns specified edge id', () => {
       expect(edgeDeletedEvent.edgeId).toEqual(edgeId);
     });
+  });
 
-    it('is read only', () => {
+  describe('setter edgeId()', () => {
+    it('throws an invalid operation error when trying to write to the edge property', () => {
       expect(() => {
-        // @ts-expect-error 'edge' is a read-only-property
         edgeDeletedEvent.edgeId = edgeId;
       }).toThrow(
-        new TypeError(
-          'Cannot set property edgeId of #<EdgeDeletedEvent> which has only a getter',
-        ),
+        new InvalidOperationError({
+          message: 'Writing to readonly property edgeId is forbidden',
+        }),
       );
     });
   });

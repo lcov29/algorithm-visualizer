@@ -26,6 +26,12 @@ flowchart RL
 
 <br>
 
+### Errors
+
+- [`GraphGeneratorError`](./src/errors/graph-generator-error.ts)
+
+<br>
+
 ### Events
 
 - [`EdgeAddedEvent`](./src/events/edge-added-event.ts)

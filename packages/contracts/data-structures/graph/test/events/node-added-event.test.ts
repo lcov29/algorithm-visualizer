@@ -1,3 +1,5 @@
+import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
+
 import { NodeAddedEvent } from '../../src/events/node-added-event';
 import { INode } from '../../src/interfaces';
 
@@ -11,26 +13,29 @@ describe('NodeAddedEvent', () => {
       nodeAddedEvent = new NodeAddedEvent(node);
     });
 
-    it('returns node object with specified property values', () => {
-      expect(nodeAddedEvent.node).toEqual(node);
+    describe('getter node()', () => {
+      it('returns node object with specified property values', () => {
+        expect(nodeAddedEvent.node).toEqual(node);
+      });
+
+      it('returns a clone of the specified node object', () => {
+        const clone = nodeAddedEvent.node;
+        clone.label = 'modifiedLabel';
+        expect(nodeAddedEvent.node).not.toBe(node);
+        expect(nodeAddedEvent.node).toEqual(node);
+      });
     });
 
-    it('returns a clone of the specified node object', () => {
-      const clone = nodeAddedEvent.node;
-      clone.label = 'modifiedLabel';
-      expect(nodeAddedEvent.node).not.toBe(node);
-      expect(nodeAddedEvent.node).toEqual(node);
-    });
-
-    it('is read only', () => {
-      expect(() => {
-        // @ts-expect-error 'node' is a read-only-property
-        nodeAddedEvent.node = { label: 'modifiedLabel' };
-      }).toThrow(
-        new TypeError(
-          'Cannot set property node of #<NodeAddedEvent> which has only a getter',
-        ),
-      );
+    describe('setter node()', () => {
+      it('throws an invalid operation error when trying to write to the node property', () => {
+        expect(() => {
+          nodeAddedEvent.node = { label: 'modifiedLabel' };
+        }).toThrow(
+          new InvalidOperationError({
+            message: 'Writing to readonly property node is forbidden',
+          }),
+        );
+      });
     });
   });
 });

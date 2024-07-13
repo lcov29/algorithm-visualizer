@@ -1,8 +1,12 @@
+import {
+  InvalidArgumentError,
+  InvalidOperationError,
+} from '@algorithm-visualizer/error-handling-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
 export type DirectionOption = 'unidirectional' | 'bidirectional';
 
-interface IGraphGeneratorConfigArgs {
+export interface IGraphGeneratorConfigArgs {
   nodeAmount: IntegerRange;
   edgeAmountPerNode: IntegerRange;
   edgeWeight: IntegerRange | null;
@@ -46,25 +50,64 @@ export class GraphGeneratorConfig {
     return this._allowRecursiveEdges;
   }
 
+  set nodeAmount(input: IntegerRange) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property nodeAmount is forbidden',
+    });
+  }
+
+  set edgeAmountPerNode(input: IntegerRange) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property edgeAmountPerNode is forbidden',
+    });
+  }
+
+  set edgeWeight(input: IntegerRange | null) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property edgeWeight is forbidden',
+    });
+  }
+
+  set edgeDirection(input: DirectionOption) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property edgeDirection is forbidden',
+    });
+  }
+
+  set allowRecursiveEdges(input: boolean) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property allowRecursiveEdges is forbidden',
+    });
+  }
+
   private _validate(args: IGraphGeneratorConfigArgs) {
     if (!['unidirectional', 'bidirectional'].includes(args.edgeDirection)) {
-      throw new RangeError(
-        'Argument edgeDirection must be either "unidirectional", "bidirectional" or "mixed"',
-      );
+      throw new InvalidArgumentError({
+        message:
+          'Argument edgeDirection is neither "unidirectional" nor "bidirectional"',
+        args: [args.edgeDirection],
+      });
     }
 
     if (typeof args.allowRecursiveEdges !== 'boolean') {
-      throw new TypeError(
-        'Argument allowRecursiveEdges must be of type boolean',
-      );
+      throw new InvalidArgumentError({
+        message: 'Argument allowRecursiveEdges is not a boolean',
+        args: [args.allowRecursiveEdges],
+      });
     }
 
     if (args.edgeAmountPerNode.min <= 0) {
-      throw new RangeError('Argument edgeAmountPerNode.min must be above zero');
+      throw new InvalidArgumentError({
+        message: 'Argument edgeAmountPerNode.min is below one',
+        args: [args.edgeAmountPerNode.min],
+      });
     }
 
     if (args.nodeAmount.min <= 1) {
-      throw new RangeError('Argument nodeAmount.min must be at least two');
+      throw new InvalidArgumentError({
+        message: 'Argument nodeAmount.min is below two',
+        args: [args.nodeAmount.min],
+      });
     }
   }
 }

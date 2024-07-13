@@ -1,3 +1,5 @@
+import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
+
 import { EdgeWeightChangedEvent } from '../../src/events';
 
 describe('EdgeWeightChangedEvent', () => {
@@ -6,30 +8,27 @@ describe('EdgeWeightChangedEvent', () => {
     newWeight: 7,
   });
 
-  describe.each([
-    [
-      'edgeId',
-      edgeWeightChangedEvent.edgeId,
-      3,
-      // @ts-expect-error 'nodeId' is a read-only-property
-      () => (edgeWeightChangedEvent.edgeId = 3),
-    ],
-    [
-      'newWeight',
-      edgeWeightChangedEvent.newWeight,
-      7,
-      // @ts-expect-error 'currentLabel' is a read-only-property
-      () => (nodeLabelChangedEvent.newWeight = 11),
-    ],
-  ])('%s()', (methodName, returnValue, expectedReturnValue, tryWriteAccess) => {
-    it(`returns specified ${methodName}`, () => {
-      expect(returnValue).toEqual(expectedReturnValue);
+  describe('getter methods', () => {
+    it.each([
+      ['edgeId', 3],
+      ['newWeight', 7],
+    ])('%s() returns specified value', (methodName, expectedValue) => {
+      // @ts-expect-error reference to a method by its string name
+      expect(edgeWeightChangedEvent[methodName]).toBe(expectedValue);
     });
+  });
 
-    it('is read only', () => {
-      expect(() => {
-        tryWriteAccess();
-      }).toThrow();
-    });
+  describe('setter methods', () => {
+    it.each([['edgeId'], ['newWeight']])(
+      'throws an invalid operation error when trying to write to the %s property',
+      methodName => {
+        // @ts-expect-error reference to a method by its string name
+        expect(() => (edgeWeightChangedEvent[methodName] = 1)).toThrow(
+          new InvalidOperationError({
+            message: `Writing to readonly property ${methodName} is forbidden`,
+          }),
+        );
+      },
+    );
   });
 });

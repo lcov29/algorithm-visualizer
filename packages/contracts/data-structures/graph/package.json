@@ -25,6 +25,7 @@
     "test-jest": "npx jest --config=../../../../jest.config.ts --roots=./packages/contracts/data-structures/graph --watchAll"
   },
   "dependencies": {
+    "@algorithm-visualizer/error-handling-contract": "1.0.0",
     "@algorithm-visualizer/event-handling-contract": "1.0.0",
     "@algorithm-visualizer/integer-range-contract": "1.0.0"
   }

@@ -1,3 +1,5 @@
+import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
+
 import { NodeDeletedEvent } from '../../src/events/node-deleted-event';
 
 describe('NodeDeletedEvent', () => {
@@ -9,19 +11,20 @@ describe('NodeDeletedEvent', () => {
     nodeDeletedEvent = new NodeDeletedEvent({ nodeId });
   });
 
-  describe('nodeId()', () => {
+  describe('getter nodeId()', () => {
     it('returns specified node', () => {
       expect(nodeDeletedEvent.nodeId).toEqual(nodeId);
     });
+  });
 
-    it('is read only', () => {
+  describe('setter nodeId()', () => {
+    it('throws an invalid operation error when trying to write to the nodeId property', () => {
       expect(() => {
-        // @ts-expect-error 'nodeId' is a read-only-property
         nodeDeletedEvent.nodeId = nodeId;
       }).toThrow(
-        new TypeError(
-          'Cannot set property nodeId of #<NodeDeletedEvent> which has only a getter',
-        ),
+        new InvalidOperationError({
+          message: 'Writing to readonly property nodeId is forbidden',
+        }),
       );
     });
   });

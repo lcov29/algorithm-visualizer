@@ -1,3 +1,4 @@
+import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 interface EdgeWeightChangedEventArgs {
@@ -21,5 +22,17 @@ export class EdgeWeightChangedEvent extends BaseEvent<'edge-weight-changed'> {
 
   get newWeight() {
     return this._newWeight;
+  }
+
+  set edgeId(input: number) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property edgeId is forbidden',
+    });
+  }
+
+  set newWeight(input: number) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property newWeight is forbidden',
+    });
   }
 }
