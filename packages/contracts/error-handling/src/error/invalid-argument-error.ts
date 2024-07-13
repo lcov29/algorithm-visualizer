@@ -9,7 +9,6 @@ export class InvalidArgumentError<T> extends Error {
 
   constructor({ message, args, cause = {} }: InvalidArgumentErrorArgs<T>) {
     super(message, { cause });
-
     this._args = args;
   }
 

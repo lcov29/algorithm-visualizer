@@ -8,3 +8,4 @@ This contract package contains general purpose error objects.
 
 - [`InvalidArgumentError`](./src/error/invalid-argument-error.ts)
 - [`InvalidOperationError`](./src/error/invalid-operation-error.ts)
+- [`InvalidResultError`](./src/error//invalid-result-error.ts)
