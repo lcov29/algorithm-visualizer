@@ -84,9 +84,9 @@ export class EdgeGenerator implements IEdgeGenerator {
   private _correctInvalidEdgePointAmountForNonRecursiveGraph() {
     // Prevent non recursive graphs from having a node A with an available
     // edge point amount that exceeds the total of available edge point
-    // amounts of all other nodes. Otherwise node A would be forces to
+    // amounts of all other nodes. Otherwise node A would be forced to
     // connect with itself after it has consumed the available edge points
-    // of all other nodes.
+    // of all the other nodes.
     const availableEdgePointTotal = this._getAvailableEdgePointsTotal();
     const nodeWithEdgePointAmountGreaterThanEdgePointTotalOfAllOtherNodes =
       this._nodes.find(
