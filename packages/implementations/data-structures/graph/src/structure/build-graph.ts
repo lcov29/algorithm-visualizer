@@ -1,3 +1,4 @@
+import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import { IGraph } from '@algorithm-visualizer/graph-contract';
 
@@ -12,6 +13,9 @@ export function buildGraph(): IGraph {
   return new Graph({
     nodes: new NodeList(),
     edges: new EdgeList(),
-    eventHandlerChain: new EventHandlerChain({ abortAfterSuccess: true }),
+    eventHandlerChain: new EventHandlerChain({
+      abortAfterSuccess: true,
+      validator: new FunctionValidator(),
+    }),
   });
 }

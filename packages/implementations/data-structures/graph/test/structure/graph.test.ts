@@ -1,3 +1,4 @@
+import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
   EdgeAddedEvent,
@@ -59,7 +60,10 @@ describe('Graph', () => {
     jest.resetAllMocks();
     nodes = initializeMockNodes();
     edges = initializeMockEdges();
-    eventHandlerChain = new EventHandlerChain({ abortAfterSuccess: true });
+    eventHandlerChain = new EventHandlerChain({
+      abortAfterSuccess: true,
+      validator: new FunctionValidator(),
+    });
     graph = new Graph({ nodes, edges, eventHandlerChain });
   });
 
