@@ -18,7 +18,9 @@ flowchart RL
 - [`IGraphGenerator`](./src/interfaces/graph-generator.ts)
 - [`IGraph`](./src/interfaces/graph.ts)
 - [`IEdge`](./src/interfaces/edge.ts)
+- [`IEdgeList`](./src/interfaces/edge-list.ts)
 - [`INode`](./src/interfaces/node.ts)
+- [`INodeList`](./src/interfaces/node-list.ts)
 
 <br>
 

@@ -3,10 +3,12 @@ import {
   IEventHandlerChain,
   IEventSubscriber,
 } from '@algorithm-visualizer/event-handling-contract';
-import { GraphEvent, IGraph } from '@algorithm-visualizer/graph-contract';
-
-import { IEdgeList } from './edge-list';
-import { INodeList } from './node-list';
+import {
+  GraphEvent,
+  IEdgeList,
+  IGraph,
+  INodeList,
+} from '@algorithm-visualizer/graph-contract';
 
 interface GraphArgs {
   nodes: INodeList;
