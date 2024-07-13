@@ -2,7 +2,8 @@ import {
   IRandomBooleanGenerator,
   IRandomIntegerGenerator,
   IRandomListItemSelector,
-} from '../../../../contracts/cross-cutting-concerns/randomization';
+} from '@algorithm-visualizer/randomization-contract';
+
 import { IntegerValidator, ListValidator } from '../../data-validation';
 import { getRandomBoolean as _getRandomBoolean } from './random-boolean-generator';
 import { getRandomIntegerBetween as _getRandomIntegerBetween } from './random-integer-generator';

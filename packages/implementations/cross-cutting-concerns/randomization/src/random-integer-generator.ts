@@ -1,5 +1,5 @@
-import { IIntegerValidator } from '../../../../contracts/cross-cutting-concerns/data-validation';
-import { InvalidArgumentError } from '../../../../contracts/cross-cutting-concerns/error-handling';
+import { IIntegerValidator } from '@algorithm-visualizer/data-validation-contract';
+import { InvalidArgumentError } from '@algorithm-visualizer/error-handling-contract';
 
 interface getRandomIntegerBetweenArgs {
   min: number;
