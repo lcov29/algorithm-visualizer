@@ -18,19 +18,19 @@
       // prevent VS Code autocompletion to display relative module paths
       "@algorithm-visualizer/app": ["../packages/app"],
       "@algorithm-visualizer/data-validation": [
-        "../packages/implementations/data-validation"
+        "../packages/implementations/cross-cutting-concerns/data-validation"
       ],
       "@algorithm-visualizer/data-validation-contract": [
-        "../packages/contracts/data-validation"
+        "../packages/contracts/cross-cutting-concerns/data-validation"
       ],
       "@algorithm-visualizer/error-handling-contract": [
-        "../packages/contracts/error-handling"
+        "../packages/contracts/cross-cutting-concerns/error-handling"
       ],
       "@algorithm-visualizer/event-handling": [
-        "../packages/implementations/event-handling"
+        "../packages/implementations/cross-cutting-concerns/event-handling"
       ],
       "@algorithm-visualizer/event-handling-contract": [
-        "../packages/contracts/event-handling"
+        "../packages/contracts/cross-cutting-concerns/event-handling"
       ],
       "@algorithm-visualizer/graph": [
         "../packages/implementations/data-structures/graph"
@@ -42,10 +42,10 @@
         "../packages/contracts/data-structures/integer-range"
       ],
       "@algorithm-visualizer/randomization": [
-        "../packages/implementations/randomization"
+        "../packages/implementations/cross-cutting-concerns/randomization"
       ],
       "@algorithm-visualizer/randomization-contract": [
-        "../packages/contracts/randomization"
+        "../packages/contracts/cross-cutting-concerns/randomization"
       ]
     }
   },

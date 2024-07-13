@@ -1,5 +1,5 @@
-import { IListValidator } from '@algorithm-visualizer/data-validation-contract';
-import { InvalidArgumentError } from '@algorithm-visualizer/error-handling-contract';
+import { IListValidator } from '../../../../contracts/cross-cutting-concerns/data-validation';
+import { InvalidArgumentError } from '../../../../contracts/cross-cutting-concerns/error-handling';
 
 interface getRandomListItemArgs<T> {
   list: T[];

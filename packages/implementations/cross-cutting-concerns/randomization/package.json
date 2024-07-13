@@ -20,7 +20,7 @@
   },
   "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
   "scripts": {
-    "test-jest": "npx jest --config=../../../jest.config.ts --roots=./packages/implementations/randomization --watchAll"
+    "test-jest": "npx jest --config=../../../../jest.config.ts --roots=./packages/implementations/cross-cutting-concerns/randomization --watchAll"
   },
   "dependencies": {
     "@algorithm-visualizer/error-handling-contract": "1.0.0",

@@ -1,7 +1,7 @@
 import {
   InvalidArgumentError,
   InvalidOperationError,
-} from '@algorithm-visualizer/error-handling-contract';
+} from '../../../cross-cutting-concerns/error-handling';
 
 /**
  * A data structure representing the inclusive range between two integers.

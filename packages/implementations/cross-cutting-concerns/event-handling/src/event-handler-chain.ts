@@ -1,9 +1,9 @@
-import { IFunctionValidator } from '@algorithm-visualizer/data-validation-contract';
-import { InvalidArgumentError } from '@algorithm-visualizer/error-handling-contract';
+import { IFunctionValidator } from '../../../../contracts/cross-cutting-concerns/data-validation';
+import { InvalidArgumentError } from '../../../../contracts/cross-cutting-concerns/error-handling';
 import {
   IEventHandler,
   IEventHandlerChain,
-} from '@algorithm-visualizer/event-handling-contract';
+} from '../../../../contracts/cross-cutting-concerns/event-handling';
 
 export interface EventHandlerChainArgs {
   abortAfterSuccess: boolean;

@@ -1,8 +1,7 @@
 import {
   InvalidArgumentError,
   InvalidOperationError,
-} from '@algorithm-visualizer/error-handling-contract';
-
+} from '../../../cross-cutting-concerns/error-handling';
 import { IntegerRange } from '../src/integer-range';
 
 describe('IntegerRange', () => {

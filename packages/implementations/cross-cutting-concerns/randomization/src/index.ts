@@ -1,13 +1,9 @@
 import {
-  IntegerValidator,
-  ListValidator,
-} from '@algorithm-visualizer/data-validation';
-import {
   IRandomBooleanGenerator,
   IRandomIntegerGenerator,
   IRandomListItemSelector,
-} from '@algorithm-visualizer/randomization-contract';
-
+} from '../../../../contracts/cross-cutting-concerns/randomization';
+import { IntegerValidator, ListValidator } from '../../data-validation';
 import { getRandomBoolean as _getRandomBoolean } from './random-boolean-generator';
 import { getRandomIntegerBetween as _getRandomIntegerBetween } from './random-integer-generator';
 import { getRandomListItem as _getRandomListItem } from './random-list-item-selector';

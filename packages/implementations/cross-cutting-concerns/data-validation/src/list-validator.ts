@@ -1,4 +1,4 @@
-import { IListValidator } from '@algorithm-visualizer/data-validation-contract';
+import { IListValidator } from '../../../../contracts/cross-cutting-concerns/data-validation';
 
 export class ListValidator implements IListValidator {
   isList<T>(input: T[]) {

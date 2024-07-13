@@ -1,6 +1,6 @@
+import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import { IGraph } from '@algorithm-visualizer/graph-contract';
 
-import { EventHandlerChain } from '../../../../event-handling';
 import { EdgeList } from './edge-list';
 import { Graph } from './graph';
 import { NodeList } from './node-list';

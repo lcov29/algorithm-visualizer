@@ -1,3 +1,4 @@
+import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
   EdgeAddedEvent,
   EdgeDeletedEvent,
@@ -8,7 +9,6 @@ import {
   NodeLabelChangedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
-import { EventHandlerChain } from '../../../../event-handling';
 import { EdgeList } from '../../src/structure/edge-list';
 import { Graph } from '../../src/structure/graph';
 import { NodeList } from '../../src/structure/node-list';

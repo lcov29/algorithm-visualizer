@@ -1,7 +1,7 @@
 {
-  "name": "@algorithm-visualizer/error-handling-contract",
+  "name": "@algorithm-visualizer/event-handling-contract",
   "version": "1.0.0",
-  "description": "Contract for handling errors",
+  "description": "Contract for handling events",
   "main": "./index.ts",
   "author": "lcov29",
   "license": "GNU GPLv3",
@@ -9,7 +9,7 @@
   "keywords": [
     "algorithm",
     "visualization",
-    "error",
+    "event",
     "handling",
     "contract"
   ],
@@ -22,6 +22,6 @@
   },
   "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
   "scripts": {
-    "test-jest": "npx jest --config=../../../jest.config.ts --roots=./packages/contracts/error-handling --watchAll"
+    "test-jest": "npx jest --config=../../../../jest.config.ts --roots=./packages/contracts/cross-cutting-concerns/event-handling --watchAll"
   }
 }

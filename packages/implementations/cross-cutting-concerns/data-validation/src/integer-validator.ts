@@ -1,4 +1,4 @@
-import { IIntegerValidator } from '@algorithm-visualizer/data-validation-contract';
+import { IIntegerValidator } from '../../../../contracts/cross-cutting-concerns/data-validation';
 
 export class IntegerValidator implements IIntegerValidator {
   isValidInteger(input: number): boolean {

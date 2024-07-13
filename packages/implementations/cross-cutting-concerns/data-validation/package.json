@@ -1,7 +1,7 @@
 {
-  "name": "@algorithm-visualizer/event-handling",
+  "name": "@algorithm-visualizer/data-validation",
   "version": "1.0.0",
-  "description": "Event handling utilities",
+  "description": "Data validation",
   "main": "./index.ts",
   "author": "lcov29",
   "license": "GNU GPLv3",
@@ -9,8 +9,8 @@
   "keywords": [
     "algorithm",
     "visualization",
-    "event",
-    "handling"
+    "data",
+    "validation"
   ],
   "repository": {
     "type": "git",
@@ -21,12 +21,9 @@
   },
   "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
   "scripts": {
-    "test-jest": "npx jest --config=../../../jest.config.ts --roots=./packages/implementations/event-handling --watchAll"
+    "test-jest": "npx jest --config=../../../../jest.config.ts --roots=./packages/implementations/cross-cutting-concerns/data-validation --watchAll"
   },
   "dependencies": {
-    "@algorithm-visualizer/data-validation": "1.0.0",
-    "@algorithm-visualizer/data-validation-contract": "1.0.0",
-    "@algorithm-visualizer/event-handling-contract": "1.0.0",
-    "@algorithm-visualizer/error-handling-contract": "1.0.0"
+    "@algorithm-visualizer/data-validation-contract": "1.0.0"
   }
 }

@@ -1,9 +1,8 @@
-import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import {
   IEventHandler,
   IEventHandlerChain,
-} from '@algorithm-visualizer/event-handling-contract';
-
+} from '../../../../contracts/cross-cutting-concerns/event-handling';
+import { FunctionValidator } from '../../data-validation';
 import {
   EventHandlerChainArgs,
   EventHandlerChain as _EventHandlerChain,
