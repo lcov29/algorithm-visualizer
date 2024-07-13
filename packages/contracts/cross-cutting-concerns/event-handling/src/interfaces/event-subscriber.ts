@@ -1,3 +1,3 @@
-export interface IEventSubscriber<Event> {
-  handleEvent: (event: Event) => void;
+export interface IEventSubscriber<Events> {
+  handleEvent: (event: Events) => void;
 }

@@ -2,24 +2,8 @@
 
 This utility package contains the following components to handle application events:
 
-- [`BaseEvent`](./src/base-event.ts)
-- [`EventHandler`](./src/event-handler.d.ts)
-- [`EventHandlerChain`](./src/event-handler-chain.ts)
-- [`EventSubscriber`](./src/event-subscriber.d.ts)
-
-<br>
-<br>
-
-## `BaseEvent` <!-- omit in toc -->
-
-Base class for events emitted by other packages.
-
-<br>
-<br>
-
-## `EventHandler` <!-- omit in toc -->
-
-Interface specifying an event handler.
+- [`EventHandlerChain`](#eventhandlerchain)
+- [`EventSubscriberManager`](#eventsubscribermanager)
 
 <br>
 <br>
@@ -44,23 +28,22 @@ flowchart LR
 <br>
 <br>
 
-## `EventSubscriber` <!-- omit in toc -->
+## `EventSubscriberManager` <!-- omit in toc -->
 
-Interfaces to implement the event subscription mechanism ([observer pattern](https://en.wikipedia.org/wiki/Observer_pattern)) that allows subscriber components to get notified about events emitted by another component.
+Encapsulates the managing of subscribers like adding, removing, clearing.
+
+Event emitters can use this component to manage their subscribers and notify them about events.
 
 <br>
 
 ```mermaid
-classDiagram
-  direction LR
-  class EventEmitter {
-    subscribers: EventSubscriber[]
-    +subscribe(subscriber: EventSubscriber)
-    +unsubscribe(subscriber: EventSubscriber)
-    +notifySubscribers()
-  }
-  class EventSubscriber {
-    +handleEvent(event: Event)
-  }
-  EventEmitter "m" --> "n" EventSubscriber
+flowchart LR
+  A[Event Subscriber A]
+  B[Event Emitter]
+  C[EventSubscriberManager]
+  A -- (1) subscribes / unsubscribe --> B
+  B -- (1) add / remove subscriber --> C
+  B -- (2) clear subscribers --> C
+  B -- (3) dispatch event --> C
+  C -- (3) dispatch event --> A
 ```

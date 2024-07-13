@@ -16,9 +16,10 @@ flowchart RL
 ## Interfaces
 
 - [`IEventEmitter`](./src/interfaces/event-emitter.ts)
-- [`IEventSubscriber`](./src/interfaces/event-subscriber.ts)
-- [`IEventHandler`](./src/interfaces/event-handler.ts)
 - [`IEventHandlerChain`](./src/interfaces/event-handler-chain.ts)
+- [`IEventHandler`](./src/interfaces/event-handler.ts)
+- [`IEventSubscriberManager`](./src/interfaces/event-subscriber-manager.ts)
+- [`IEventSubscriber`](./src/interfaces/event-subscriber.ts)
 
 <br>
 

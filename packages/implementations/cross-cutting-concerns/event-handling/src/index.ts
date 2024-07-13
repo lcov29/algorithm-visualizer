@@ -8,6 +8,8 @@ import {
   EventHandlerChain as _EventHandlerChain,
 } from './event-handler-chain';
 
+export { EventSubscriberManager } from './event-subscriber-manager';
+
 export class EventHandlerChain<Events> implements IEventHandlerChain<Events> {
   private _handlerChain: _EventHandlerChain<Events>;
 
