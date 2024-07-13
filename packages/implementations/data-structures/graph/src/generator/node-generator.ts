@@ -4,6 +4,8 @@ import {
 } from '@algorithm-visualizer/graph-contract';
 import { IRandomIntegerGenerator } from '@algorithm-visualizer/randomization-contract';
 
+import { NodeGeneratorError } from './node-generator-error';
+
 export interface INodeGenerator {
   generateRandomNodes(): Omit<INode, 'id'>[];
 }
@@ -23,14 +25,23 @@ export class NodeGenerator implements INodeGenerator {
   }
 
   generateRandomNodes() {
-    const { min, max } = this._config.nodeAmount;
-    const nodeAmount = this._getRandomIntegerBetween(min, max);
+    try {
+      const { min, max } = this._config.nodeAmount;
+      const nodeAmount = this._getRandomIntegerBetween(min, max);
 
-    const nodes = new Array(nodeAmount)
-      .fill(null)
-      .map((_, index) => ({ label: this._getLabelCharacterFor(index) }));
+      const nodes = new Array(nodeAmount)
+        .fill(null)
+        .map((_, index) => ({ label: this._getLabelCharacterFor(index) }));
 
-    return nodes;
+      return nodes;
+    } catch (error) {
+      throw new NodeGeneratorError({
+        message:
+          'Failed to generate random nodes according to the passed configuration',
+        config: this._config,
+        cause: error as Error,
+      });
+    }
   }
 
   private _getLabelCharacterFor(index: number) {

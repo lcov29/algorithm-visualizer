@@ -23,6 +23,9 @@
     "test-jest": "npx jest --config=../../../jest.config.ts --roots=./packages/implementations/randomization --watchAll"
   },
   "dependencies": {
+    "@algorithm-visualizer/error-handling-contract": "1.0.0",
+    "@algorithm-visualizer/data-validation": "1.0.0",
+    "@algorithm-visualizer/data-validation-contract": "1.0.0",
     "@algorithm-visualizer/randomization-contract": "1.0.0"
   }
 }

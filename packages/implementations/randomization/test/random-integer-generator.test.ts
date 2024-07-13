@@ -1,16 +1,59 @@
+import { IIntegerValidator } from '@algorithm-visualizer/data-validation-contract';
+import { InvalidArgumentError } from '@algorithm-visualizer/error-handling-contract';
+
 import { getRandomIntegerBetween } from '../src/random-integer-generator';
 
+function getMockValidatorReturning(result: boolean) {
+  return {
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    isValidInteger: (input: number) => result,
+  } as IIntegerValidator;
+}
+
 describe('getRandomIntegerBetween()', () => {
-  it('throws a range error when the argument min is greater than the argument max', () => {
-    const expectedError = new RangeError(
-      'The argument min is greater than the argument max',
+  it('throws an invalid argument error if the isValidInteger check fails for the argument min', () => {
+    expect(() => {
+      getRandomIntegerBetween({
+        min: 3.14,
+        max: 4,
+        validator: {
+          isValidInteger: input => input !== 3.14,
+        } as IIntegerValidator,
+      });
+    }).toThrow(
+      new InvalidArgumentError({
+        message: 'Argument min is not an integer',
+        args: [3.14],
+      }),
     );
-    expect(() => getRandomIntegerBetween(5, 2)).toThrow(expectedError);
+  });
+
+  it('throws an invalid argument error if the argument min is greater than the argument max', () => {
+    expect(() =>
+      getRandomIntegerBetween({
+        min: 5,
+        max: 2,
+        validator: getMockValidatorReturning(true),
+      }),
+    ).toThrow(
+      new InvalidArgumentError({
+        message: 'Argument min is greater than the argument max',
+        args: [5, 2],
+      }),
+    );
   });
 
   it('returns an integer within the specified range', () => {
-    const randomPositiveInteger = getRandomIntegerBetween(2, 5);
-    const randomNegativeInteger = getRandomIntegerBetween(-6, -2);
+    const randomPositiveInteger = getRandomIntegerBetween({
+      min: 2,
+      max: 5,
+      validator: getMockValidatorReturning(true),
+    });
+    const randomNegativeInteger = getRandomIntegerBetween({
+      min: -6,
+      max: -2,
+      validator: getMockValidatorReturning(true),
+    });
 
     expect(randomPositiveInteger).toBeGreaterThanOrEqual(2);
     expect(randomPositiveInteger).toBeLessThanOrEqual(5);
@@ -19,7 +62,13 @@ describe('getRandomIntegerBetween()', () => {
   });
 
   it('returns the argument value when both arguments are equal', () => {
-    expect(getRandomIntegerBetween(4, 4)).toBe(4);
+    expect(
+      getRandomIntegerBetween({
+        min: 4,
+        max: 4,
+        validator: getMockValidatorReturning(true),
+      }),
+    ).toBe(4);
   });
 
   it('returns every integer within the specified range with equal probability', () => {
@@ -46,7 +95,11 @@ describe('getRandomIntegerBetween()', () => {
       resultCount <= expectedDistributionRange.max;
 
     for (let i = 0; i < executionNumber; i++) {
-      const result = getRandomIntegerBetween(1, 4);
+      const result = getRandomIntegerBetween({
+        min: 1,
+        max: 4,
+        validator: getMockValidatorReturning(true),
+      });
       const counter = resultCounter.get(result)!;
       resultCounter.set(result, counter + 1);
     }
@@ -60,7 +113,13 @@ describe('getRandomIntegerBetween()', () => {
   it('can return all integers within the specified range including the boundaries', () => {
     const resultSet = new Set();
     for (let i = 0; i < 10_000; i++) {
-      resultSet.add(getRandomIntegerBetween(1, 4));
+      resultSet.add(
+        getRandomIntegerBetween({
+          min: 1,
+          max: 4,
+          validator: getMockValidatorReturning(true),
+        }),
+      );
     }
     const results = [...resultSet].sort();
     expect(results).toEqual([1, 2, 3, 4]);

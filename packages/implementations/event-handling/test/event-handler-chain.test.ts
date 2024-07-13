@@ -1,6 +1,12 @@
+import { IFunctionValidator } from '@algorithm-visualizer/data-validation-contract';
+import { InvalidArgumentError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { EventHandlerChain } from '../src/event-handler-chain';
+
+function getMockValidatorReturning(result: boolean) {
+  return { isFunction: () => result } as IFunctionValidator;
+}
 
 class MockEventA extends BaseEvent<'event-a'> {
   constructor() {
@@ -28,10 +34,26 @@ describe('EventHandlerChain', () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
-    handlerChain = new EventHandlerChain();
+    handlerChain = new EventHandlerChain({
+      abortAfterSuccess: true,
+      validator: getMockValidatorReturning(true),
+    });
   });
 
   describe('add()', () => {
+    it('throws an invalid argument error if the isFunction check fails', () => {
+      handlerChain = new EventHandlerChain({
+        abortAfterSuccess: true,
+        validator: getMockValidatorReturning(false),
+      });
+      expect(() => handlerChain.add(mockEventBHandler)).toThrow(
+        new InvalidArgumentError({
+          message: 'Argument handler is not a function',
+          args: [mockEventBHandler],
+        }),
+      );
+    });
+
     it('adds the specified handler to the handler list', () => {
       handlerChain.add(mockEventBHandler);
       // @ts-expect-error private property is accessible at runtime
@@ -87,6 +109,10 @@ describe('EventHandlerChain', () => {
 
     describe('when the chain is configured to not abort after the first successful handling', () => {
       beforeEach(() => {
+        handlerChain = new EventHandlerChain({
+          abortAfterSuccess: false,
+          validator: getMockValidatorReturning(true),
+        });
         handlerChain
           .add(mockEventA1Handler)
           .add(mockEventA2Handler)
@@ -131,7 +157,6 @@ describe('EventHandlerChain', () => {
 
     describe('when the chain is configured to abort after the first successful handling', () => {
       beforeEach(() => {
-        handlerChain = new EventHandlerChain({ abortAfterSuccess: true });
         handlerChain
           .add(mockEventA1Handler)
           .add(mockEventA2Handler)

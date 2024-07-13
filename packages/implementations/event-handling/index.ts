@@ -1,1 +1,1 @@
-export { EventHandlerChain } from './src/event-handler-chain';
+export * from './src';

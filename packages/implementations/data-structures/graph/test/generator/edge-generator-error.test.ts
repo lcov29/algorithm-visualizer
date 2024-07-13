@@ -22,7 +22,7 @@ describe('EdgeGeneratorError', () => {
     });
     nodes = [{ id: 1, label: 'test', availableEdgePointAmount: 5 }];
     error = new EdgeGeneratorError({
-      message: 'node generator error',
+      message: 'edge generator error',
       config,
       nodes,
       cause,
@@ -30,14 +30,14 @@ describe('EdgeGeneratorError', () => {
   });
 
   it('returns the specified error message', () => {
-    expect(error.message).toBe('node generator error');
+    expect(error.message).toBe('edge generator error');
   });
 
   it('returns the specified config', () => {
     expect(error.config).toEqual(config);
   });
 
-  it('returns the specified node list', () => {
+  it('returns the specified edge list', () => {
     expect(error.nodes).toBe(nodes);
   });
 
