@@ -51,6 +51,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
       .add(event => this._handleEdgeAddedEvent(event))
       .add(event => this._handleEdgeDeletedEvent(event))
       .add(event => this._handleEdgeWeightChangedEvent(event))
+      .add(event => this._handleGraphCreatedEvent(event))
       .add(event => this._handleNodeAddedEvent(event))
       .add(event => this._handleNodeDeletedEvent(event))
       .add(event => this._handleNodeLabelChangedEvent(event));
@@ -107,6 +108,15 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
         cause: error as Error,
       });
     }
+  }
+
+  private _handleGraphCreatedEvent(event: GraphEvent) {
+    if (event.name !== 'graph-created') {
+      return false;
+    }
+    this._nodes = event.nodes;
+    this._edges = event.edges;
+    return true;
   }
 
   private _handleNodeAddedEvent(event: GraphEvent) {

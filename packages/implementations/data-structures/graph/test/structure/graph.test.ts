@@ -4,6 +4,7 @@ import {
   EdgeAddedEvent,
   EdgeDeletedEvent,
   EdgeWeightChangedEvent,
+  GraphCreatedEvent,
   GraphEvent,
   NodeAddedEvent,
   NodeDeletedEvent,
@@ -130,6 +131,22 @@ describe('Graph', () => {
         });
         graph.handleEvent(edgeWeightChangedEvent);
         expect(graph.edges).toEqual(mockEdges);
+      });
+    });
+
+    describe('when passed a graph-created event', () => {
+      it('sets the nodeList and edgeList', () => {
+        const nodes = initializeMockNodes();
+        nodes.add({ label: 'Node3' });
+        const edges = initializeMockEdges();
+        edges.add({
+          startNodeId: 4,
+          endNodeId: 5,
+        });
+        const graphCreatedEvent = new GraphCreatedEvent({ nodes, edges });
+        graph.handleEvent(graphCreatedEvent);
+        expect(graph.nodes).toEqual(nodes.list);
+        expect(graph.edges).toEqual(edges.list);
       });
     });
 
