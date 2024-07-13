@@ -6,6 +6,9 @@ interface EdgeWeightChangedEventArgs {
   newWeight: number;
 }
 
+/**
+ * @throws InvalidOperationError
+ */
 export class EdgeWeightChangedEvent extends BaseEvent<'edge-weight-changed'> {
   private _edgeId: number;
   private _newWeight: number;

@@ -3,6 +3,9 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { IEdge } from '../interfaces';
 
+/**
+ * @throws InvalidOperationError
+ */
 export class EdgeAddedEvent extends BaseEvent<'edge-added'> {
   private _edge: Omit<IEdge, 'id'>;
 

@@ -5,6 +5,9 @@ interface EdgeDeletedEventArgs {
   edgeId: number;
 }
 
+/**
+ * @throws InvalidOperationError
+ */
 export class EdgeDeletedEvent extends BaseEvent<'edge-deleted'> {
   private _edgeId: number;
 

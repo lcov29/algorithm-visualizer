@@ -5,6 +5,9 @@ interface NodeDeletedEventArgs {
   nodeId: number;
 }
 
+/**
+ * @throws InvalidOperationError
+ */
 export class NodeDeletedEvent extends BaseEvent<'node-deleted'> {
   private _nodeId: number;
 

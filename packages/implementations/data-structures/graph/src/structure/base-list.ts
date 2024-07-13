@@ -11,6 +11,9 @@ export interface IBaseList<Item extends INode | IEdge> {
   };
 }
 
+/**
+ * Abstract list base class for {@link NodeList} and {@link EdgeList}
+ */
 export abstract class BaseList<Item extends INode | IEdge>
   implements IBaseList<Item>
 {

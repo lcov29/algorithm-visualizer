@@ -6,6 +6,9 @@ interface NodeLabelChangedEventArgs {
   label: string;
 }
 
+/**
+ * @throws InvalidOperationError
+ */
 export class NodeLabelChangedEvent extends BaseEvent<'node-label-changed'> {
   private _nodeId: number;
   private _label: string;

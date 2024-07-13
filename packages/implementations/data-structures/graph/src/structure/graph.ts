@@ -14,6 +14,12 @@ interface GraphArgs {
   eventHandlerChain: IEventHandlerChain<GraphEvent>;
 }
 
+/**
+ * Data structure representing a graph.
+ * Can be modified by different GraphEvents.
+ *
+ * @throws EventHandlingError
+ */
 export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
   private _nodes: INodeList;
   private _edges: IEdgeList;

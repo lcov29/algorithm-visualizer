@@ -14,6 +14,12 @@ export interface IGraphGeneratorConfigArgs {
   allowRecursiveEdges: boolean;
 }
 
+/**
+ * Configuration object to pass to a {@link GraphGenerator}
+ *
+ * @throws InvalidOperationError
+ * @throws InvalidArgumentError
+ */
 export class GraphGeneratorConfig {
   private _nodeAmount: IntegerRange;
   private _edgeAmountPerNode: IntegerRange;

@@ -15,6 +15,13 @@ import { INodeList, NodeList } from '../structure/node-list';
 import { EdgeGenerator } from './edge-generator';
 import { NodeGenerator } from './node-generator';
 
+/**
+ * Generates a random graph based on the specified GraphGeneratorConfig
+ *
+ * @param {GraphGeneratorConfig} config - A {@link GraphGeneratorConfig} object
+ *
+ * @throws GraphGeneratorError
+ */
 export const generateGraph: IGraphGenerator = (
   config: GraphGeneratorConfig,
 ) => {

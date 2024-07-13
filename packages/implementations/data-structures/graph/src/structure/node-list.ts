@@ -13,6 +13,9 @@ export interface INodeList {
   };
 }
 
+/**
+ * Data structure representing the nodes of a {@link Graph}.
+ */
 export class NodeList extends BaseList<INode> implements INodeList {
   constructor() {
     super();

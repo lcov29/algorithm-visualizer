@@ -6,6 +6,11 @@ interface getRandomListItemArgs<T> {
   validator: IListValidator;
 }
 
+/**
+ * Returns a random list item or null if the list is empty.
+ *
+ * @throws InvalidArgumentError
+ */
 export const getRandomListItem = <T>(args: getRandomListItemArgs<T>) => {
   const { list, validator } = args;
 

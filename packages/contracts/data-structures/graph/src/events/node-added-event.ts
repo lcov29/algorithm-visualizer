@@ -3,6 +3,9 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { INode } from '../interfaces';
 
+/**
+ * @throws InvalidOperationError
+ */
 export class NodeAddedEvent extends BaseEvent<'node-added'> {
   private _node: Omit<INode, 'id'>;
 

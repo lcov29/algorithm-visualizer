@@ -21,6 +21,9 @@ export interface IEdgeList {
   };
 }
 
+/**
+ * Data structure representing the edges of a {@link Graph}.
+ */
 export class EdgeList extends BaseList<IEdge> implements IEdgeList {
   constructor() {
     super();
