@@ -1,11 +1,15 @@
-import { GraphGeneratorConfig } from '../other/graph-generator-config';
-import { IGraph } from './graph';
+import { IEventEmitter } from '@algorithm-visualizer/event-handling-contract';
 
-/**
- * Generates a random graph based on the specified GraphGeneratorConfig
- *
- * @param {GraphGeneratorConfig} config - A {@link GraphGeneratorConfig} object
- *
- * @throws GraphGeneratorError
- */
-export type IGraphGenerator = (config: GraphGeneratorConfig) => IGraph;
+import { GraphEvent } from '../events';
+import { GraphGeneratorConfig } from '../other/graph-generator-config';
+
+export interface IGraphGenerator extends IEventEmitter<GraphEvent> {
+  /**
+   * Generates a random graph based on the specified GraphGeneratorConfig
+   *
+   * @param {GraphGeneratorConfig} config - A {@link GraphGeneratorConfig} object
+   *
+   * @throws GraphGeneratorError
+   */
+  generateGraph: (config: GraphGeneratorConfig) => void;
+}
