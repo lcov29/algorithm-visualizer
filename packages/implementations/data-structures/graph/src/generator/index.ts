@@ -1,1 +1,1 @@
-export { generateGraph } from './graph-generator';
+export { buildGraphGenerator } from './build-graph-generator';
