@@ -33,11 +33,11 @@ export class EventHandlerChain<Events> implements IEventHandlerChain<Events> {
     return this;
   }
 
-  handle(event: Events) {
+  async handle(event: Events) {
     let isHandled = false;
 
     for (const handler of this._handlers) {
-      const isSuccessful = handler(event);
+      const isSuccessful = await handler(event);
       const abort = this._abortAfterSuccess && isSuccessful;
       isHandled ||= isSuccessful;
 

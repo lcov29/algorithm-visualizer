@@ -82,14 +82,14 @@ describe('Graph', () => {
 
   describe('handleEvent()', () => {
     describe('when passed an edge-added event', () => {
-      it('adds a new edge to the graph', () => {
+      it('adds a new edge to the graph', async () => {
         const edgeAddedEvent = new EdgeAddedEvent({
           startNodeId: 1,
           endNodeId: 3,
           isDirected: false,
           weight: 4,
         });
-        graph.handleEvent(edgeAddedEvent);
+        await graph.handleEvent(edgeAddedEvent);
         expect(graph.edges).toEqual([
           ...mockEdges,
           { id: 2, startNodeId: 1, endNodeId: 3, isDirected: false, weight: 4 },
@@ -98,44 +98,44 @@ describe('Graph', () => {
     });
 
     describe('when passed an edge-deleted event', () => {
-      it('deletes the edge with the specified id', () => {
+      it('deletes the edge with the specified id', async () => {
         const edgeDeletedEvent = new EdgeDeletedEvent({ edgeId: 1 });
-        graph.handleEvent(new EdgeDeletedEvent(edgeDeletedEvent));
+        await graph.handleEvent(new EdgeDeletedEvent(edgeDeletedEvent));
         expect(graph.edges).toEqual([mockEdges[0]]);
       });
 
-      it('does not delete any edges when the specified id is nonexistent', () => {
+      it('does not delete any edges when the specified id is nonexistent', async () => {
         const edgeDeletedEvent = new EdgeDeletedEvent({ edgeId: 6 });
-        graph.handleEvent(edgeDeletedEvent);
+        await graph.handleEvent(edgeDeletedEvent);
         expect(graph.edges).toEqual(mockEdges);
       });
     });
 
     describe('when passed an edge-weight-changed event', () => {
-      it('changes the edge weight of the specified id', () => {
+      it('changes the edge weight of the specified id', async () => {
         const edgeWeightChangedEvent = new EdgeWeightChangedEvent({
           edgeId: 1,
           newWeight: 100,
         });
-        graph.handleEvent(edgeWeightChangedEvent);
+        await graph.handleEvent(edgeWeightChangedEvent);
         expect(graph.edges).toEqual([
           mockEdges[0],
           { ...mockEdges[1], weight: 100 },
         ]);
       });
 
-      it('does not change any edge weight when the specified id is nonexistent', () => {
+      it('does not change any edge weight when the specified id is nonexistent', async () => {
         const edgeWeightChangedEvent = new EdgeWeightChangedEvent({
           edgeId: 9,
           newWeight: 100,
         });
-        graph.handleEvent(edgeWeightChangedEvent);
+        await graph.handleEvent(edgeWeightChangedEvent);
         expect(graph.edges).toEqual(mockEdges);
       });
     });
 
     describe('when passed a graph-created event', () => {
-      it('sets the nodeList and edgeList', () => {
+      it('sets the nodeList and edgeList', async () => {
         const nodes = initializeMockNodes();
         nodes.add({ label: 'Node3' });
         const edges = initializeMockEdges();
@@ -144,16 +144,16 @@ describe('Graph', () => {
           endNodeId: 5,
         });
         const graphCreatedEvent = new GraphCreatedEvent({ nodes, edges });
-        graph.handleEvent(graphCreatedEvent);
+        await graph.handleEvent(graphCreatedEvent);
         expect(graph.nodes).toEqual(nodes.list);
         expect(graph.edges).toEqual(edges.list);
       });
     });
 
     describe('when passed a node-added event', () => {
-      it('adds a new node', () => {
+      it('adds a new node', async () => {
         const nodeAddedEvent = new NodeAddedEvent({ label: 'newNode' });
-        graph.handleEvent(nodeAddedEvent);
+        await graph.handleEvent(nodeAddedEvent);
         expect(graph.nodes).toEqual([
           ...mockNodes,
           { id: 2, label: 'newNode' },
@@ -162,44 +162,44 @@ describe('Graph', () => {
     });
 
     describe('when passed a node-deleted event', () => {
-      it('deletes the node with the specified id', () => {
+      it('deletes the node with the specified id', async () => {
         const nodeDeletedEvent = new NodeDeletedEvent({ nodeId: 1 });
-        graph.handleEvent(nodeDeletedEvent);
+        await graph.handleEvent(nodeDeletedEvent);
         expect(graph.nodes).toEqual([mockNodes[0]]);
       });
 
-      it('deletes all edges that include the specified node', () => {
+      it('deletes all edges that include the specified node', async () => {
         const nodeDeletedEvent = new NodeDeletedEvent({ nodeId: 1 });
-        graph.handleEvent(nodeDeletedEvent);
+        await graph.handleEvent(nodeDeletedEvent);
         expect(graph.edges).toEqual([mockEdges[1]]);
       });
 
-      it('does not delete any nodes when the specified id is nonexistent', () => {
+      it('does not delete any nodes when the specified id is nonexistent', async () => {
         const nodeDeletedEvent = new NodeDeletedEvent({ nodeId: 8 });
-        graph.handleEvent(nodeDeletedEvent);
+        await graph.handleEvent(nodeDeletedEvent);
         expect(graph.nodes).toEqual(mockNodes);
       });
     });
 
     describe('when passed a node-label-changed event', () => {
-      it('changes the label of the specified node id', () => {
+      it('changes the label of the specified node id', async () => {
         const nodeLabelChangedEvent = new NodeLabelChangedEvent({
           nodeId: 1,
           label: 'newLabel',
         });
-        graph.handleEvent(nodeLabelChangedEvent);
+        await graph.handleEvent(nodeLabelChangedEvent);
         expect(graph.nodes).toEqual([
           mockNodes[0],
           { ...mockNodes[1], label: 'newLabel' },
         ]);
       });
 
-      it('does not change any node label when the specified id is nonexistent', () => {
+      it('does not change any node label when the specified id is nonexistent', async () => {
         const nodeLabelChangedEvent = new NodeLabelChangedEvent({
           nodeId: 9,
           label: 'newLabel',
         });
-        graph.handleEvent(nodeLabelChangedEvent);
+        await graph.handleEvent(nodeLabelChangedEvent);
         expect(graph.nodes).toEqual(mockNodes);
       });
     });

@@ -17,5 +17,5 @@ export interface IEventHandlerChain<Events> {
    * @returns {boolean} Boolean indicating whether the event was successfully
    * handled by at least one handler
    */
-  handle: (event: Events) => boolean;
+  handle: (event: Events) => Promise<boolean>;
 }

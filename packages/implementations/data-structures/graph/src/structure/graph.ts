@@ -42,8 +42,8 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
     return this._edges.list;
   }
 
-  handleEvent(event: GraphEvent) {
-    this._eventHandlerChain.handle(event);
+  async handleEvent(event: GraphEvent) {
+    await this._eventHandlerChain.handle(event);
   }
 
   private _initializeEventHandlerChain() {
@@ -57,7 +57,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
       .add(event => this._handleNodeLabelChangedEvent(event));
   }
 
-  private _handleEdgeAddedEvent(event: GraphEvent) {
+  private async _handleEdgeAddedEvent(event: GraphEvent) {
     try {
       if (event.name !== 'edge-added') {
         return false;
@@ -73,7 +73,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
     }
   }
 
-  private _handleEdgeDeletedEvent(event: GraphEvent) {
+  private async _handleEdgeDeletedEvent(event: GraphEvent) {
     try {
       if (event.name !== 'edge-deleted') {
         return false;
@@ -89,7 +89,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
     }
   }
 
-  private _handleEdgeWeightChangedEvent(event: GraphEvent) {
+  private async _handleEdgeWeightChangedEvent(event: GraphEvent) {
     try {
       if (event.name !== 'edge-weight-changed') {
         return false;
@@ -110,7 +110,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
     }
   }
 
-  private _handleGraphCreatedEvent(event: GraphEvent) {
+  private async _handleGraphCreatedEvent(event: GraphEvent) {
     if (event.name !== 'graph-created') {
       return false;
     }
@@ -119,7 +119,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
     return true;
   }
 
-  private _handleNodeAddedEvent(event: GraphEvent) {
+  private async _handleNodeAddedEvent(event: GraphEvent) {
     try {
       if (event.name !== 'node-added') {
         return false;
@@ -135,7 +135,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
     }
   }
 
-  private _handleNodeDeletedEvent(event: GraphEvent) {
+  private async _handleNodeDeletedEvent(event: GraphEvent) {
     try {
       if (event.name !== 'node-deleted') {
         return false;
@@ -153,7 +153,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
     }
   }
 
-  private _handleNodeLabelChangedEvent(event: GraphEvent) {
+  private async _handleNodeLabelChangedEvent(event: GraphEvent) {
     try {
       if (event.name !== 'node-label-changed') {
         return false;

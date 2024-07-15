@@ -1,3 +1,4 @@
+import { EventSubscriberManager } from '@algorithm-visualizer/event-handling';
 import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract';
 import {
   GraphCreatedEvent,
@@ -17,18 +18,18 @@ describe('GraphGenerator', () => {
   let graphCreatedEvent: GraphCreatedEvent | null;
 
   class MockGraphCreatedSubscriber implements IEventSubscriber<GraphEvent> {
-    handleEvent(event: GraphEvent) {
+    async handleEvent(event: GraphEvent) {
       if (event.name === 'graph-created') {
         graphCreatedEvent = event;
-        return true;
       }
-      return false;
     }
   }
 
   beforeEach(() => {
     jest.resetAllMocks();
-    generator = new GraphGenerator();
+    generator = new GraphGenerator({
+      subscriberManager: new EventSubscriberManager(),
+    });
     mockSubscriber = new MockGraphCreatedSubscriber();
     config = new GraphGeneratorConfig({
       nodeAmount: new IntegerRange({ min: 3, max: 5 }),

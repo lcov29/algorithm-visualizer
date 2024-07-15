@@ -1,1 +1,1 @@
-export type IEventHandler<T> = (args: T) => boolean;
+export type IEventHandler<T> = (args: T) => Promise<boolean>;

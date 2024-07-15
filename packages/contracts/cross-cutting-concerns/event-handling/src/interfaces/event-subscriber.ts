@@ -1,3 +1,3 @@
 export interface IEventSubscriber<Events> {
-  handleEvent: (event: Events) => void;
+  handleEvent: (event: Events) => Promise<void>;
 }

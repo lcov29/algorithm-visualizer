@@ -13,5 +13,4 @@ import { INode } from './node';
 export interface IGraph extends IEventSubscriber<GraphEvent> {
   readonly nodes: INode[];
   readonly edges: IEdge[];
-  handleEvent: (event: GraphEvent) => void;
 }

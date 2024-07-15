@@ -119,30 +119,30 @@ describe('EventHandlerChain', () => {
           .add(mockEventBHandler);
       });
 
-      it('calls each registered event handler', () => {
-        handlerChain.handle(new MockEventA());
+      it('calls each registered event handler', async () => {
+        await handlerChain.handle(new MockEventA());
         expect(mockEventA1Handler).toHaveBeenCalledTimes(1);
         expect(mockEventA2Handler).toHaveBeenCalledTimes(1);
         expect(mockEventBHandler).toHaveBeenCalledTimes(1);
       });
 
-      it('executes handing action of each registered handler responsible for the dispatched event', () => {
-        handlerChain.handle(new MockEventA());
+      it('executes handing action of each registered handler responsible for the dispatched event', async () => {
+        await handlerChain.handle(new MockEventA());
         expect(mockEventA1Handling).toHaveBeenCalledTimes(1);
         expect(mockEventA2Handling).toHaveBeenCalledTimes(1);
       });
 
-      it('does not execute handling action of handlers not responsible for the dispatched event', () => {
-        handlerChain.handle(new MockEventA());
+      it('does not execute handling action of handlers not responsible for the dispatched event', async () => {
+        await handlerChain.handle(new MockEventA());
         expect(mockEventBHandling).not.toHaveBeenCalled();
       });
 
-      it('returns true if at least one registered handler could successfully handle the event', () => {
-        const result = handlerChain.handle(new MockEventA());
+      it('returns true if at least one registered handler could successfully handle the event', async () => {
+        const result = await handlerChain.handle(new MockEventA());
         expect(result).toBe(true);
       });
 
-      it('returns false if no registered handler could successfully handle the event', () => {
+      it('returns false if no registered handler could successfully handle the event', async () => {
         mockEventA1Handler.mockImplementation(
           createMockEventHandlerImplementation(
             'event-a',
@@ -150,7 +150,7 @@ describe('EventHandlerChain', () => {
             false,
           ),
         );
-        const result = handlerChain.handle(new MockEventA());
+        const result = await handlerChain.handle(new MockEventA());
         expect(result).toBe(false);
       });
     });
@@ -163,19 +163,19 @@ describe('EventHandlerChain', () => {
           .add(mockEventBHandler);
       });
 
-      it('aborts after first successful handler', () => {
-        handlerChain.handle(new MockEventA());
+      it('aborts after first successful handler', async () => {
+        await handlerChain.handle(new MockEventA());
         expect(mockEventA1Handling).toHaveBeenCalledTimes(1);
         expect(mockEventA2Handler).not.toHaveBeenCalled();
         expect(mockEventA2Handler).not.toHaveBeenCalled();
       });
 
-      it('returns true if at least one registered handler could successfully handle the event', () => {
-        const result = handlerChain.handle(new MockEventA());
+      it('returns true if at least one registered handler could successfully handle the event', async () => {
+        const result = await handlerChain.handle(new MockEventA());
         expect(result).toBe(true);
       });
 
-      it('returns false if no registered handler could successfully handle the event', () => {
+      it('returns false if no registered handler could successfully handle the event', async () => {
         mockEventA1Handler.mockImplementation(
           createMockEventHandlerImplementation(
             'event-a',
@@ -184,7 +184,7 @@ describe('EventHandlerChain', () => {
           ),
         );
 
-        const result = handlerChain.handle(new MockEventA());
+        const result = await handlerChain.handle(new MockEventA());
         expect(result).toBe(false);
       });
     });
