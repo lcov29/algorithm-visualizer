@@ -1,11 +1,9 @@
-import { EventSubscriberManager } from '@algorithm-visualizer/event-handling';
 import {
   IEventSubscriber,
   IEventSubscriberManager,
 } from '@algorithm-visualizer/event-handling-contract';
 import {
   GraphCreatedEvent,
-  GraphEvent,
   GraphGeneratorConfig,
   GraphGeneratorError,
   IEdgeList,
@@ -22,14 +20,18 @@ import { NodeList } from '../structure/node-list';
 import { EdgeGenerator } from './edge-generator';
 import { NodeGenerator } from './node-generator';
 
-export class GraphGenerator implements IGraphGenerator {
-  private _subscriberManager: IEventSubscriberManager<GraphEvent>;
+interface GraphGeneratorArgs {
+  subscriberManager: IEventSubscriberManager<GraphCreatedEvent>;
+}
 
-  constructor() {
-    this._subscriberManager = new EventSubscriberManager();
+export class GraphGenerator implements IGraphGenerator {
+  private _subscriberManager: IEventSubscriberManager<GraphCreatedEvent>;
+
+  constructor({ subscriberManager }: GraphGeneratorArgs) {
+    this._subscriberManager = subscriberManager;
   }
 
-  addSubscriber(subscriber: IEventSubscriber<GraphEvent>) {
+  addSubscriber(subscriber: IEventSubscriber<GraphCreatedEvent>) {
     return this._subscriberManager.addSubscriber(subscriber);
   }
 
