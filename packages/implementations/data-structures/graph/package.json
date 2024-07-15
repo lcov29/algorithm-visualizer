@@ -26,9 +26,10 @@
   "dependencies": {
     "@algorithm-visualizer/event-handling": "1.0.0",
     "@algorithm-visualizer/event-handling-contract": "1.0.0",
-    "@algorithm-visualizer/randomization": "1.0.0",
     "@algorithm-visualizer/graph-contract": "1.0.0",
     "@algorithm-visualizer/integer-range-contract": "1.0.0",
-    "@algorithm-visualizer/randomization-contract": "1.0.0"
+    "@algorithm-visualizer/randomization": "1.0.0",
+    "@algorithm-visualizer/randomization-contract": "1.0.0",
+    "mermaid": "^10.9.1"
   }
 }
