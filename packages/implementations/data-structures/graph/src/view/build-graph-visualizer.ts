@@ -1,15 +1,28 @@
 import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
+  GraphVisualizationError,
   GraphVisualizationEvent,
   IGraphVisualizationBuilder,
 } from '@algorithm-visualizer/graph-contract';
 
 import { GraphMermaidSVGRenderEngine } from './graph-mermaid-svg-render-engine';
+import { GraphRenderDirectionMap } from './graph-render-direction-map';
 import { GraphVisualizer } from './graph-visualizer';
 
-export const buildGraphVisualizer: IGraphVisualizationBuilder = () => {
-  const graphSVGRenderEngine = new GraphMermaidSVGRenderEngine();
+export const buildGraphVisualizer: IGraphVisualizationBuilder = args => {
+  const { graphDirection } = args;
+  if (!GraphRenderDirectionMap.has(graphDirection)) {
+    throw new GraphVisualizationError({
+      message: `Failed to map graph render direction text ${graphDirection} to valid mermaid flowchart direction`,
+    });
+  }
+
+  const mermaidGraphRenderDirection =
+    GraphRenderDirectionMap.get(graphDirection)!;
+  const graphSVGRenderEngine = new GraphMermaidSVGRenderEngine(
+    mermaidGraphRenderDirection,
+  );
   const eventHandlerChain = new EventHandlerChain<GraphVisualizationEvent>({
     abortAfterSuccess: false,
     validator: new FunctionValidator(),

@@ -33,7 +33,10 @@ describe('GraphDefinitionMermaidParser', () => {
 
   beforeEach(() => {
     const parser = new GraphDefinitionMermaidParser();
-    parsedGraph = parser.parse(buildMockGraphCreatedEvent());
+    parsedGraph = parser.parse({
+      event: buildMockGraphCreatedEvent(),
+      graphRenderDirection: 'LR',
+    });
   });
 
   describe('parse()', () => {

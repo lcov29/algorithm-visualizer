@@ -1,7 +1,6 @@
-import {
-  GraphRenderDirectionMap,
-  GraphRenderDirectionText,
-} from '../../src/view/graph-render-direction-map';
+import { GraphRenderDirection } from '@algorithm-visualizer/graph-contract';
+
+import { GraphRenderDirectionMap } from '../../src/view/graph-render-direction-map';
 
 describe('GraphRenderDirectionMap', () => {
   beforeEach(() => {
@@ -14,7 +13,7 @@ describe('GraphRenderDirectionMap', () => {
     ['TB', 'Top-To-Bottom'],
     ['BT', 'Bottom-To-Top'],
   ])('returns the expected value "%s" for key "%s"', (value, key) => {
-    expect(GraphRenderDirectionMap.get(key as GraphRenderDirectionText)).toBe(
+    expect(GraphRenderDirectionMap.get(key as GraphRenderDirection)).toBe(
       value,
     );
   });

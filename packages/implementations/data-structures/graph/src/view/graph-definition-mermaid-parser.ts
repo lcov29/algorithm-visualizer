@@ -4,14 +4,25 @@ import {
   INode,
 } from '@algorithm-visualizer/graph-contract';
 
+import { MermaidGraphRenderDirection } from './graph-render-direction-map';
+
+export interface GraphDefinitionMermaidParserArgs {
+  event: GraphCreatedEvent;
+  graphRenderDirection: MermaidGraphRenderDirection;
+}
+
 export class GraphDefinitionMermaidParser {
   /**
    * Parses the specified graph into a valid mermaid flowchart definition.
    */
-  parse({ nodes, edges }: GraphCreatedEvent): string {
+  parse({
+    event,
+    graphRenderDirection,
+  }: GraphDefinitionMermaidParserArgs): string {
+    const { nodes, edges } = event;
     return [
-      '%%{ init: { flowchart: { curve: "linear" } } }%%',
-      'flowchart LR',
+      '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',
+      `flowchart ${graphRenderDirection}`,
       this._parseNodes(nodes.list),
       this._parseEdges(edges.list),
       '\n',
