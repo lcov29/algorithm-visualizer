@@ -15,7 +15,7 @@ interface GraphVisualizerArgs {
 export class GraphVisualizer implements IGraphVisualizer {
   private _eventHandlerChain: IEventHandlerChain<GraphVisualizationEvent>;
   private _graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
-  private _graphRef: React.MutableRefObject<null>;
+  private _graphRef: React.RefObject<HTMLDivElement>;
   private _setGraphSVGString: React.Dispatch<React.SetStateAction<string>>;
 
   constructor(args: GraphVisualizerArgs) {
@@ -26,12 +26,12 @@ export class GraphVisualizer implements IGraphVisualizer {
     this._initializeEventHandlerChain();
   }
 
-  setGraphViewValues(
-    ref: React.MutableRefObject<null>,
-    fn: React.Dispatch<React.SetStateAction<string>>,
+  setGraphViewReferences(
+    graphRef: React.RefObject<HTMLDivElement>,
+    setGraphSVGString: React.Dispatch<React.SetStateAction<string>>,
   ) {
-    this._graphRef = ref;
-    this._setGraphSVGString = fn;
+    this._graphRef = graphRef;
+    this._setGraphSVGString = setGraphSVGString;
   }
 
   async handleEvent(event: GraphVisualizationEvent) {

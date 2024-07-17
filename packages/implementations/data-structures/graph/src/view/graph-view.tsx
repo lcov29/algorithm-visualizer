@@ -10,9 +10,9 @@ export function GraphView({
   graphVisualizer,
 }: GraphViewProps): JSX.Element | null {
   const [graphSVGString, setGraphSVGString] = useState<string>('');
-  const graphRef = useRef(null);
+  const graphRef = useRef<HTMLDivElement>(null);
 
-  graphVisualizer.setGraphViewValues(graphRef, setGraphSVGString);
+  graphVisualizer.setGraphViewReferences(graphRef, setGraphSVGString);
 
   if (!graphSVGString) {
     return null;
@@ -20,7 +20,7 @@ export function GraphView({
 
   return (
     <div
-      id="temp"
+      className="graph-view"
       ref={graphRef}
       dangerouslySetInnerHTML={{ __html: graphSVGString }}
     />

@@ -6,8 +6,8 @@ import React from 'react';
 
 export interface IGraphVisualizer
   extends IEventSubscriber<GraphVisualizationEvent> {
-  setGraphViewValues: (
-    ref: React.MutableRefObject<null>,
-    fn: React.Dispatch<React.SetStateAction<string>>,
+  setGraphViewReferences: (
+    graphRef: React.RefObject<HTMLDivElement>,
+    setGraphSVGString: React.Dispatch<React.SetStateAction<string>>,
   ) => void;
 }
