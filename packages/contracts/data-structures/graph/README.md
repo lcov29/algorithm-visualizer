@@ -15,10 +15,16 @@ flowchart RL
 
 ## Interfaces
 
-- [`IGraphGenerator`](./src/interfaces/graph-generator.ts)
-- [`IGraph`](./src/interfaces/graph.ts)
 - [`IEdge`](./src/interfaces/edge.ts)
 - [`IEdgeList`](./src/interfaces/edge-list.ts)
+- [`IGraph`](./src/interfaces/graph.ts)
+- [`IGraphBuilder`](./src/interfaces/builder-functions.ts)
+- [`IGraphGenerator`](./src/interfaces/graph-generator.ts)
+- [`IGraphGeneratorBuilder`](./src/interfaces/builder-functions.ts)
+- [`GraphRenderDirection`](./src/interfaces/graph-render-direction.ts)
+- [`IGraphSVGRenderEngine`](./src/interfaces/graph-svg-render-engine.ts)
+- [`IGraphVisualizer`](./src/interfaces/graph-visualizer.ts)
+- [`IGraphVisualizationBuilder`](./src/interfaces/builder-functions.ts)
 - [`INode`](./src/interfaces/node.ts)
 - [`INodeList`](./src/interfaces/node-list.ts)
 
@@ -31,6 +37,7 @@ flowchart RL
 ### Errors
 
 - [`GraphGeneratorError`](./src/errors/graph-generator-error.ts)
+- [`GraphVisualizationError`](./src/errors/graph-visualization-error.ts)
 
 <br>
 
