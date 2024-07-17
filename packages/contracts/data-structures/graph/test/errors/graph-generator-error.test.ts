@@ -3,7 +3,7 @@ import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
 import { GraphGeneratorError } from '../../src/errors/graph-generator-error';
 
-describe('EdgeGeneratorError', () => {
+describe('GraphGeneratorError', () => {
   let error: GraphGeneratorError;
   let cause: RangeError;
   let config: GraphGeneratorConfig;
