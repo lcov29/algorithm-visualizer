@@ -49,6 +49,7 @@ flowchart RL
 - [`GraphCreatedEvent`](./src/events/graph-created-event.ts)
 - [`NodeAddedEvent`](./src/events/node-added-event.ts)
 - [`NodeDeletedEvent`](./src/events/node-deleted-event.ts)
+- [`NodeHighlightedEvent`](./src/events/node-highlighted-event.ts)
 - [`NodeLabelChangedEvent`](./src/events/node-label-changed-event.ts)
 
 <br>
