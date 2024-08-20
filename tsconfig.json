@@ -49,5 +49,5 @@
       ]
     }
   },
-  "include": ["./packages/**/*"]
+  "include": ["./packages/**/*", "__mocks__"]
 }
