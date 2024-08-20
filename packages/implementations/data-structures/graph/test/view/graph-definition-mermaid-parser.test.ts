@@ -42,7 +42,7 @@ describe('GraphDefinitionMermaidParser', () => {
   describe('parse()', () => {
     it('parses the specified graph into a valid mermaid flowchart definition', () => {
       const expectedGraph = [
-        '%%{ init: { flowchart: { curve: "linear" } } }%%',
+        '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',
         'flowchart LR',
         '0((A))',
         '1((B))',
