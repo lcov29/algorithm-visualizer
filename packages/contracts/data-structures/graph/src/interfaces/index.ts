@@ -6,6 +6,7 @@ export {
 export { IEdge } from './edge';
 export { IEdgeList, INavigableEdgesArgs } from './edge-list';
 export { IGraph } from './graph';
+export { IGraphComponentSelector } from './graph-component-selector';
 export { IGraphGenerator } from './graph-generator';
 export { GraphRenderDirection } from './graph-render-direction';
 export { IGraphSVGRenderEngine } from './graph-svg-render-engine';

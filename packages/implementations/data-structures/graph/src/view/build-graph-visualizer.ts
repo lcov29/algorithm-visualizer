@@ -6,6 +6,7 @@ import {
   IGraphVisualizationBuilder,
 } from '@algorithm-visualizer/graph-contract';
 
+import { GraphMermaidComponentSelector } from './graph-mermaid-component-selector';
 import { GraphMermaidSVGRenderEngine } from './graph-mermaid-svg-render-engine';
 import { GraphRenderDirectionMap } from './graph-render-direction-map';
 import { GraphVisualizer } from './graph-visualizer';
@@ -27,8 +28,12 @@ export const buildGraphVisualizer: IGraphVisualizationBuilder = args => {
     abortAfterSuccess: false,
     validator: new FunctionValidator(),
   });
+
+  const graphComponentSelector = new GraphMermaidComponentSelector();
+
   return new GraphVisualizer({
     eventHandlerChain,
     graphSVGRenderEngine,
+    graphComponentSelector,
   });
 };
