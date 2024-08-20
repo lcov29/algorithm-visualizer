@@ -1,0 +1,28 @@
+.node > circle {
+  fill: green !important;
+  stroke: black !important;
+  stroke-width: 2px !important;
+}
+
+.nodeHighlighted > circle {
+  fill: red !important;
+}
+
+.nodeLabel {
+  color: black !important;
+}
+
+.edgePaths path {
+  stroke: black !important;
+  stroke-width: 3px !important;
+}
+
+.edgeLabel {
+  background: none !important;
+  color: blue !important;
+  font-weight: bolder;
+}
+
+.edgePaths .edgeHighlighted {
+  stroke: red !important;
+}

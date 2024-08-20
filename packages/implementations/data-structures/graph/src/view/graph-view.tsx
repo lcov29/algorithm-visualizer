@@ -1,5 +1,7 @@
 import { IGraphVisualizer } from '@algorithm-visualizer/graph-contract';
 
+import './graph-view.css';
+
 import React, { JSX, useRef, useState } from 'react';
 
 interface GraphViewProps {
