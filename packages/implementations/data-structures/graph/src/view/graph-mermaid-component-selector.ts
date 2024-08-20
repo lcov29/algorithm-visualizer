@@ -13,33 +13,23 @@ export class GraphMermaidComponentSelector implements IGraphComponentSelector {
   }
 
   getNode(id: number) {
-    return (
-      this._graphRef?.current?.querySelector(`[id^="flowchart-${id}"]`) ?? null
-    );
+    return this._select(`[id^="flowchart-${id}"]`);
   }
 
   getLabelOfNode(id: number) {
-    return (
-      this._graphRef?.current?.querySelector(
-        `[id^=flowchart-${id}] .nodeLabel`,
-      ) ?? null
-    );
+    return this._select(`[id^=flowchart-${id}] .nodeLabel`);
   }
 
   getEdgeBetween(args: Pick<IEdge, 'startNodeId' | 'endNodeId'>) {
     const { startNodeId, endNodeId } = args;
-    return (
-      this._graphRef?.current?.querySelector(
-        `[id^="L-${startNodeId}-${endNodeId}"]`,
-      ) ?? null
-    );
+    return this._select(`[id^="L-${startNodeId}-${endNodeId}"]`);
   }
 
   getLabelOfEdge(id: number) {
-    return (
-      this._graphRef?.current?.querySelector(
-        `.edgeLabels > .edgeLabel:nth-child(${id}) span`,
-      ) ?? null
-    );
+    return this._select(`.edgeLabels > .edgeLabel:nth-child(${id + 1}) span`);
+  }
+
+  private _select(selector: string) {
+    return this._graphRef?.current?.querySelector(selector) ?? null;
   }
 }
