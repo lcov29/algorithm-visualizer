@@ -2,6 +2,7 @@ export { EdgeAddedEvent } from './edge-added-event';
 export { EdgeDeletedEvent } from './edge-deleted-event';
 export { EdgeWeightChangedEvent } from './edge-weight-changed-event';
 export { EdgeHighlightAddedEvent } from './edge-highlight-added-event';
+export { EdgeHighlightRemovedEvent } from './edge-highlight-removed-event';
 export { GraphCreatedEvent } from './graph-created-event';
 export { GraphVisualizationEvent } from './graph-visualization-events';
 export { GraphEvent } from './graph-events';

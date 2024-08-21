@@ -1,4 +1,5 @@
 import { EdgeHighlightAddedEvent } from './edge-highlight-added-event';
+import { EdgeHighlightRemovedEvent } from './edge-highlight-removed-event';
 import { GraphCreatedEvent } from './graph-created-event';
 import { NodeHighlightAddedEvent } from './node-highlight-added-event';
 import { NodeHighlightRemovedEvent } from './node-highlight-removed-event';
@@ -9,4 +10,5 @@ export type GraphVisualizationEvent =
   | NodeHighlightAddedEvent
   | NodeHighlightRemovedEvent
   | NodeLabelChangedEvent
-  | EdgeHighlightAddedEvent;
+  | EdgeHighlightAddedEvent
+  | EdgeHighlightRemovedEvent;
