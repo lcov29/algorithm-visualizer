@@ -47,7 +47,8 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleNodeHighlightRemovedEvent(event))
       .add(event => this._handleNodeLabelChangedEvent(event))
       .add(event => this._handleEdgeHighlightAddedEvent(event))
-      .add(event => this._handleEdgeHighlightRemovedEvent(event));
+      .add(event => this._handleEdgeHighlightRemovedEvent(event))
+      .add(event => this._handleEdgeWeightChangedEvent(event));
   }
 
   private async _handleGraphCreatedEvent(event: GraphVisualizationEvent) {
@@ -83,9 +84,9 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'node-label-changed') {
       return false;
     }
-    const node = this._graphComponentSelector.getLabelOfNode(event.nodeId);
-    if (node?.textContent) {
-      node.textContent = event.label;
+    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    if (nodeLabel?.textContent) {
+      nodeLabel.textContent = event.label;
     }
     return true;
   }
@@ -107,6 +108,17 @@ export class GraphVisualizer implements IGraphVisualizer {
     }
     const edge = this._graphComponentSelector.getEdge(event.edgeId);
     edge?.classList.remove('edgeHighlighted');
+    return true;
+  }
+
+  private async _handleEdgeWeightChangedEvent(event: GraphVisualizationEvent) {
+    if (event.name !== 'edge-weight-changed') {
+      return false;
+    }
+    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    if (edgeLabel?.textContent) {
+      edgeLabel.textContent = event.newWeight.toString();
+    }
     return true;
   }
 }

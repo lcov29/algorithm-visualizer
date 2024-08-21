@@ -6,6 +6,7 @@ import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
   EdgeHighlightAddedEvent,
   EdgeHighlightRemovedEvent,
+  EdgeWeightChangedEvent,
   GraphCreatedEvent,
   GraphVisualizationEvent,
   IGraphSVGRenderEngine,
@@ -104,12 +105,12 @@ describe('GraphVisualizer', () => {
 
     describe('NodeLabelChangedEvent', () => {
       it('changes the label text of the specified node', async () => {
-        const node = graphComponentSelector.getLabelOfNode(nodeId);
-        expect(node?.textContent).not.toBe('Foo');
+        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        expect(nodeLabel?.textContent).not.toBe('Foo');
         await visualizer.handleEvent(
           new NodeLabelChangedEvent({ nodeId, label: 'Foo' }),
         );
-        expect(node?.textContent).toBe('Foo');
+        expect(nodeLabel?.textContent).toBe('Foo');
       });
     });
   });
@@ -134,6 +135,17 @@ describe('GraphVisualizer', () => {
         expect(edge?.classList).toContain(edgeHighlightClassName);
         await visualizer.handleEvent(new EdgeHighlightRemovedEvent(edgeId));
         expect(edge?.classList).not.toContain(edgeHighlightClassName);
+      });
+    });
+
+    describe('EdgeWeightChangedEvent', () => {
+      it('changes the label text of the specified edge', async () => {
+        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        expect(edgeLabel?.textContent).not.toBe('6');
+        await visualizer.handleEvent(
+          new EdgeWeightChangedEvent({ edgeId, newWeight: 6 }),
+        );
+        expect(edgeLabel?.textContent).toBe('6');
       });
     });
   });
