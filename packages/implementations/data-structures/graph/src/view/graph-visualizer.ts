@@ -45,7 +45,8 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleGraphCreatedEvent(event))
       .add(event => this._handleNodeHighlightAddedEvent(event))
       .add(event => this._handleNodeHighlightRemovedEvent(event))
-      .add(event => this._handleNodeLabelChangedEvent(event));
+      .add(event => this._handleNodeLabelChangedEvent(event))
+      .add(event => this._handleEdgeHighlightAddedEvent(event));
   }
 
   private async _handleGraphCreatedEvent(event: GraphVisualizationEvent) {
@@ -85,6 +86,15 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (node?.textContent) {
       node.textContent = event.label;
     }
+    return true;
+  }
+
+  private async _handleEdgeHighlightAddedEvent(event: GraphVisualizationEvent) {
+    if (event.name !== 'edge-highlight-added') {
+      return false;
+    }
+    const edge = this._graphComponentSelector.getEdge(event.edgeId);
+    edge?.classList.add('edgeHighlighted');
     return true;
   }
 }

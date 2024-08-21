@@ -4,6 +4,7 @@
 import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
+  EdgeHighlightAddedEvent,
   GraphCreatedEvent,
   GraphVisualizationEvent,
   IGraphSVGRenderEngine,
@@ -108,6 +109,20 @@ describe('GraphVisualizer', () => {
           new NodeLabelChangedEvent({ nodeId, label: 'Foo' }),
         );
         expect(node?.textContent).toBe('Foo');
+      });
+    });
+  });
+
+  describe('Edge Events', () => {
+    const edgeHighlightClassName = 'edgeHighlighted';
+    const edgeId = 2;
+
+    describe('EdgeHighlightAddedEvent', () => {
+      it('highlights the specified edge', async () => {
+        const edge = graphComponentSelector.getEdge(edgeId);
+        expect(edge?.classList).not.toContain(edgeHighlightClassName);
+        await visualizer.handleEvent(new EdgeHighlightAddedEvent(edgeId));
+        expect(edge?.classList).toContain(edgeHighlightClassName);
       });
     });
   });
