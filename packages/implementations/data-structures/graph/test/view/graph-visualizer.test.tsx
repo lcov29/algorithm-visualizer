@@ -9,6 +9,7 @@ import {
   IGraphSVGRenderEngine,
   NodeHighlightAddedEvent,
   NodeHighlightRemovedEvent,
+  NodeLabelChangedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
 import { EdgeList } from '../../src/structure/edge-list';
@@ -76,7 +77,7 @@ describe('GraphVisualizer', () => {
     });
   });
 
-  describe('Node Highlight Events', () => {
+  describe('Node Events', () => {
     const nodeHighlightClassName = 'nodeHighlighted';
     const nodeId = 1;
 
@@ -96,6 +97,17 @@ describe('GraphVisualizer', () => {
         expect(node?.classList).toContain(nodeHighlightClassName);
         await visualizer.handleEvent(new NodeHighlightRemovedEvent(nodeId));
         expect(node?.classList).not.toContain(nodeHighlightClassName);
+      });
+    });
+
+    describe('NodeLabelChangedEvent', () => {
+      it('changes the label text of the specified node', async () => {
+        const node = graphComponentSelector.getLabelOfNode(nodeId);
+        expect(node?.textContent).not.toBe('Foo');
+        await visualizer.handleEvent(
+          new NodeLabelChangedEvent({ nodeId, label: 'Foo' }),
+        );
+        expect(node?.textContent).toBe('Foo');
       });
     });
   });

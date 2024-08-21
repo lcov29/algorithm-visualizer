@@ -44,7 +44,8 @@ export class GraphVisualizer implements IGraphVisualizer {
     this._eventHandlerChain
       .add(event => this._handleGraphCreatedEvent(event))
       .add(event => this._handleNodeHighlightAddedEvent(event))
-      .add(event => this._handleNodeHighlightRemovedEvent(event));
+      .add(event => this._handleNodeHighlightRemovedEvent(event))
+      .add(event => this._handleNodeLabelChangedEvent(event));
   }
 
   private async _handleGraphCreatedEvent(event: GraphVisualizationEvent) {
@@ -73,6 +74,17 @@ export class GraphVisualizer implements IGraphVisualizer {
     }
     const node = this._graphComponentSelector.getNode(event.nodeId);
     node?.classList.remove('nodeHighlighted');
+    return true;
+  }
+
+  private async _handleNodeLabelChangedEvent(event: GraphVisualizationEvent) {
+    if (event.name !== 'node-label-changed') {
+      return false;
+    }
+    const node = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    if (node?.textContent) {
+      node.textContent = event.label;
+    }
     return true;
   }
 }
