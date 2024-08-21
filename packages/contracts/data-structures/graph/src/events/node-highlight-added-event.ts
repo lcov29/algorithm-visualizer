@@ -4,11 +4,11 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 /**
  * @throws InvalidOperationError
  */
-export class NodeHighlightedEvent extends BaseEvent<'node-highlighted'> {
+export class NodeHighlightAddedEvent extends BaseEvent<'node-highlight-added'> {
   private _nodeId: number;
 
   constructor(nodeId: number) {
-    super('node-highlighted');
+    super('node-highlight-added');
     this._nodeId = nodeId;
   }
 

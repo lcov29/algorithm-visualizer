@@ -7,8 +7,8 @@ import {
   GraphCreatedEvent,
   GraphVisualizationEvent,
   IGraphSVGRenderEngine,
+  NodeHighlightAddedEvent,
   NodeHighlightRemovedEvent,
-  NodeHighlightedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
 import { EdgeList } from '../../src/structure/edge-list';
@@ -84,7 +84,7 @@ describe('GraphVisualizer', () => {
       it('highlights the specified node', async () => {
         const node = graphComponentSelector.getNode(nodeId);
         expect(node?.classList).not.toContain(nodeHighlightClassName);
-        await visualizer.handleEvent(new NodeHighlightedEvent(nodeId));
+        await visualizer.handleEvent(new NodeHighlightAddedEvent(nodeId));
         expect(node?.classList).toContain(nodeHighlightClassName);
       });
     });
@@ -92,7 +92,7 @@ describe('GraphVisualizer', () => {
     describe('NodeHighlightRemovedEvent', () => {
       it('removes the highlighting of the specified node', async () => {
         const node = graphComponentSelector.getNode(nodeId);
-        await visualizer.handleEvent(new NodeHighlightedEvent(nodeId));
+        await visualizer.handleEvent(new NodeHighlightAddedEvent(nodeId));
         expect(node?.classList).toContain(nodeHighlightClassName);
         await visualizer.handleEvent(new NodeHighlightRemovedEvent(nodeId));
         expect(node?.classList).not.toContain(nodeHighlightClassName);
