@@ -7,6 +7,7 @@ import {
   GraphCreatedEvent,
   GraphVisualizationEvent,
   IGraphSVGRenderEngine,
+  NodeHighlightRemovedEvent,
   NodeHighlightedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
@@ -75,14 +76,27 @@ describe('GraphVisualizer', () => {
     });
   });
 
-  describe('NodeHighlightedEvent', () => {
-    it('highlights the specified node', async () => {
-      const nodeId = 1;
-      const nodeHighlightedEvent = new NodeHighlightedEvent(nodeId);
-      const node = graphComponentSelector.getNode(nodeId);
-      expect(node?.classList).not.toContain('nodeHighlighted');
-      await visualizer.handleEvent(nodeHighlightedEvent);
-      expect(node?.classList).toContain('nodeHighlighted');
+  describe('Node Highlight Events', () => {
+    const nodeHighlightClassName = 'nodeHighlighted';
+    const nodeId = 1;
+
+    describe('NodeHighlightedEvent', () => {
+      it('highlights the specified node', async () => {
+        const node = graphComponentSelector.getNode(nodeId);
+        expect(node?.classList).not.toContain(nodeHighlightClassName);
+        await visualizer.handleEvent(new NodeHighlightedEvent(nodeId));
+        expect(node?.classList).toContain(nodeHighlightClassName);
+      });
+    });
+
+    describe('NodeHighlightRemovedEvent', () => {
+      it('removes the highlighting of the specified node', async () => {
+        const node = graphComponentSelector.getNode(nodeId);
+        await visualizer.handleEvent(new NodeHighlightedEvent(nodeId));
+        expect(node?.classList).toContain(nodeHighlightClassName);
+        await visualizer.handleEvent(new NodeHighlightRemovedEvent(nodeId));
+        expect(node?.classList).not.toContain(nodeHighlightClassName);
+      });
     });
   });
 });

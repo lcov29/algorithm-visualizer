@@ -7,4 +7,5 @@ export { GraphEvent } from './graph-events';
 export { NodeAddedEvent } from './node-added-event';
 export { NodeDeletedEvent } from './node-deleted-event';
 export { NodeHighlightedEvent } from './node-highlighted-event';
+export { NodeHighlightRemovedEvent } from './node-highlight-removed-event';
 export { NodeLabelChangedEvent } from './node-label-changed-event';
