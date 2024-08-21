@@ -20,6 +20,10 @@ export class GraphMermaidComponentSelector implements IGraphComponentSelector {
     return this._select(`[id^=flowchart-${id}] .nodeLabel`);
   }
 
+  getEdge(id: number) {
+    return this._select(`.edgePaths > .flowchart-link:nth-child(${id + 1})`);
+  }
+
   getEdgeBetween(args: Pick<IEdge, 'startNodeId' | 'endNodeId'>) {
     const { startNodeId, endNodeId } = args;
     return this._select(`[id^="L-${startNodeId}-${endNodeId}"]`);

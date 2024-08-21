@@ -49,6 +49,17 @@ describe('GraphMermaidComponentSelector', () => {
     });
   });
 
+  describe('getEdge()', () => {
+    it.each([
+      ['first', 0, 0, 1],
+      ['second', 1, 1, 2],
+      ['third', 2, 0, 2],
+    ])('selects the %s edge', (_, edgeId, startNodeId, endNodeId) => {
+      const edge = selector.getEdge(edgeId);
+      expect(edge?.id).toContain(`L-${startNodeId}-${endNodeId}`);
+    });
+  });
+
   describe('getEdgeBetween()', () => {
     it.each([
       ['first', 0, 1],
