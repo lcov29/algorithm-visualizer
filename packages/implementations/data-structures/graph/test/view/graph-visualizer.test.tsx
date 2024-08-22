@@ -12,6 +12,7 @@ import {
   IGraphSVGRenderEngine,
   NodeHighlightAddedEvent,
   NodeHighlightRemovedEvent,
+  NodeHighlightStyleClass,
   NodeLabelChangedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
@@ -81,25 +82,32 @@ describe('GraphVisualizer', () => {
   });
 
   describe('Node Events', () => {
-    const nodeHighlightClassName = 'nodeHighlighted';
+    // const nodeHighlightClassName = 'nodeHighlighted';
+    const highlightStyleClass: NodeHighlightStyleClass = 'nodeHighlightStyle1';
     const nodeId = 1;
 
     describe('NodeHighlightedEvent', () => {
       it('highlights the specified node', async () => {
         const node = graphComponentSelector.getNode(nodeId);
-        expect(node?.classList).not.toContain(nodeHighlightClassName);
-        await visualizer.handleEvent(new NodeHighlightAddedEvent(nodeId));
-        expect(node?.classList).toContain(nodeHighlightClassName);
+        expect(node?.classList).not.toContain(highlightStyleClass);
+        await visualizer.handleEvent(
+          new NodeHighlightAddedEvent({ nodeId, highlightStyleClass }),
+        );
+        expect(node?.classList).toContain(highlightStyleClass);
       });
     });
 
     describe('NodeHighlightRemovedEvent', () => {
       it('removes the highlighting of the specified node', async () => {
         const node = graphComponentSelector.getNode(nodeId);
-        await visualizer.handleEvent(new NodeHighlightAddedEvent(nodeId));
-        expect(node?.classList).toContain(nodeHighlightClassName);
-        await visualizer.handleEvent(new NodeHighlightRemovedEvent(nodeId));
-        expect(node?.classList).not.toContain(nodeHighlightClassName);
+        await visualizer.handleEvent(
+          new NodeHighlightAddedEvent({ nodeId, highlightStyleClass }),
+        );
+        expect(node?.classList).toContain(highlightStyleClass);
+        await visualizer.handleEvent(
+          new NodeHighlightRemovedEvent({ nodeId, highlightStyleClass }),
+        );
+        expect(node?.classList).not.toContain(highlightStyleClass);
       });
     });
 

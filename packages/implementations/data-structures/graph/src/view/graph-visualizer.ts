@@ -65,7 +65,7 @@ export class GraphVisualizer implements IGraphVisualizer {
       return false;
     }
     const node = this._graphComponentSelector.getNode(event.nodeId);
-    node?.classList.add('nodeHighlighted');
+    node?.classList.add(event.highlightStyleClass);
     return true;
   }
 
@@ -76,7 +76,7 @@ export class GraphVisualizer implements IGraphVisualizer {
       return false;
     }
     const node = this._graphComponentSelector.getNode(event.nodeId);
-    node?.classList.remove('nodeHighlighted');
+    node?.classList.remove(event.highlightStyleClass);
     return true;
   }
 

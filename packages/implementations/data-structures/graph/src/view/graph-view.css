@@ -4,8 +4,20 @@
   stroke-width: 2px !important;
 }
 
-.nodeHighlighted > circle {
+.nodeHighlightStyle1 > circle {
   fill: red !important;
+}
+
+.nodeHighlightStyle2 > circle {
+  fill: lightblue !important;
+}
+
+.nodeHighlightStyle3 > circle {
+  fill: darkmagenta !important;
+}
+
+.nodeHighlightStyle4 > circle {
+  fill: dimgray !important;
 }
 
 .nodeLabel {
