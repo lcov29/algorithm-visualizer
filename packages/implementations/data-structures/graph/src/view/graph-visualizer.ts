@@ -50,7 +50,9 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleEdgeHighlightRemovedEvent(event))
       .add(event => this._handleEdgeWeightChangedEvent(event))
       .add(event => this._handleEdgeLabelHighlightAddedEvent(event))
-      .add(event => this._handleEdgeLabelHighlightRemovedEvent(event));
+      .add(event => this._handleEdgeLabelHighlightRemovedEvent(event))
+      .add(event => this._handleNodeLabelHighlightAddedEvent(event))
+      .add(event => this._handleNodeLabelHighlightRemovedEvent(event));
   }
 
   private async _handleGraphCreatedEvent(event: GraphVisualizationEvent) {
@@ -143,6 +145,28 @@ export class GraphVisualizer implements IGraphVisualizer {
     }
     const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
     edgeLabel?.classList.remove(event.highlightStyleClass);
+    return true;
+  }
+
+  private async _handleNodeLabelHighlightAddedEvent(
+    event: GraphVisualizationEvent,
+  ) {
+    if (event.name !== 'node-label-highlight-added') {
+      return false;
+    }
+    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    nodeLabel?.classList.add(event.highlightStyleClass);
+    return true;
+  }
+
+  private async _handleNodeLabelHighlightRemovedEvent(
+    event: GraphVisualizationEvent,
+  ) {
+    if (event.name !== 'node-label-highlight-removed') {
+      return false;
+    }
+    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    nodeLabel?.classList.remove(event.highlightStyleClass);
     return true;
   }
 }

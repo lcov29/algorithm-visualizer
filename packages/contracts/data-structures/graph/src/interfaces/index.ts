@@ -15,3 +15,4 @@ export { INode } from './node';
 export { INodeList } from './node-list';
 export { NodeHighlightStyleClass } from './node-highlight-styles';
 export { EdgeLabelHighlightStyleClass } from './edge-label-highlight-styles';
+export { NodeLabelHighlightStyleClass } from './node-label-highlight-styles';

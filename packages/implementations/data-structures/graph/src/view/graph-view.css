@@ -32,6 +32,14 @@
   color: black !important;
 }
 
+.nodeLabel.nodeLabelHighlightStyle1 {
+  color: red !important;
+}
+
+.nodeLabel.nodeLabelHighlightStyle2 {
+  color: green !important;
+}
+
 .edgePaths path {
   stroke: black !important;
   stroke-width: 3px !important;
