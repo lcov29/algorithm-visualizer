@@ -1,5 +1,7 @@
 import { EdgeHighlightAddedEvent } from './edge-highlight-added-event';
 import { EdgeHighlightRemovedEvent } from './edge-highlight-removed-event';
+import { EdgeLabelHighlightAddedEvent } from './edge-label-highlight-added-event';
+import { EdgeLabelHighlightRemovedEvent } from './edge-label-highlight-removed-event';
 import { EdgeWeightChangedEvent } from './edge-weight-changed-event';
 import { GraphCreatedEvent } from './graph-created-event';
 import { NodeHighlightAddedEvent } from './node-highlight-added-event';
@@ -13,4 +15,6 @@ export type GraphVisualizationEvent =
   | NodeLabelChangedEvent
   | EdgeHighlightAddedEvent
   | EdgeHighlightRemovedEvent
-  | EdgeWeightChangedEvent;
+  | EdgeWeightChangedEvent
+  | EdgeLabelHighlightAddedEvent
+  | EdgeLabelHighlightRemovedEvent;

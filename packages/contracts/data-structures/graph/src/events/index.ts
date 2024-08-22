@@ -1,6 +1,8 @@
 export { EdgeAddedEvent } from './edge-added-event';
 export { EdgeDeletedEvent } from './edge-deleted-event';
 export { EdgeWeightChangedEvent } from './edge-weight-changed-event';
+export { EdgeLabelHighlightAddedEvent } from './edge-label-highlight-added-event';
+export { EdgeLabelHighlightRemovedEvent } from './edge-label-highlight-removed-event';
 export { EdgeHighlightAddedEvent } from './edge-highlight-added-event';
 export { EdgeHighlightRemovedEvent } from './edge-highlight-removed-event';
 export { GraphCreatedEvent } from './graph-created-event';

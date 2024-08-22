@@ -20,6 +20,14 @@
   fill: dimgray !important;
 }
 
+.edgeLabel.edgeLabelHighlightStyle1 {
+  color: red !important;
+}
+
+.edgeLabel.edgeLabelHighlightStyle2 {
+  color: green !important;
+}
+
 .nodeLabel {
   color: black !important;
 }
