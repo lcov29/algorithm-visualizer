@@ -8,7 +8,7 @@ import {
   EdgeHighlightRemovedEvent,
   EdgeWeightChangedEvent,
   GraphCreatedEvent,
-  GraphVisualizationEvent,
+  GraphEvent,
   IGraphSVGRenderEngine,
   NodeHighlightAddedEvent,
   NodeHighlightRemovedEvent,
@@ -25,7 +25,7 @@ import { MockMermaidSVGGraph } from './mocks/mock-mermaid-svg-graph';
 import { render, screen } from '@testing-library/react';
 import * as React from 'react';
 
-const eventHandlerChain = new EventHandlerChain<GraphVisualizationEvent>({
+const eventHandlerChain = new EventHandlerChain<GraphEvent>({
   abortAfterSuccess: false,
   validator: new FunctionValidator(),
 });
