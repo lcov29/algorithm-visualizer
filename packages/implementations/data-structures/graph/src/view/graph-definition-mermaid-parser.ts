@@ -6,7 +6,7 @@ import {
 
 import { MermaidGraphRenderDirection } from './graph-render-direction-map';
 
-export interface IGraphDefinitionMermaidParserArgs {
+interface IGraphDefinitionMermaidParserArgs {
   event: GraphCreatedEvent;
   graphRenderDirection: MermaidGraphRenderDirection;
 }

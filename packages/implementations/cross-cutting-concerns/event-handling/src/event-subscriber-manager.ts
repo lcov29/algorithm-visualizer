@@ -3,7 +3,7 @@ import {
   IEventSubscriberManager,
 } from '@algorithm-visualizer/event-handling-contract';
 
-export interface ISubscriberData<Events> {
+interface ISubscriberData<Events> {
   id: number;
   subscriber: IEventSubscriber<Events>;
 }

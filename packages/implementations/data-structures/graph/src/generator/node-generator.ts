@@ -6,7 +6,7 @@ import { RandomIntegerGenerator } from '@algorithm-visualizer/randomization-cont
 
 import { NodeGeneratorError } from './node-generator-error';
 
-export interface INodeGenerator {
+interface INodeGenerator {
   generateRandomNodes(): Omit<INode, 'id'>[];
 }
 

@@ -3,7 +3,7 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { IEdgeList, INodeList } from '../../structure';
 
-export interface IGraphCreatedEventArgs {
+interface IGraphCreatedEventArgs {
   nodes: INodeList;
   edges: IEdgeList;
 }

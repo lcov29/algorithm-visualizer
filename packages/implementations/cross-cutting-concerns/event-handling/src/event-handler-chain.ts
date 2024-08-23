@@ -5,7 +5,7 @@ import {
   IEventHandlerChain,
 } from '@algorithm-visualizer/event-handling-contract';
 
-export interface IEventHandlerChainArgs {
+interface IEventHandlerChainArgs {
   abortAfterSuccess: boolean;
   validator: IFunctionValidator;
 }
