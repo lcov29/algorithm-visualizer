@@ -4,6 +4,8 @@ import {
   EdgeHideEvent,
   EdgeHighlightAddedEvent,
   EdgeHighlightRemovedEvent,
+  EdgeLabelDisplayEvent,
+  EdgeLabelHideEvent,
   EdgeLabelHighlightAddedEvent,
   EdgeLabelHighlightRemovedEvent,
   NodeHighlightAddedEvent,
@@ -28,6 +30,8 @@ export type GraphEvent =
   | EdgeHideEvent
   | EdgeHighlightAddedEvent
   | EdgeHighlightRemovedEvent
+  | EdgeLabelDisplayEvent
+  | EdgeLabelHideEvent
   | EdgeLabelHighlightAddedEvent
   | EdgeLabelHighlightRemovedEvent
   | EdgeWeightChangedEvent

@@ -2,6 +2,8 @@ export { EdgeDisplayEvent } from './edge-display-event';
 export { EdgeHideEvent } from './edge-hide-event';
 export { EdgeHighlightAddedEvent } from './edge-highlight-added-event';
 export { EdgeHighlightRemovedEvent } from './edge-highlight-removed-event';
+export { EdgeLabelDisplayEvent } from './edge-label-display-event';
+export { EdgeLabelHideEvent } from './edge-label-hide-event';
 export { EdgeLabelHighlightAddedEvent } from './edge-label-highlight-added-event';
 export { EdgeLabelHighlightRemovedEvent } from './edge-label-highlight-removed-event';
 export { NodeHighlightAddedEvent } from './node-highlight-added-event';

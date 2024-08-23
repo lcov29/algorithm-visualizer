@@ -4,8 +4,12 @@
 import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
+  EdgeDisplayEvent,
+  EdgeHideEvent,
   EdgeHighlightAddedEvent,
   EdgeHighlightRemovedEvent,
+  EdgeLabelDisplayEvent,
+  EdgeLabelHideEvent,
   EdgeLabelHighlightAddedEvent,
   EdgeLabelHighlightRemovedEvent,
   EdgeLabelHighlightStyleClass,
@@ -191,10 +195,30 @@ describe('GraphVisualizer', () => {
   });
 
   describe('Edge Events', () => {
+    const hiddenClassName = 'hidden';
     const edgeHighlightClassName = 'edgeHighlighted';
     const edgeLabelHighlightClassName: EdgeLabelHighlightStyleClass =
       'edgeLabelHighlightStyle1';
     const edgeId = 2;
+
+    describe('EdgeDisplayEvent', () => {
+      it('displays the specified edge', async () => {
+        const edge = graphComponentSelector.getEdge(edgeId);
+        await visualizer.handleEvent(new EdgeHideEvent({ edgeId }));
+        expect(edge?.classList).toContain(hiddenClassName);
+        await visualizer.handleEvent(new EdgeDisplayEvent({ edgeId }));
+        expect(edge?.classList).not.toContain(hiddenClassName);
+      });
+    });
+
+    describe('EdgeHideEvent', () => {
+      it('hides the specified edge', async () => {
+        const edge = graphComponentSelector.getEdge(edgeId);
+        expect(edge?.classList).not.toContain(hiddenClassName);
+        await visualizer.handleEvent(new EdgeHideEvent({ edgeId }));
+        expect(edge?.classList).toContain(hiddenClassName);
+      });
+    });
 
     describe('EdgeHighlightAddedEvent', () => {
       it('highlights the specified edge', async () => {
@@ -212,6 +236,25 @@ describe('GraphVisualizer', () => {
         expect(edge?.classList).toContain(edgeHighlightClassName);
         await visualizer.handleEvent(new EdgeHighlightRemovedEvent(edgeId));
         expect(edge?.classList).not.toContain(edgeHighlightClassName);
+      });
+    });
+
+    describe('EdgeLabelDisplayEvent', () => {
+      it('displays the specified edge label', async () => {
+        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        await visualizer.handleEvent(new EdgeLabelHideEvent({ edgeId }));
+        expect(edgeLabel?.classList).toContain(hiddenClassName);
+        await visualizer.handleEvent(new EdgeLabelDisplayEvent({ edgeId }));
+        expect(edgeLabel?.classList).not.toContain(hiddenClassName);
+      });
+    });
+
+    describe('EdgeLabelHideEvent', () => {
+      it('hides the specified edge label', async () => {
+        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        expect(edgeLabel?.classList).not.toContain(hiddenClassName);
+        await visualizer.handleEvent(new EdgeLabelHideEvent({ edgeId }));
+        expect(edgeLabel?.classList).toContain(hiddenClassName);
       });
     });
 

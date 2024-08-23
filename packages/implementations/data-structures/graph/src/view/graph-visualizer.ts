@@ -48,6 +48,8 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleEdgeHighlightRemovedEvent(event))
       .add(event => this._handleEdgeLabelHighlightAddedEvent(event))
       .add(event => this._handleEdgeLabelHighlightRemovedEvent(event))
+      .add(event => this._handleEdgeLabelDisplayEvent(event))
+      .add(event => this._handleEdgeLabelHideEvent(event))
       .add(event => this._handleEdgeWeightChangedEvent(event))
       .add(event => this._handleGraphCreatedEvent(event))
       .add(event => this._handleNodeHighlightAddedEvent(event))
@@ -63,9 +65,7 @@ export class GraphVisualizer implements IGraphVisualizer {
       return false;
     }
     const edge = this._graphComponentSelector.getEdge(event.edgeId);
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
     edge?.classList.remove('hidden');
-    edgeLabel?.classList.remove('hidden');
     return true;
   }
 
@@ -74,9 +74,7 @@ export class GraphVisualizer implements IGraphVisualizer {
       return false;
     }
     const edge = this._graphComponentSelector.getEdge(event.edgeId);
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
     edge?.classList.add('hidden');
-    edgeLabel?.classList.add('hidden');
     return true;
   }
 
@@ -95,6 +93,24 @@ export class GraphVisualizer implements IGraphVisualizer {
     }
     const edge = this._graphComponentSelector.getEdge(event.edgeId);
     edge?.classList.remove('edgeHighlighted');
+    return true;
+  }
+
+  private async _handleEdgeLabelDisplayEvent(event: GraphEvent) {
+    if (event.name !== 'edge-label-display') {
+      return false;
+    }
+    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    edgeLabel?.classList.remove('hidden');
+    return true;
+  }
+
+  private async _handleEdgeLabelHideEvent(event: GraphEvent) {
+    if (event.name !== 'edge-label-hide') {
+      return false;
+    }
+    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    edgeLabel?.classList.add('hidden');
     return true;
   }
 
