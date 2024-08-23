@@ -15,3 +15,4 @@ export { NodeHighlightRemovedEvent } from './node-highlight-removed-event';
 export { NodeLabelChangedEvent } from './node-label-changed-event';
 export { NodeLabelHighlightAddedEvent } from './node-label-highlight-added-event';
 export { NodeLabelHighlightRemovedEvent } from './node-label-highlight-removed-event';
+export { NodeTitleChangedEvent } from './node-title-changed-event';

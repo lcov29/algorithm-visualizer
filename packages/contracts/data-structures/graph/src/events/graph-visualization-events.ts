@@ -9,6 +9,7 @@ import { NodeHighlightRemovedEvent } from './node-highlight-removed-event';
 import { NodeLabelChangedEvent } from './node-label-changed-event';
 import { NodeLabelHighlightAddedEvent } from './node-label-highlight-added-event';
 import { NodeLabelHighlightRemovedEvent } from './node-label-highlight-removed-event';
+import { NodeTitleChangedEvent } from './node-title-changed-event';
 
 export type GraphVisualizationEvent =
   | GraphCreatedEvent
@@ -21,4 +22,5 @@ export type GraphVisualizationEvent =
   | EdgeLabelHighlightAddedEvent
   | EdgeLabelHighlightRemovedEvent
   | NodeLabelHighlightAddedEvent
-  | NodeLabelHighlightRemovedEvent;
+  | NodeLabelHighlightRemovedEvent
+  | NodeTitleChangedEvent;

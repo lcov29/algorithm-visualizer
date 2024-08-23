@@ -52,7 +52,8 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleEdgeLabelHighlightAddedEvent(event))
       .add(event => this._handleEdgeLabelHighlightRemovedEvent(event))
       .add(event => this._handleNodeLabelHighlightAddedEvent(event))
-      .add(event => this._handleNodeLabelHighlightRemovedEvent(event));
+      .add(event => this._handleNodeLabelHighlightRemovedEvent(event))
+      .add(event => this._handleNodeTitleChangedEvent(event));
   }
 
   private async _handleGraphCreatedEvent(event: GraphVisualizationEvent) {
@@ -167,6 +168,15 @@ export class GraphVisualizer implements IGraphVisualizer {
     }
     const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
     nodeLabel?.classList.remove(event.highlightStyleClass);
+    return true;
+  }
+
+  private async _handleNodeTitleChangedEvent(event: GraphVisualizationEvent) {
+    if (event.name !== 'node-title-changed') {
+      return false;
+    }
+    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    nodeLabel?.setAttribute('title', event.title);
     return true;
   }
 }
