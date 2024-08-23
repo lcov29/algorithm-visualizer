@@ -1,7 +1,7 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface NodeLabelChangedEventArgs {
+interface INodeLabelChangedEventArgs {
   nodeId: number;
   label: string;
 }
@@ -13,7 +13,7 @@ export class NodeLabelChangedEvent extends BaseEvent<'node-label-changed'> {
   private _nodeId: number;
   private _label: string;
 
-  constructor(args: NodeLabelChangedEventArgs) {
+  constructor(args: INodeLabelChangedEventArgs) {
     super('node-label-changed');
     this._nodeId = args.nodeId;
     this._label = args.label;

@@ -8,4 +8,4 @@
  *
  * @throws InvalidArgumentError
  */
-export type IRandomIntegerGenerator = (min: number, max: number) => number;
+export type RandomIntegerGenerator = (min: number, max: number) => number;

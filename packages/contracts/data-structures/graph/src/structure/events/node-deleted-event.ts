@@ -1,7 +1,7 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface NodeDeletedEventArgs {
+interface INodeDeletedEventArgs {
   nodeId: number;
 }
 
@@ -11,7 +11,7 @@ interface NodeDeletedEventArgs {
 export class NodeDeletedEvent extends BaseEvent<'node-deleted'> {
   private _nodeId: number;
 
-  constructor({ nodeId }: NodeDeletedEventArgs) {
+  constructor({ nodeId }: INodeDeletedEventArgs) {
     super('node-deleted');
     this._nodeId = nodeId;
   }

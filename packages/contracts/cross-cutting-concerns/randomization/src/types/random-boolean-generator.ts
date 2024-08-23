@@ -5,6 +5,6 @@
  *
  * @throws InvalidArgumentError
  */
-export type IRandomBooleanGenerator = (
+export type RandomBooleanGenerator = (
   probabilityTrueInPercent: number,
 ) => boolean;

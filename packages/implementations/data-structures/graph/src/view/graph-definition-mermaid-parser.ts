@@ -6,7 +6,7 @@ import {
 
 import { MermaidGraphRenderDirection } from './graph-render-direction-map';
 
-export interface GraphDefinitionMermaidParserArgs {
+export interface IGraphDefinitionMermaidParserArgs {
   event: GraphCreatedEvent;
   graphRenderDirection: MermaidGraphRenderDirection;
 }
@@ -18,7 +18,7 @@ export class GraphDefinitionMermaidParser {
   parse({
     event,
     graphRenderDirection,
-  }: GraphDefinitionMermaidParserArgs): string {
+  }: IGraphDefinitionMermaidParserArgs): string {
     const { nodes, edges } = event;
     return [
       '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',

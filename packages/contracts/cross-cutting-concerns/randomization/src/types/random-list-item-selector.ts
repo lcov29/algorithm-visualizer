@@ -3,4 +3,4 @@
  *
  * @throws InvalidArgumentError
  */
-export type IRandomListItemSelector = <T>(list: T[]) => NonNullable<T> | null;
+export type RandomListItemSelector = <T>(list: T[]) => NonNullable<T> | null;

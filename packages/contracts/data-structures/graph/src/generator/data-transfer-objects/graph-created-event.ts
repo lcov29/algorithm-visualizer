@@ -3,7 +3,7 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { IEdgeList, INodeList } from '../../structure';
 
-export interface GraphCreatedEventArgs {
+export interface IGraphCreatedEventArgs {
   nodes: INodeList;
   edges: IEdgeList;
 }
@@ -12,7 +12,7 @@ export class GraphCreatedEvent extends BaseEvent<'graph-created'> {
   private _nodes: INodeList;
   private _edges: IEdgeList;
 
-  constructor({ nodes, edges }: GraphCreatedEventArgs) {
+  constructor({ nodes, edges }: IGraphCreatedEventArgs) {
     super('graph-created');
     this._nodes = nodes;
     this._edges = edges;

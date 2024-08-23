@@ -1,9 +1,9 @@
 import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
+  GraphEvent,
+  GraphVisualizationBuilder,
   GraphVisualizationError,
-  GraphVisualizationEvent,
-  IGraphVisualizationBuilder,
 } from '@algorithm-visualizer/graph-contract';
 
 import { GraphMermaidComponentSelector } from './graph-mermaid-component-selector';
@@ -11,7 +11,7 @@ import { GraphMermaidSVGRenderEngine } from './graph-mermaid-svg-render-engine';
 import { GraphRenderDirectionMap } from './graph-render-direction-map';
 import { GraphVisualizer } from './graph-visualizer';
 
-export const buildGraphVisualizer: IGraphVisualizationBuilder = args => {
+export const buildGraphVisualizer: GraphVisualizationBuilder = args => {
   const { graphDirection } = args;
   if (!GraphRenderDirectionMap.has(graphDirection)) {
     throw new GraphVisualizationError({
@@ -24,7 +24,7 @@ export const buildGraphVisualizer: IGraphVisualizationBuilder = args => {
   const graphSVGRenderEngine = new GraphMermaidSVGRenderEngine(
     mermaidGraphRenderDirection,
   );
-  const eventHandlerChain = new EventHandlerChain<GraphVisualizationEvent>({
+  const eventHandlerChain = new EventHandlerChain<GraphEvent>({
     abortAfterSuccess: false,
     validator: new FunctionValidator(),
   });

@@ -10,7 +10,7 @@ import {
   INodeList,
 } from '@algorithm-visualizer/graph-contract';
 
-interface GraphArgs {
+interface IGraphArgs {
   nodes: INodeList;
   edges: IEdgeList;
   eventHandlerChain: IEventHandlerChain<GraphEvent>;
@@ -27,7 +27,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
   private _edges: IEdgeList;
   private _eventHandlerChain: IEventHandlerChain<GraphEvent>;
 
-  constructor({ nodes, edges, eventHandlerChain }: GraphArgs) {
+  constructor({ nodes, edges, eventHandlerChain }: IGraphArgs) {
     this._nodes = nodes;
     this._edges = edges;
     this._eventHandlerChain = eventHandlerChain;

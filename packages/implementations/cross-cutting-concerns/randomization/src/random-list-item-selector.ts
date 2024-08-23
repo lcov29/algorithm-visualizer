@@ -1,7 +1,7 @@
 import { IListValidator } from '@algorithm-visualizer/data-validation-contract';
 import { InvalidArgumentError } from '@algorithm-visualizer/error-handling-contract';
 
-interface getRandomListItemArgs<T> {
+interface IGetRandomListItemArgs<T> {
   list: T[];
   validator: IListValidator;
 }
@@ -11,7 +11,7 @@ interface getRandomListItemArgs<T> {
  *
  * @throws InvalidArgumentError
  */
-export const getRandomListItem = <T>(args: getRandomListItemArgs<T>) => {
+export const getRandomListItem = <T>(args: IGetRandomListItemArgs<T>) => {
   const { list, validator } = args;
 
   if (!validator.isList(list)) {

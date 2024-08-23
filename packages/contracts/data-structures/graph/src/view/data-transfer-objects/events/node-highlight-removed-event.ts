@@ -3,7 +3,7 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { NodeHighlightStyleClass } from '../../types';
 
-interface NodeHighlightRemovedEventArgs {
+interface INodeHighlightRemovedEventArgs {
   nodeId: number;
   highlightStyleClass: NodeHighlightStyleClass;
 }
@@ -15,7 +15,7 @@ export class NodeHighlightRemovedEvent extends BaseEvent<'node-highlight-removed
   private _nodeId: number;
   private _highlightStyleClass: NodeHighlightStyleClass;
 
-  constructor(args: NodeHighlightRemovedEventArgs) {
+  constructor(args: INodeHighlightRemovedEventArgs) {
     super('node-highlight-removed');
     this._nodeId = args.nodeId;
     this._highlightStyleClass = args.highlightStyleClass;

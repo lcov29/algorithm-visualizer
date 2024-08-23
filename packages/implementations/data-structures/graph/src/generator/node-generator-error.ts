@@ -1,6 +1,6 @@
 import { GraphGeneratorConfig } from '@algorithm-visualizer/graph-contract';
 
-interface NodeGeneratorErrorArgs {
+interface INodeGeneratorErrorArgs {
   message: string;
   config: GraphGeneratorConfig;
   cause?: Error | object;
@@ -9,7 +9,7 @@ interface NodeGeneratorErrorArgs {
 export class NodeGeneratorError extends Error {
   private _config: GraphGeneratorConfig;
 
-  constructor({ message, config, cause = {} }: NodeGeneratorErrorArgs) {
+  constructor({ message, config, cause = {} }: INodeGeneratorErrorArgs) {
     super(message, { cause });
     this._config = config;
   }

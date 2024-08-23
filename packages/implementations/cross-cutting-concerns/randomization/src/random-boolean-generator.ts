@@ -1,7 +1,7 @@
 import { IIntegerValidator } from '@algorithm-visualizer/data-validation-contract';
 import { InvalidArgumentError } from '@algorithm-visualizer/error-handling-contract';
 
-interface getRandomBooleanArgs {
+interface IGetRandomBooleanArgs {
   validator: IIntegerValidator;
   probabilityTrueInPercent: number;
 }
@@ -13,7 +13,7 @@ interface getRandomBooleanArgs {
  *
  * @throws InvalidArgumentError
  */
-export const getRandomBoolean = (args: getRandomBooleanArgs) => {
+export const getRandomBoolean = (args: IGetRandomBooleanArgs) => {
   const { validator, probabilityTrueInPercent } = args;
 
   if (!validator.isValidNonNegativeInteger(probabilityTrueInPercent)) {

@@ -5,7 +5,7 @@ import {
   IEventHandlerChain,
 } from '@algorithm-visualizer/event-handling-contract';
 
-export interface EventHandlerChainArgs {
+export interface IEventHandlerChainArgs {
   abortAfterSuccess: boolean;
   validator: IFunctionValidator;
 }
@@ -15,7 +15,7 @@ export class EventHandlerChain<Events> implements IEventHandlerChain<Events> {
   private _handlers: IEventHandler<Events>[];
   private _validator: IFunctionValidator;
 
-  constructor(args: EventHandlerChainArgs) {
+  constructor(args: IEventHandlerChainArgs) {
     this._abortAfterSuccess = args.abortAfterSuccess;
     this._handlers = [];
     this._validator = args.validator;

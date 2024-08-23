@@ -1,4 +1,4 @@
-interface InvalidResultErrorArgs<T> {
+interface IInvalidResultErrorArgs<T> {
   message: string;
   result: T;
   cause?: Error | object;
@@ -7,7 +7,7 @@ interface InvalidResultErrorArgs<T> {
 export class InvalidResultError<T> extends Error {
   private _result: T;
 
-  constructor({ message, result, cause = {} }: InvalidResultErrorArgs<T>) {
+  constructor({ message, result, cause = {} }: IInvalidResultErrorArgs<T>) {
     super(message, { cause });
     this._result = result;
   }

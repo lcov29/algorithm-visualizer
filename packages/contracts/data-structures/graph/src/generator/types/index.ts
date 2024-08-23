@@ -1,2 +1,2 @@
 export { DirectionOption } from './graph-direction';
-export { IGraphGeneratorBuilder } from './graph-generator-builder';
+export { GraphGeneratorBuilder } from './graph-generator-builder';

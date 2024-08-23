@@ -20,14 +20,14 @@ import { NodeList } from '../structure/node-list';
 import { EdgeGenerator } from './edge-generator';
 import { NodeGenerator } from './node-generator';
 
-interface GraphGeneratorArgs {
+interface IGraphGeneratorArgs {
   subscriberManager: IEventSubscriberManager<GraphCreatedEvent>;
 }
 
 export class GraphGenerator implements IGraphGenerator {
   private _subscriberManager: IEventSubscriberManager<GraphCreatedEvent>;
 
-  constructor({ subscriberManager }: GraphGeneratorArgs) {
+  constructor({ subscriberManager }: IGraphGeneratorArgs) {
     this._subscriberManager = subscriberManager;
   }
 

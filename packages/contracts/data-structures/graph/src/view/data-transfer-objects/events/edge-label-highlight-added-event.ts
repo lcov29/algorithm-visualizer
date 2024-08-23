@@ -3,7 +3,7 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { EdgeLabelHighlightStyleClass } from '../../types';
 
-interface EdgeLabelHighlightAddedEventArgs {
+interface IEdgeLabelHighlightAddedEventArgs {
   edgeId: number;
   highlightStyleClass: EdgeLabelHighlightStyleClass;
 }
@@ -15,7 +15,7 @@ export class EdgeLabelHighlightAddedEvent extends BaseEvent<'edge-label-highligh
   private _edgeId: number;
   private _highlightStyleClass: EdgeLabelHighlightStyleClass;
 
-  constructor(args: EdgeLabelHighlightAddedEventArgs) {
+  constructor(args: IEdgeLabelHighlightAddedEventArgs) {
     super('edge-label-highlight-added');
     this._edgeId = args.edgeId;
     this._highlightStyleClass = args.highlightStyleClass;

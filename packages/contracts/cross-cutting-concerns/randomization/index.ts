@@ -1,3 +1,3 @@
-export { IRandomBooleanGenerator } from './src/interfaces/random-boolean-generator';
-export { IRandomIntegerGenerator } from './src/interfaces/random-integer-generator';
-export { IRandomListItemSelector } from './src/interfaces/random-list-item-selector';
+export { RandomBooleanGenerator } from './src/types/random-boolean-generator';
+export { RandomIntegerGenerator } from './src/types/random-integer-generator';
+export { RandomListItemSelector } from './src/types/random-list-item-selector';

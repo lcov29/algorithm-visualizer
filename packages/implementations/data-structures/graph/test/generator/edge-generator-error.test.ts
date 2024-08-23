@@ -1,14 +1,14 @@
 import { GraphGeneratorConfig } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
-import { EdgeNode } from '../../src/generator/edge-generator';
+import { IEdgeNode } from '../../src/generator/edge-generator';
 import { EdgeGeneratorError } from '../../src/generator/edge-generator-error';
 
 describe('EdgeGeneratorError', () => {
   let error: EdgeGeneratorError;
   let cause: RangeError;
   let config: GraphGeneratorConfig;
-  let nodes: EdgeNode[];
+  let nodes: IEdgeNode[];
 
   beforeEach(() => {
     jest.resetAllMocks();

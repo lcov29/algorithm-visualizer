@@ -8,7 +8,7 @@ import {
 
 import React from 'react';
 
-interface GraphVisualizerArgs {
+interface IGraphVisualizerArgs {
   eventHandlerChain: IEventHandlerChain<GraphEvent>;
   graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
   graphComponentSelector: IGraphComponentSelector;
@@ -20,7 +20,7 @@ export class GraphVisualizer implements IGraphVisualizer {
   private _graphComponentSelector: IGraphComponentSelector;
   private _setGraphSVGString: React.Dispatch<React.SetStateAction<string>>;
 
-  constructor(args: GraphVisualizerArgs) {
+  constructor(args: IGraphVisualizerArgs) {
     this._eventHandlerChain = args.eventHandlerChain;
     this._graphSVGRenderEngine = args.graphSVGRenderEngine;
     this._graphComponentSelector = args.graphComponentSelector;

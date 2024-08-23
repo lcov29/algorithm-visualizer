@@ -3,7 +3,7 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { NodeLabelHighlightStyleClass } from '../../types';
 
-interface NodeLabelHighlightAddedEventArgs {
+interface INodeLabelHighlightAddedEventArgs {
   nodeId: number;
   highlightStyleClass: NodeLabelHighlightStyleClass;
 }
@@ -15,7 +15,7 @@ export class NodeLabelHighlightAddedEvent extends BaseEvent<'node-label-highligh
   private _nodeId: number;
   private _highlightStyleClass: NodeLabelHighlightStyleClass;
 
-  constructor(args: NodeLabelHighlightAddedEventArgs) {
+  constructor(args: INodeLabelHighlightAddedEventArgs) {
     super('node-label-highlight-added');
     this._nodeId = args.nodeId;
     this._highlightStyleClass = args.highlightStyleClass;

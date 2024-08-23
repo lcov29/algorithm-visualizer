@@ -1,7 +1,7 @@
 import {
-  IRandomBooleanGenerator,
-  IRandomIntegerGenerator,
-  IRandomListItemSelector,
+  RandomBooleanGenerator,
+  RandomIntegerGenerator,
+  RandomListItemSelector,
 } from '@algorithm-visualizer/randomization-contract';
 
 import { IntegerValidator, ListValidator } from '../../data-validation';
@@ -16,7 +16,7 @@ import { getRandomListItem as _getRandomListItem } from './random-list-item-sele
  *
  * @throws InvalidArgumentError
  */
-export const getRandomBoolean: IRandomBooleanGenerator = (
+export const getRandomBoolean: RandomBooleanGenerator = (
   probabilityTrueInPercent: number,
 ) =>
   _getRandomBoolean({
@@ -34,7 +34,7 @@ export const getRandomBoolean: IRandomBooleanGenerator = (
  *
  * @throws InvalidArgumentError
  */
-export const getRandomIntegerBetween: IRandomIntegerGenerator = (
+export const getRandomIntegerBetween: RandomIntegerGenerator = (
   min: number,
   max: number,
 ) => _getRandomIntegerBetween({ min, max, validator: new IntegerValidator() });
@@ -46,5 +46,5 @@ export const getRandomIntegerBetween: IRandomIntegerGenerator = (
  *
  * @throws InvalidArgumentError
  */
-export const getRandomListItem: IRandomListItemSelector = <T>(list: T[]) =>
+export const getRandomListItem: RandomListItemSelector = <T>(list: T[]) =>
   _getRandomListItem({ list, validator: new ListValidator() });

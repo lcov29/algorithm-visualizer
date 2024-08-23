@@ -1,4 +1,4 @@
-interface InvalidArgumentErrorArgs<T> {
+interface IInvalidArgumentErrorArgs<T> {
   message: string;
   args: T[];
   cause?: Error | object;
@@ -7,7 +7,7 @@ interface InvalidArgumentErrorArgs<T> {
 export class InvalidArgumentError<T> extends Error {
   private _args: T[];
 
-  constructor({ message, args, cause = {} }: InvalidArgumentErrorArgs<T>) {
+  constructor({ message, args, cause = {} }: IInvalidArgumentErrorArgs<T>) {
     super(message, { cause });
     this._args = args;
   }

@@ -1,3 +1,3 @@
 import { IGraphGenerator } from '../interfaces/graph-generator';
 
-export type IGraphGeneratorBuilder = () => IGraphGenerator;
+export type GraphGeneratorBuilder = () => IGraphGenerator;

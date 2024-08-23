@@ -4,13 +4,13 @@ import './graph-view.css';
 
 import React, { JSX, useRef, useState } from 'react';
 
-interface GraphViewProps {
+interface IGraphViewProps {
   graphVisualizer: IGraphVisualizer;
 }
 
 export function GraphView({
   graphVisualizer,
-}: GraphViewProps): JSX.Element | null {
+}: IGraphViewProps): JSX.Element | null {
   const [graphSVGString, setGraphSVGString] = useState<string>('');
   const graphRef = useRef<HTMLDivElement>(null);
 

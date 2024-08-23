@@ -1,7 +1,9 @@
 import { IEventEmitter } from '@algorithm-visualizer/event-handling-contract';
 
-import { GraphCreatedEvent } from '../data-transfer-objects';
-import { GraphGeneratorConfig } from '../data-transfer-objects/config/graph-generator-config';
+import {
+  GraphCreatedEvent,
+  GraphGeneratorConfig,
+} from '../data-transfer-objects';
 
 export interface IGraphGenerator extends IEventEmitter<GraphCreatedEvent> {
   /**

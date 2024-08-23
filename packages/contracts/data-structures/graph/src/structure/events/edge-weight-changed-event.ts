@@ -1,7 +1,7 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface EdgeWeightChangedEventArgs {
+interface IEdgeWeightChangedEventArgs {
   edgeId: number;
   newWeight: number;
 }
@@ -13,7 +13,7 @@ export class EdgeWeightChangedEvent extends BaseEvent<'edge-weight-changed'> {
   private _edgeId: number;
   private _newWeight: number;
 
-  constructor(args: EdgeWeightChangedEventArgs) {
+  constructor(args: IEdgeWeightChangedEventArgs) {
     super('edge-weight-changed');
     this._edgeId = args.edgeId;
     this._newWeight = args.newWeight;

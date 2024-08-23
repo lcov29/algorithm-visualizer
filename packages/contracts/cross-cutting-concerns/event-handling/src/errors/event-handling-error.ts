@@ -1,6 +1,6 @@
 import { BaseEvent } from '../other/base-event';
 
-interface EventHandlingErrorArgs<T extends string> {
+interface IEventHandlingErrorArgs<T extends string> {
   message: string;
   event: BaseEvent<T>;
   cause?: Error | object;
@@ -9,7 +9,7 @@ interface EventHandlingErrorArgs<T extends string> {
 export class EventHandlingError<T extends string> extends Error {
   private _event: BaseEvent<T>;
 
-  constructor({ message, event, cause = {} }: EventHandlingErrorArgs<T>) {
+  constructor({ message, event, cause = {} }: IEventHandlingErrorArgs<T>) {
     super(message, { cause });
     this._event = event;
   }

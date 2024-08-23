@@ -1,7 +1,7 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface EdgeDeletedEventArgs {
+interface IEdgeDeletedEventArgs {
   edgeId: number;
 }
 
@@ -11,7 +11,7 @@ interface EdgeDeletedEventArgs {
 export class EdgeDeletedEvent extends BaseEvent<'edge-deleted'> {
   private _edgeId: number;
 
-  constructor({ edgeId }: EdgeDeletedEventArgs) {
+  constructor({ edgeId }: IEdgeDeletedEventArgs) {
     super('edge-deleted');
     this._edgeId = edgeId;
   }

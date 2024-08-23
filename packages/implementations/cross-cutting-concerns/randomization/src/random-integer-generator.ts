@@ -1,7 +1,7 @@
 import { IIntegerValidator } from '@algorithm-visualizer/data-validation-contract';
 import { InvalidArgumentError } from '@algorithm-visualizer/error-handling-contract';
 
-interface getRandomIntegerBetweenArgs {
+interface IGetRandomIntegerBetweenArgs {
   min: number;
   max: number;
   validator: IIntegerValidator;
@@ -17,7 +17,7 @@ interface getRandomIntegerBetweenArgs {
  *
  * @throws InvalidArgumentError
  */
-export const getRandomIntegerBetween = (args: getRandomIntegerBetweenArgs) => {
+export const getRandomIntegerBetween = (args: IGetRandomIntegerBetweenArgs) => {
   const { min, max, validator } = args;
 
   if (!validator.isValidInteger(min)) {

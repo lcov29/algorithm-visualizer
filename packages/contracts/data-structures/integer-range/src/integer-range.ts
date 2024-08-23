@@ -3,6 +3,11 @@ import {
   InvalidOperationError,
 } from '@algorithm-visualizer/error-handling-contract';
 
+interface IIntegerRangeArgs {
+  min: number;
+  max: number;
+}
+
 /**
  * A data structure representing the inclusive range between two integers.
  *
@@ -13,7 +18,7 @@ export class IntegerRange {
   private _min: number;
   private _max: number;
 
-  constructor(args: { min: number; max: number }) {
+  constructor(args: IIntegerRangeArgs) {
     const { min, max } = args;
     this._validate(min, max);
     this._min = min;

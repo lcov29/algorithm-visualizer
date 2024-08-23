@@ -1,19 +1,19 @@
 import { GraphGeneratorConfig } from '@algorithm-visualizer/graph-contract';
 
-import { EdgeNode } from './edge-generator';
+import { IEdgeNode } from './edge-generator';
 
-interface EdgeGeneratorErrorArgs {
+interface IEdgeGeneratorErrorArgs {
   message: string;
   config: GraphGeneratorConfig;
-  nodes: EdgeNode[];
+  nodes: IEdgeNode[];
   cause?: Error | object;
 }
 
 export class EdgeGeneratorError extends Error {
   private _config: GraphGeneratorConfig;
-  private _nodes: EdgeNode[];
+  private _nodes: IEdgeNode[];
 
-  constructor({ message, config, nodes, cause = {} }: EdgeGeneratorErrorArgs) {
+  constructor({ message, config, nodes, cause = {} }: IEdgeGeneratorErrorArgs) {
     super(message, { cause });
     this._config = config;
     this._nodes = nodes;

@@ -2,7 +2,7 @@ import {
   GraphGeneratorConfig,
   INode,
 } from '@algorithm-visualizer/graph-contract';
-import { IRandomIntegerGenerator } from '@algorithm-visualizer/randomization-contract';
+import { RandomIntegerGenerator } from '@algorithm-visualizer/randomization-contract';
 
 import { NodeGeneratorError } from './node-generator-error';
 
@@ -10,16 +10,16 @@ export interface INodeGenerator {
   generateRandomNodes(): Omit<INode, 'id'>[];
 }
 
-interface NodeGeneratorArgs {
+interface INodeGeneratorArgs {
   config: GraphGeneratorConfig;
-  getRandomIntegerBetween: IRandomIntegerGenerator;
+  getRandomIntegerBetween: RandomIntegerGenerator;
 }
 
 export class NodeGenerator implements INodeGenerator {
   private _config: GraphGeneratorConfig;
-  private _getRandomIntegerBetween: IRandomIntegerGenerator;
+  private _getRandomIntegerBetween: RandomIntegerGenerator;
 
-  constructor(args: NodeGeneratorArgs) {
+  constructor(args: INodeGeneratorArgs) {
     this._config = args.config;
     this._getRandomIntegerBetween = args.getRandomIntegerBetween;
   }

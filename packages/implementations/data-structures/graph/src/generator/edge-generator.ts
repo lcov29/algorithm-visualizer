@@ -4,13 +4,13 @@ import {
   INode,
 } from '@algorithm-visualizer/graph-contract';
 import {
-  IRandomIntegerGenerator,
-  IRandomListItemSelector,
+  RandomIntegerGenerator,
+  RandomListItemSelector,
 } from '@algorithm-visualizer/randomization-contract';
 
 import { EdgeGeneratorError } from './edge-generator-error';
 
-export interface EdgeNode extends INode {
+export interface IEdgeNode extends INode {
   availableEdgePointAmount: number;
 }
 
@@ -21,15 +21,15 @@ export interface IEdgeGenerator {
 export interface EdgeGeneratorArgs {
   config: GraphGeneratorConfig;
   nodes: INode[];
-  getRandomIntegerBetween: IRandomIntegerGenerator;
-  getRandomListItem: IRandomListItemSelector;
+  getRandomIntegerBetween: RandomIntegerGenerator;
+  getRandomListItem: RandomListItemSelector;
 }
 
 export class EdgeGenerator implements IEdgeGenerator {
-  private _getRandomIntegerBetween: IRandomIntegerGenerator;
-  private _getRandomListItem: IRandomListItemSelector;
+  private _getRandomIntegerBetween: RandomIntegerGenerator;
+  private _getRandomListItem: RandomListItemSelector;
   private _config: GraphGeneratorConfig;
-  private _nodes: EdgeNode[];
+  private _nodes: IEdgeNode[];
   private _edges: Omit<IEdge, 'id'>[] = [];
 
   constructor(args: EdgeGeneratorArgs) {
@@ -165,7 +165,7 @@ export class EdgeGenerator implements IEdgeGenerator {
     }
   }
 
-  private _selectRandomEndNodeFor(startNode: EdgeNode) {
+  private _selectRandomEndNodeFor(startNode: IEdgeNode) {
     try {
       let candidates = this._getNodesWithDescendingEdgePointAmount();
 
@@ -210,7 +210,7 @@ export class EdgeGenerator implements IEdgeGenerator {
     }
   }
 
-  private _createEdgeBetween(startNode: EdgeNode, endNode: EdgeNode) {
+  private _createEdgeBetween(startNode: IEdgeNode, endNode: IEdgeNode) {
     this._edges.push({
       startNodeId: startNode.id,
       endNodeId: endNode.id,
