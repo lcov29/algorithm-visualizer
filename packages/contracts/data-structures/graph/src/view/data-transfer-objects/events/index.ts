@@ -10,6 +10,8 @@ export { NodeDisplayEvent } from './node-display-event';
 export { NodeHideEvent } from './node-hide-event';
 export { NodeHighlightAddedEvent } from './node-highlight-added-event';
 export { NodeHighlightRemovedEvent } from './node-highlight-removed-event';
+export { NodeLabelDisplayEvent } from './node-label-display-event';
+export { NodeLabelHideEvent } from './node-label-hide-event';
 export { NodeLabelHighlightAddedEvent } from './node-label-highlight-added-event';
 export { NodeLabelHighlightRemovedEvent } from './node-label-highlight-removed-event';
 export { NodeTitleChangedEvent } from './node-title-changed-event';

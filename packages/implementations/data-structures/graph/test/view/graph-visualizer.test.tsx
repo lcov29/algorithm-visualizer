@@ -23,6 +23,8 @@ import {
   NodeHighlightRemovedEvent,
   NodeHighlightStyleClass,
   NodeLabelChangedEvent,
+  NodeLabelDisplayEvent,
+  NodeLabelHideEvent,
   NodeLabelHighlightAddedEvent,
   NodeLabelHighlightRemovedEvent,
   NodeLabelHighlightStyleClass,
@@ -163,6 +165,25 @@ describe('GraphVisualizer', () => {
         expect(node?.classList).not.toContain(hiddenClassName);
         await visualizer.handleEvent(new NodeHideEvent({ nodeId }));
         expect(node?.classList).toContain(hiddenClassName);
+      });
+    });
+
+    describe('NodeLabelDisplayEvent', () => {
+      it('displays the specified node label', async () => {
+        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        await visualizer.handleEvent(new NodeLabelHideEvent({ nodeId }));
+        expect(nodeLabel?.classList).toContain(hiddenClassName);
+        await visualizer.handleEvent(new NodeLabelDisplayEvent({ nodeId }));
+        expect(nodeLabel?.classList).not.toContain(hiddenClassName);
+      });
+    });
+
+    describe('NodeLabelHideEvent', () => {
+      it('hides the specified node label', async () => {
+        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        expect(nodeLabel?.classList).not.toContain(hiddenClassName);
+        await visualizer.handleEvent(new NodeLabelHideEvent({ nodeId }));
+        expect(nodeLabel?.classList).toContain(hiddenClassName);
       });
     });
 

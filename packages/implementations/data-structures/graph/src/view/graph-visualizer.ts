@@ -57,6 +57,8 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleNodeLabelChangedEvent(event))
       .add(event => this._handleNodeDisplayEvent(event))
       .add(event => this._handleNodeHideEvent(event))
+      .add(event => this._handleNodeLabelDisplayEvent(event))
+      .add(event => this._handleNodeLabelHideEvent(event))
       .add(event => this._handleNodeLabelHighlightAddedEvent(event))
       .add(event => this._handleNodeLabelHighlightRemovedEvent(event))
       .add(event => this._handleNodeTitleChangedEvent(event));
@@ -198,6 +200,24 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (nodeLabel?.textContent) {
       nodeLabel.textContent = event.label;
     }
+    return true;
+  }
+
+  private async _handleNodeLabelDisplayEvent(event: GraphEvent) {
+    if (event.name !== 'node-label-displayed') {
+      return false;
+    }
+    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    nodeLabel?.classList.remove('hidden');
+    return true;
+  }
+
+  private async _handleNodeLabelHideEvent(event: GraphEvent) {
+    if (event.name !== 'node-label-hidden') {
+      return false;
+    }
+    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    nodeLabel?.classList.add('hidden');
     return true;
   }
 
