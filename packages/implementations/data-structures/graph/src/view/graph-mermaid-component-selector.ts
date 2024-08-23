@@ -21,7 +21,7 @@ export class GraphMermaidComponentSelector implements IGraphComponentSelector {
   }
 
   getEdge(id: number) {
-    return this._select(`.edgePaths > .flowchart-link:nth-child(${id + 1})`);
+    return this._select(`.edgePaths > [id$="-${id}"]`);
   }
 
   getEdgeBetween(args: Pick<IEdge, 'startNodeId' | 'endNodeId'>) {
@@ -30,7 +30,7 @@ export class GraphMermaidComponentSelector implements IGraphComponentSelector {
   }
 
   getLabelOfEdge(id: number) {
-    return this._select(`.edgeLabels > .edgeLabel:nth-child(${id + 1}) span`);
+    return this._select(`[id="edge-label-${id}"]`);
   }
 
   private _select(selector: string) {

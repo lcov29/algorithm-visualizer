@@ -92,15 +92,15 @@ export function MockMermaidSVGGraph(): JSX.Element {
             <g className="edgePaths">
               <path
                 className="edge-thickness-normal edge-pattern-solid flowchart-link LS-0 LE-1"
-                id="L-0-1-0"
+                id="L-0-1-0-0"
                 d="M23.588,34.428C35.642,23.456,47.696,12.483,59.75,12.483C71.189,12.483,82.628,12.483,94.067,12.483"></path>
               <path
                 className="edge-thickness-normal edge-pattern-solid flowchart-link LS-1 LE-2"
-                id="L-1-2-0"
+                id="L-1-2-0-1"
                 d="M119.033,12.483C128.919,12.483,138.806,12.483,148.692,12.483C159.301,12.483,169.91,23.204,180.519,33.925"></path>
               <path
                 className="edge-thickness-normal edge-pattern-solid flowchart-link LS-0 LE-2"
-                id="L-0-2-0"
+                id="L-0-2-0-2"
                 d="M23.588,47.622C35.642,58.594,47.696,69.567,59.75,69.567C75.35,69.567,90.95,69.567,106.55,69.567C120.597,69.567,134.644,69.567,148.692,69.567C159.301,69.567,169.91,58.846,180.519,48.125"></path>
             </g>
             <g className="edgeLabels">
@@ -114,7 +114,9 @@ export function MockMermaidSVGGraph(): JSX.Element {
                     height="19.199996948242188"
                     width="18.633331298828125">
                     <div>
-                      <span className="edgeLabel">10</span>
+                      <span id="edge-label-0" className="edgeLabel">
+                        10
+                      </span>
                     </div>
                   </foreignObject>
                 </g>
@@ -129,7 +131,9 @@ export function MockMermaidSVGGraph(): JSX.Element {
                     height="19.199996948242188"
                     width="9.316665649414062">
                     <div>
-                      <span className="edgeLabel">7</span>
+                      <span id="edge-label-1" className="edgeLabel">
+                        7
+                      </span>
                     </div>
                   </foreignObject>
                 </g>
@@ -144,7 +148,9 @@ export function MockMermaidSVGGraph(): JSX.Element {
                     height="19.199996948242188"
                     width="9.316665649414062">
                     <div>
-                      <span className="edgeLabel">5</span>
+                      <span id="edge-label-2" className="edgeLabel">
+                        5
+                      </span>
                     </div>
                   </foreignObject>
                 </g>
