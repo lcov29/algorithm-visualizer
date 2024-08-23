@@ -6,6 +6,9 @@ import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
   EdgeHighlightAddedEvent,
   EdgeHighlightRemovedEvent,
+  EdgeLabelHighlightAddedEvent,
+  EdgeLabelHighlightRemovedEvent,
+  EdgeLabelHighlightStyleClass,
   EdgeWeightChangedEvent,
   GraphCreatedEvent,
   GraphEvent,
@@ -14,6 +17,10 @@ import {
   NodeHighlightRemovedEvent,
   NodeHighlightStyleClass,
   NodeLabelChangedEvent,
+  NodeLabelHighlightAddedEvent,
+  NodeLabelHighlightRemovedEvent,
+  NodeLabelHighlightStyleClass,
+  NodeTitleChangedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
 import { EdgeList } from '../../src/structure/edge-list';
@@ -82,18 +89,23 @@ describe('GraphVisualizer', () => {
   });
 
   describe('Node Events', () => {
-    // const nodeHighlightClassName = 'nodeHighlighted';
-    const highlightStyleClass: NodeHighlightStyleClass = 'nodeHighlightStyle1';
+    const nodeHighlightStyleClass: NodeHighlightStyleClass =
+      'nodeHighlightStyle1';
+    const nodeLabelHighlightStyleClass: NodeLabelHighlightStyleClass =
+      'nodeLabelHighlightStyle1';
     const nodeId = 1;
 
-    describe('NodeHighlightedEvent', () => {
+    describe('NodeHighlightAddedEvent', () => {
       it('highlights the specified node', async () => {
         const node = graphComponentSelector.getNode(nodeId);
-        expect(node?.classList).not.toContain(highlightStyleClass);
+        expect(node?.classList).not.toContain(nodeHighlightStyleClass);
         await visualizer.handleEvent(
-          new NodeHighlightAddedEvent({ nodeId, highlightStyleClass }),
+          new NodeHighlightAddedEvent({
+            nodeId,
+            highlightStyleClass: nodeHighlightStyleClass,
+          }),
         );
-        expect(node?.classList).toContain(highlightStyleClass);
+        expect(node?.classList).toContain(nodeHighlightStyleClass);
       });
     });
 
@@ -101,13 +113,19 @@ describe('GraphVisualizer', () => {
       it('removes the highlighting of the specified node', async () => {
         const node = graphComponentSelector.getNode(nodeId);
         await visualizer.handleEvent(
-          new NodeHighlightAddedEvent({ nodeId, highlightStyleClass }),
+          new NodeHighlightAddedEvent({
+            nodeId,
+            highlightStyleClass: nodeHighlightStyleClass,
+          }),
         );
-        expect(node?.classList).toContain(highlightStyleClass);
+        expect(node?.classList).toContain(nodeHighlightStyleClass);
         await visualizer.handleEvent(
-          new NodeHighlightRemovedEvent({ nodeId, highlightStyleClass }),
+          new NodeHighlightRemovedEvent({
+            nodeId,
+            highlightStyleClass: nodeHighlightStyleClass,
+          }),
         );
-        expect(node?.classList).not.toContain(highlightStyleClass);
+        expect(node?.classList).not.toContain(nodeHighlightStyleClass);
       });
     });
 
@@ -121,10 +139,61 @@ describe('GraphVisualizer', () => {
         expect(nodeLabel?.textContent).toBe('Foo');
       });
     });
+
+    describe('NodeLabelHighlightAddedEvent', () => {
+      it('highlights the label of the specified node', async () => {
+        await visualizer.handleEvent(
+          new NodeLabelHighlightAddedEvent({
+            nodeId,
+            highlightStyleClass: nodeLabelHighlightStyleClass,
+          }),
+        );
+        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        expect(nodeLabel?.classList).toContain(nodeLabelHighlightStyleClass);
+        await visualizer.handleEvent(
+          new NodeLabelHighlightRemovedEvent({
+            nodeId,
+            highlightStyleClass: nodeLabelHighlightStyleClass,
+          }),
+        );
+        expect(nodeLabel?.classList).not.toContain(
+          nodeLabelHighlightStyleClass,
+        );
+      });
+    });
+
+    describe('NodeLabelHighlightRemovedEvent', () => {
+      it('removes the highlighting of the label of the specified node', async () => {
+        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        expect(nodeLabel?.classList).not.toContain(
+          nodeLabelHighlightStyleClass,
+        );
+        await visualizer.handleEvent(
+          new NodeLabelHighlightAddedEvent({
+            nodeId,
+            highlightStyleClass: nodeLabelHighlightStyleClass,
+          }),
+        );
+        expect(nodeLabel?.classList).toContain(nodeLabelHighlightStyleClass);
+      });
+    });
+
+    describe('NodeTitleChangedEvent', () => {
+      it('adds a title attribute to the specified node', async () => {
+        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        expect(nodeLabel?.getAttribute('title')).toBeNull();
+        await visualizer.handleEvent(
+          new NodeTitleChangedEvent({ nodeId, title: 'Foo' }),
+        );
+        expect(nodeLabel?.getAttribute('title')).toBe('Foo');
+      });
+    });
   });
 
   describe('Edge Events', () => {
     const edgeHighlightClassName = 'edgeHighlighted';
+    const edgeLabelHighlightClassName: EdgeLabelHighlightStyleClass =
+      'edgeLabelHighlightStyle1';
     const edgeId = 2;
 
     describe('EdgeHighlightAddedEvent', () => {
@@ -143,6 +212,40 @@ describe('GraphVisualizer', () => {
         expect(edge?.classList).toContain(edgeHighlightClassName);
         await visualizer.handleEvent(new EdgeHighlightRemovedEvent(edgeId));
         expect(edge?.classList).not.toContain(edgeHighlightClassName);
+      });
+    });
+
+    describe('EdgeLabelHighlightAddedEvent', () => {
+      it('highlights the label of the specified edge', async () => {
+        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        expect(edgeLabel?.classList).not.toContain(edgeLabelHighlightClassName);
+        await visualizer.handleEvent(
+          new EdgeLabelHighlightAddedEvent({
+            edgeId,
+            highlightStyleClass: edgeLabelHighlightClassName,
+          }),
+        );
+        expect(edgeLabel?.classList).toContain(edgeLabelHighlightClassName);
+      });
+    });
+
+    describe('EdgeLabelHighlightRemovedEvent', () => {
+      it('removes the highlighting of the label of the specified edge', async () => {
+        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        await visualizer.handleEvent(
+          new EdgeLabelHighlightAddedEvent({
+            edgeId,
+            highlightStyleClass: edgeLabelHighlightClassName,
+          }),
+        );
+        expect(edgeLabel?.classList).toContain(edgeLabelHighlightClassName);
+        await visualizer.handleEvent(
+          new EdgeLabelHighlightRemovedEvent({
+            edgeId,
+            highlightStyleClass: edgeLabelHighlightClassName,
+          }),
+        );
+        expect(edgeLabel?.classList).not.toContain(edgeLabelHighlightClassName);
       });
     });
 
