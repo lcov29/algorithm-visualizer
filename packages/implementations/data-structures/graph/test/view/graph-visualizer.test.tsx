@@ -17,6 +17,8 @@ import {
   GraphCreatedEvent,
   GraphEvent,
   IGraphSVGRenderEngine,
+  NodeDisplayEvent,
+  NodeHideEvent,
   NodeHighlightAddedEvent,
   NodeHighlightRemovedEvent,
   NodeHighlightStyleClass,
@@ -53,6 +55,7 @@ const mockGraphSVGRenderEngine: IGraphSVGRenderEngine<string> = {
 
 describe('GraphVisualizer', () => {
   let visualizer: GraphVisualizer;
+  const hiddenClassName = 'hidden';
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -144,6 +147,25 @@ describe('GraphVisualizer', () => {
       });
     });
 
+    describe('NodeDisplayEvent', () => {
+      it('displays the specified node', async () => {
+        const node = graphComponentSelector.getNode(nodeId);
+        await visualizer.handleEvent(new NodeHideEvent({ nodeId }));
+        expect(node?.classList).toContain(hiddenClassName);
+        await visualizer.handleEvent(new NodeDisplayEvent({ nodeId }));
+        expect(node?.classList).not.toContain(hiddenClassName);
+      });
+    });
+
+    describe('NodeHideEvent', () => {
+      it('hides the specified node', async () => {
+        const node = graphComponentSelector.getNode(nodeId);
+        expect(node?.classList).not.toContain(hiddenClassName);
+        await visualizer.handleEvent(new NodeHideEvent({ nodeId }));
+        expect(node?.classList).toContain(hiddenClassName);
+      });
+    });
+
     describe('NodeLabelHighlightAddedEvent', () => {
       it('highlights the label of the specified node', async () => {
         await visualizer.handleEvent(
@@ -195,7 +217,6 @@ describe('GraphVisualizer', () => {
   });
 
   describe('Edge Events', () => {
-    const hiddenClassName = 'hidden';
     const edgeHighlightClassName = 'edgeHighlighted';
     const edgeLabelHighlightClassName: EdgeLabelHighlightStyleClass =
       'edgeLabelHighlightStyle1';

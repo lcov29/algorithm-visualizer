@@ -55,6 +55,8 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleNodeHighlightAddedEvent(event))
       .add(event => this._handleNodeHighlightRemovedEvent(event))
       .add(event => this._handleNodeLabelChangedEvent(event))
+      .add(event => this._handleNodeDisplayEvent(event))
+      .add(event => this._handleNodeHideEvent(event))
       .add(event => this._handleNodeLabelHighlightAddedEvent(event))
       .add(event => this._handleNodeLabelHighlightRemovedEvent(event))
       .add(event => this._handleNodeTitleChangedEvent(event));
@@ -149,6 +151,24 @@ export class GraphVisualizer implements IGraphVisualizer {
     }
     const svg = await this._graphSVGRenderEngine.render(event);
     this._setGraphSVGString(svg);
+    return true;
+  }
+
+  private async _handleNodeDisplayEvent(event: GraphEvent) {
+    if (event.name !== 'node-displayed') {
+      return false;
+    }
+    const node = this._graphComponentSelector.getNode(event.nodeId);
+    node?.classList.remove('hidden');
+    return true;
+  }
+
+  private async _handleNodeHideEvent(event: GraphEvent) {
+    if (event.name !== 'node-hidden') {
+      return false;
+    }
+    const node = this._graphComponentSelector.getNode(event.nodeId);
+    node?.classList.add('hidden');
     return true;
   }
 

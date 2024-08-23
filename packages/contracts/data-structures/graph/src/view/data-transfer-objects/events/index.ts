@@ -6,6 +6,8 @@ export { EdgeLabelDisplayEvent } from './edge-label-display-event';
 export { EdgeLabelHideEvent } from './edge-label-hide-event';
 export { EdgeLabelHighlightAddedEvent } from './edge-label-highlight-added-event';
 export { EdgeLabelHighlightRemovedEvent } from './edge-label-highlight-removed-event';
+export { NodeDisplayEvent } from './node-display-event';
+export { NodeHideEvent } from './node-hide-event';
 export { NodeHighlightAddedEvent } from './node-highlight-added-event';
 export { NodeHighlightRemovedEvent } from './node-highlight-removed-event';
 export { NodeLabelHighlightAddedEvent } from './node-label-highlight-added-event';
