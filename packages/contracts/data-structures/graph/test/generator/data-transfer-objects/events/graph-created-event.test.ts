@@ -10,30 +10,24 @@ describe('GraphCreatedEvent', () => {
     edges: mockEdgeList,
   });
 
-  describe('getters', () => {
-    it.each([
-      ['nodes', mockNodeList],
-      ['edges', mockEdgeList],
-    ])('%s() returns specified value', (methodName, expectedValue) => {
-      // @ts-expect-error reference to a method by its string name
-      expect(nodeLabelChangedEvent[methodName]).toBe(expectedValue);
+  describe.each([
+    ['nodes', mockNodeList],
+    ['edges', mockEdgeList],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`getter returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(nodeLabelChangedEvent[methodName]).toBe(expectedResult);
     });
-  });
 
-  describe('setters', () => {
-    it.each([
-      ['nodes', mockNodeList],
-      ['edges', mockEdgeList],
-    ])(
-      'throws an invalid operation error when trying to write to the %s property',
-      (methodName, newValue) => {
-        // @ts-expect-error reference to a method by its string name
-        expect(() => (nodeLabelChangedEvent[methodName] = newValue)).toThrow(
-          new InvalidOperationError({
-            message: `Writing to readonly property ${methodName} is forbidden`,
-          }),
-        );
-      },
-    );
+    it('setter throws an invalid operation error', () => {
+      expect(
+        // @ts-expect-error invoke method by string name
+        () => (nodeLabelChangedEvent[methodName] = expectedResult),
+      ).toThrow(
+        new InvalidOperationError({
+          message: `Writing to readonly property ${methodName} is forbidden`,
+        }),
+      );
+    });
   });
 });

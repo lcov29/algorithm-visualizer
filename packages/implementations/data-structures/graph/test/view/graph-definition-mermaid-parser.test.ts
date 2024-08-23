@@ -29,18 +29,18 @@ function buildMockGraphCreatedEvent() {
 }
 
 describe('GraphDefinitionMermaidParser', () => {
-  let parsedGraph: string;
+  const parser = new GraphDefinitionMermaidParser();
 
   beforeEach(() => {
-    const parser = new GraphDefinitionMermaidParser();
-    parsedGraph = parser.parse({
-      event: buildMockGraphCreatedEvent(),
-      graphRenderDirection: 'LR',
-    });
+    jest.resetAllMocks();
   });
 
   describe('parse()', () => {
     it('parses the specified graph into a valid mermaid flowchart definition', () => {
+      const graph = parser.parse({
+        event: buildMockGraphCreatedEvent(),
+        graphRenderDirection: 'LR',
+      });
       const expectedGraph = [
         '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',
         'flowchart LR',
@@ -51,7 +51,7 @@ describe('GraphDefinitionMermaidParser', () => {
         '1 --- 2',
         '\n',
       ].join('\n');
-      expect(parsedGraph).toEqual(expectedGraph);
+      expect(graph).toEqual(expectedGraph);
     });
   });
 });

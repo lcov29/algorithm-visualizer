@@ -11,36 +11,40 @@ function getMockValidatorReturning(result: boolean) {
 }
 
 describe('getRandomIntegerBetween()', () => {
-  it('throws an invalid argument error if the isValidInteger check fails for the argument min', () => {
-    expect(() => {
-      getRandomIntegerBetween({
-        min: 3.14,
-        max: 4,
-        validator: {
-          isValidInteger: input => input !== 3.14,
+  describe('Error handling', () => {
+    describe.each([
+      [
+        'when the argument min is not an integer',
+        3.14,
+        {
+          isValidInteger: input => Number.isInteger(input),
         } as IIntegerValidator,
+        'Argument min is not an integer',
+        [3.14],
+      ],
+      [
+        'when the argument min is greater than the argument max',
+        5,
+        getMockValidatorReturning(true),
+        'Argument min is greater than the argument max',
+        [5, 4],
+      ],
+    ])('%s', (_, min, validator, expectedErrorMessage, expectedErrorArgs) => {
+      it('throws an invalid argument error', () => {
+        expect(() => {
+          getRandomIntegerBetween({
+            min,
+            max: 4,
+            validator,
+          });
+        }).toThrow(
+          new InvalidArgumentError({
+            message: expectedErrorMessage,
+            args: expectedErrorArgs,
+          }),
+        );
       });
-    }).toThrow(
-      new InvalidArgumentError({
-        message: 'Argument min is not an integer',
-        args: [3.14],
-      }),
-    );
-  });
-
-  it('throws an invalid argument error if the argument min is greater than the argument max', () => {
-    expect(() =>
-      getRandomIntegerBetween({
-        min: 5,
-        max: 2,
-        validator: getMockValidatorReturning(true),
-      }),
-    ).toThrow(
-      new InvalidArgumentError({
-        message: 'Argument min is greater than the argument max',
-        args: [5, 2],
-      }),
-    );
+    });
   });
 
   it('returns an integer within the specified range', () => {

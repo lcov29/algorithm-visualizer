@@ -5,15 +5,14 @@ import { EdgeAddedEvent, IEdge } from '../../../src';
 describe('EdgeAddedEvent', () => {
   describe('edge()', () => {
     const edge: Omit<IEdge, 'id'> = { startNodeId: 1, endNodeId: 2 };
-    let edgeAddedEvent: EdgeAddedEvent;
+    const edgeAddedEvent = new EdgeAddedEvent(edge);
 
     beforeEach(() => {
       jest.resetAllMocks();
-      edgeAddedEvent = new EdgeAddedEvent(edge);
     });
 
-    describe('getter edge()', () => {
-      it('returns edge object with specified property values', () => {
+    describe('getter', () => {
+      it('returns an edge object with the specified property values', () => {
         expect(edgeAddedEvent.edge).toEqual(edge);
       });
 
@@ -25,7 +24,7 @@ describe('EdgeAddedEvent', () => {
       });
     });
 
-    describe('setter edge()', () => {
+    describe('setter', () => {
       it('throws an invalid operation error when trying to write to the edge property', () => {
         expect(() => {
           edgeAddedEvent.edge = { startNodeId: 6, endNodeId: 8 };

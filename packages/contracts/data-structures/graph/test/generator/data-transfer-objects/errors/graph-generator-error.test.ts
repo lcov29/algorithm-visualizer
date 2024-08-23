@@ -3,36 +3,32 @@ import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 import { GraphGeneratorConfig, GraphGeneratorError } from '../../../../src';
 
 describe('GraphGeneratorError', () => {
-  let error: GraphGeneratorError;
-  let cause: RangeError;
-  let config: GraphGeneratorConfig;
+  const cause = new RangeError('This caused the graph generator error');
+  const config = new GraphGeneratorConfig({
+    nodeAmount: new IntegerRange({ min: 2, max: 3 }),
+    edgeAmountPerNode: new IntegerRange({ min: 3, max: 4 }),
+    edgeWeight: new IntegerRange({ min: 3, max: 4 }),
+    edgeDirection: 'unidirectional',
+    allowRecursiveEdges: true,
+  });
+  const error = new GraphGeneratorError({
+    message: 'Graph generator error',
+    config,
+    cause,
+  });
 
   beforeEach(() => {
     jest.resetAllMocks();
-    cause = new RangeError('This caused the graph generator error');
-    config = new GraphGeneratorConfig({
-      nodeAmount: new IntegerRange({ min: 2, max: 3 }),
-      edgeAmountPerNode: new IntegerRange({ min: 3, max: 4 }),
-      edgeWeight: new IntegerRange({ min: 3, max: 4 }),
-      edgeDirection: 'unidirectional',
-      allowRecursiveEdges: true,
+  });
+
+  describe.each([
+    ['message', 'Graph generator error'],
+    ['config', config],
+    ['cause', cause],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(error[methodName]).toEqual(expectedResult);
     });
-    error = new GraphGeneratorError({
-      message: 'graph generator error',
-      config,
-      cause,
-    });
-  });
-
-  it('returns the specified error message', () => {
-    expect(error.message).toBe('graph generator error');
-  });
-
-  it('returns the specified config', () => {
-    expect(error.config).toEqual(config);
-  });
-
-  it('returns the specified error cause', () => {
-    expect(error.cause).toBe(cause);
   });
 });

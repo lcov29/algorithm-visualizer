@@ -1,28 +1,25 @@
 import { InvalidArgumentError } from '../../src/error/invalid-argument-error';
 
 describe('InvalidArgumentError', () => {
-  let error: InvalidArgumentError<number>;
-  let cause: RangeError;
+  const cause = new RangeError('This caused the invalid argument error');
+  const error = new InvalidArgumentError({
+    message: 'Error message',
+    args: [4],
+    cause,
+  });
 
   beforeEach(() => {
     jest.resetAllMocks();
-    cause = new RangeError('This caused the invalid argument error');
-    error = new InvalidArgumentError({
-      message: 'Error message',
-      args: [4],
-      cause,
+  });
+
+  describe.each([
+    ['message', 'Error message'],
+    ['arguments', [4]],
+    ['cause', cause],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`getter returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(error[methodName]).toEqual(expectedResult);
     });
-  });
-
-  it('returns specified error message', () => {
-    expect(error.message).toBe('Error message');
-  });
-
-  it('returns specified arguments', () => {
-    expect(error.arguments).toEqual([4]);
-  });
-
-  it('returns specified error cause', () => {
-    expect(error.cause).toBe(cause);
   });
 });

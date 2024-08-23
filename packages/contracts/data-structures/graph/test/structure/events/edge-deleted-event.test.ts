@@ -4,21 +4,18 @@ import { EdgeDeletedEvent } from '../../../src';
 
 describe('EdgeDeletedEvent', () => {
   const edgeId = 8;
-  let edgeDeletedEvent: EdgeDeletedEvent;
+  const edgeDeletedEvent = new EdgeDeletedEvent({ edgeId });
 
   beforeEach(() => {
     jest.resetAllMocks();
-    edgeDeletedEvent = new EdgeDeletedEvent({ edgeId });
   });
 
-  describe('getter edgeId()', () => {
-    it('returns specified edge id', () => {
+  describe('edgeId()', () => {
+    it('getter returns the specified edgeId value', () => {
       expect(edgeDeletedEvent.edgeId).toEqual(edgeId);
     });
-  });
 
-  describe('setter edgeId()', () => {
-    it('throws an invalid operation error when trying to write to the edge property', () => {
+    it('setter throws an invalid operation error', () => {
       expect(() => {
         edgeDeletedEvent.edgeId = edgeId;
       }).toThrow(

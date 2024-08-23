@@ -1,26 +1,24 @@
 import { BaseEvent } from '../../src/other/base-event';
 
 describe('BaseEvent', () => {
+  const name = 'event-name';
+  const currentTime = 123456789;
+  let event: BaseEvent<'event-name'>;
+
   beforeEach(() => {
     jest.resetAllMocks();
+    jest.spyOn(Date, 'now').mockImplementation(() => currentTime);
+    // @ts-expect-error abstract class
+    event = new BaseEvent(name);
   });
 
-  describe('name()', () => {
-    it('returns the specified name', () => {
-      const name = 'event-name';
-      // @ts-expect-error abstract class
-      const event = new BaseEvent(name);
-      expect(event.name).toBe(name);
-    });
-  });
-
-  describe('creationTime', () => {
-    it('returns the time of creation', () => {
-      const currentTime = 123456789;
-      jest.spyOn(Date, 'now').mockImplementation(() => currentTime);
-      // @ts-expect-error abstract class
-      const event = new BaseEvent('foo');
-      expect(event.creationTime).toBe(currentTime);
+  describe.each([
+    ['name', name],
+    ['creationTime', currentTime],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`getter returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(event[methodName]).toBe(expectedResult);
     });
   });
 });

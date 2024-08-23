@@ -1,23 +1,23 @@
 import { GraphVisualizationError } from '../../../../src';
 
 describe('GraphVisualizationError', () => {
-  let error: GraphVisualizationError;
-  let cause: RangeError;
+  const cause = new RangeError('This caused the graph visualization error');
+  const error = new GraphVisualizationError({
+    message: 'Graph visualization error',
+    cause,
+  });
 
   beforeEach(() => {
     jest.resetAllMocks();
-    cause = new RangeError('This caused the graph visualization error');
-    error = new GraphVisualizationError({
-      message: 'graph visualization error',
-      cause,
+  });
+
+  describe.each([
+    ['message', 'Graph visualization error'],
+    ['cause', cause],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(error[methodName]).toBe(expectedResult);
     });
-  });
-
-  it('returns the specified error message', () => {
-    expect(error.message).toBe('graph visualization error');
-  });
-
-  it('returns the specified error cause', () => {
-    expect(error.cause).toBe(cause);
   });
 });

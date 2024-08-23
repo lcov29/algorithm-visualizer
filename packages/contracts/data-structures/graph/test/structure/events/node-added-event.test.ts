@@ -5,14 +5,13 @@ import { INode, NodeAddedEvent } from '../../../src';
 describe('NodeAddedEvent', () => {
   describe('node()', () => {
     const node: Omit<INode, 'id'> = { label: 'NodeA' };
-    let nodeAddedEvent: NodeAddedEvent;
+    const nodeAddedEvent = new NodeAddedEvent(node);
 
     beforeEach(() => {
       jest.resetAllMocks();
-      nodeAddedEvent = new NodeAddedEvent(node);
     });
 
-    describe('getter node()', () => {
+    describe('getter', () => {
       it('returns node object with specified property values', () => {
         expect(nodeAddedEvent.node).toEqual(node);
       });
@@ -25,7 +24,7 @@ describe('NodeAddedEvent', () => {
       });
     });
 
-    describe('setter node()', () => {
+    describe('setter', () => {
       it('throws an invalid operation error when trying to write to the node property', () => {
         expect(() => {
           nodeAddedEvent.node = { label: 'modifiedLabel' };

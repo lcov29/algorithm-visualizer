@@ -11,6 +11,10 @@ function getMockValidatorReturning(result: boolean) {
 }
 
 describe('getRandomBoolean()', () => {
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('throws an invalid argument error if the isValidNonNegativeInteger check fails', () => {
     expect(() =>
       getRandomBoolean({

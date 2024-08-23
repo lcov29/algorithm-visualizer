@@ -5,33 +5,31 @@ import { NodeLabelChangedEvent } from '../../../src';
 describe('NodeLabelChangedEvent', () => {
   const nodeLabelChangedEvent = new NodeLabelChangedEvent({
     nodeId: 3,
-    label: 'new',
+    label: 'newLabel',
   });
 
-  describe('getters', () => {
-    it.each([
-      ['nodeId', 3],
-      ['label', 'new'],
-    ])('%s() returns specified value', (methodName, expectedValue) => {
-      // @ts-expect-error reference to a method by its string name
-      expect(nodeLabelChangedEvent[methodName]).toBe(expectedValue);
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
+  describe.each([
+    ['nodeId', 3],
+    ['label', 'newLabel'],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`getter returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(nodeLabelChangedEvent[methodName]).toBe(expectedResult);
     });
-  });
 
-  describe('setters', () => {
-    it.each([
-      ['nodeId', 4],
-      ['label', 'test'],
-    ])(
-      'throws an invalid operation error when trying to write to the %s property',
-      (methodName, newValue) => {
-        // @ts-expect-error reference to a method by its string name
-        expect(() => (nodeLabelChangedEvent[methodName] = newValue)).toThrow(
-          new InvalidOperationError({
-            message: `Writing to readonly property ${methodName} is forbidden`,
-          }),
-        );
-      },
-    );
+    it('setter throws an invalid operation error', () => {
+      expect(
+        // @ts-expect-error invoke method by string name
+        () => (nodeLabelChangedEvent[methodName] = expectedResult),
+      ).toThrow(
+        new InvalidOperationError({
+          message: `Writing to readonly property ${methodName} is forbidden`,
+        }),
+      );
+    });
   });
 });

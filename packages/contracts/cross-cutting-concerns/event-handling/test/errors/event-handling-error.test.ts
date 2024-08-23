@@ -2,31 +2,27 @@ import { EventHandlingError } from '../../src/errors';
 import { BaseEvent } from '../../src/other/base-event';
 
 describe('EventHandlingError', () => {
-  let error: EventHandlingError<'base-event'>;
-  let event: BaseEvent<'base-event'>;
-  let cause: RangeError;
+  const cause = new RangeError('This caused the invalid argument error');
+  // @ts-expect-error instantiation of abstract class
+  const event = new BaseEvent('base-event');
+  const error: EventHandlingError<'base-event'> = new EventHandlingError({
+    message: 'Event handling error message',
+    event,
+    cause,
+  });
 
   beforeEach(() => {
     jest.resetAllMocks();
-    cause = new RangeError('This caused the invalid argument error');
-    // @ts-expect-error instantiation of abstract class
-    event = new BaseEvent('base-event');
-    error = new EventHandlingError({
-      message: 'event handling error message',
-      event,
-      cause,
+  });
+
+  describe.each([
+    ['message', 'Event handling error message'],
+    ['event', event],
+    ['cause', cause],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`getter returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(error[methodName]).toBe(expectedResult);
     });
-  });
-
-  it('returns the specified error message', () => {
-    expect(error.message).toBe('event handling error message');
-  });
-
-  it('returns the specified event', () => {
-    expect(error.event).toEqual(event);
-  });
-
-  it('returns specified error cause', () => {
-    expect(error.cause).toBe(cause);
   });
 });

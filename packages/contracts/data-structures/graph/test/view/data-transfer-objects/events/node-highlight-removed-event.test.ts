@@ -9,57 +9,33 @@ describe('NodeHighlightRemovedEvent', () => {
   describe('node()', () => {
     const nodeId = 3;
     const highlightStyleClass: NodeHighlightStyleClass = 'nodeHighlightStyle1';
-    let nodeHighlightRemovedEvent: NodeHighlightRemovedEvent;
+    const nodeHighlightRemovedEvent = new NodeHighlightRemovedEvent({
+      nodeId,
+      highlightStyleClass,
+    });
 
     beforeEach(() => {
       jest.resetAllMocks();
-      nodeHighlightRemovedEvent = new NodeHighlightRemovedEvent({
-        nodeId,
-        highlightStyleClass,
-      });
     });
 
-    describe('Getter methods', () => {
-      describe('nodeId()', () => {
-        it('returns the specified node id', () => {
-          expect(nodeHighlightRemovedEvent.nodeId).toBe(nodeId);
-        });
+    describe.each([
+      ['nodeId', nodeId],
+      ['highlightStyleClass', highlightStyleClass],
+    ])('%s()', (methodName, expectedResult) => {
+      it(`getter returns the specified ${methodName} value`, () => {
+        // @ts-expect-error invoke method by string name
+        expect(nodeHighlightRemovedEvent[methodName]).toBe(expectedResult);
       });
 
-      describe('highlightStyleClass()', () => {
-        it('returns the specified highlightStyleClass', () => {
-          expect(nodeHighlightRemovedEvent.highlightStyleClass).toBe(
-            highlightStyleClass,
-          );
-        });
-      });
-    });
-
-    describe('Setter methods', () => {
-      describe('nodeId()', () => {
-        it('throws an invalid operation error when trying to write to the node property', () => {
-          expect(() => {
-            nodeHighlightRemovedEvent.nodeId = 5;
-          }).toThrow(
-            new InvalidOperationError({
-              message: 'Writing to readonly property nodeId is forbidden',
-            }),
-          );
-        });
-      });
-
-      describe('highlightStyleClass', () => {
-        it('throws an invalid operation error when trying to write to the highlightStyleClass property', () => {
-          expect(() => {
-            nodeHighlightRemovedEvent.highlightStyleClass =
-              'nodeHighlightStyle2';
-          }).toThrow(
-            new InvalidOperationError({
-              message:
-                'Writing to readonly property highlightStyleClass is forbidden',
-            }),
-          );
-        });
+      it('setter throws an invalid operation error', () => {
+        expect(() => {
+          // @ts-expect-error invoke method by string name
+          nodeHighlightRemovedEvent[methodName] = expectedResult;
+        }).toThrow(
+          new InvalidOperationError({
+            message: `Writing to readonly property ${methodName} is forbidden`,
+          }),
+        );
       });
     });
   });

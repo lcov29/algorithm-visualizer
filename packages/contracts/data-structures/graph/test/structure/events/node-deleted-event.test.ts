@@ -4,21 +4,18 @@ import { NodeDeletedEvent } from '../../../src';
 
 describe('NodeDeletedEvent', () => {
   const nodeId = 5;
-  let nodeDeletedEvent: NodeDeletedEvent;
+  const nodeDeletedEvent = new NodeDeletedEvent({ nodeId });
 
   beforeEach(() => {
     jest.resetAllMocks();
-    nodeDeletedEvent = new NodeDeletedEvent({ nodeId });
   });
 
-  describe('getter nodeId()', () => {
-    it('returns specified node', () => {
+  describe('nodeId()', () => {
+    it('getter returns specified nodeId value', () => {
       expect(nodeDeletedEvent.nodeId).toEqual(nodeId);
     });
-  });
 
-  describe('setter nodeId()', () => {
-    it('throws an invalid operation error when trying to write to the nodeId property', () => {
+    it('setter throws an invalid operation error when trying to write to the nodeId property', () => {
       expect(() => {
         nodeDeletedEvent.nodeId = nodeId;
       }).toThrow(

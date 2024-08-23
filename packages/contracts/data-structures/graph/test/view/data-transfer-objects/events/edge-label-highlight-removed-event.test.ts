@@ -9,57 +9,33 @@ describe('EdgeLabelHighlightRemovedEvent', () => {
   const edgeId = 3;
   const highlightStyleClass: EdgeLabelHighlightStyleClass =
     'edgeLabelHighlightStyle1';
-  let edgeLabelHighlightAddedEvent: EdgeLabelHighlightRemovedEvent;
+  const edgeLabelHighlightAddedEvent = new EdgeLabelHighlightRemovedEvent({
+    edgeId,
+    highlightStyleClass,
+  });
 
   beforeEach(() => {
     jest.resetAllMocks();
-    edgeLabelHighlightAddedEvent = new EdgeLabelHighlightRemovedEvent({
-      edgeId,
-      highlightStyleClass,
-    });
   });
 
-  describe('Getter Methods', () => {
-    describe('edgeId()', () => {
-      it('returns the specified edge id', () => {
-        expect(edgeLabelHighlightAddedEvent.edgeId).toBe(edgeId);
-      });
+  describe.each([
+    ['edgeId', edgeId],
+    ['highlightStyleClass', highlightStyleClass],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`getter returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(edgeLabelHighlightAddedEvent[methodName]).toBe(expectedResult);
     });
 
-    describe('highlightStyleClass()', () => {
-      it('returns the specified highlightStyleClass', () => {
-        expect(edgeLabelHighlightAddedEvent.highlightStyleClass).toBe(
-          highlightStyleClass,
-        );
-      });
-    });
-  });
-
-  describe('Setter Methods', () => {
-    describe('edgeId()', () => {
-      it('throws an invalid operation error when trying to write to the edgeId property', () => {
-        expect(() => {
-          edgeLabelHighlightAddedEvent.edgeId = 5;
-        }).toThrow(
-          new InvalidOperationError({
-            message: 'Writing to readonly property edgeId is forbidden',
-          }),
-        );
-      });
-    });
-
-    describe('highlightStyleClass', () => {
-      it('throws an invalid operation error when trying to write to the highlightStyleClass property', () => {
-        expect(() => {
-          edgeLabelHighlightAddedEvent.highlightStyleClass =
-            'edgeLabelHighlightStyle2';
-        }).toThrow(
-          new InvalidOperationError({
-            message:
-              'Writing to readonly property highlightStyleClass is forbidden',
-          }),
-        );
-      });
+    it('setter throws an invalid operation error', () => {
+      expect(() => {
+        // @ts-expect-error invoke method by string name
+        edgeLabelHighlightAddedEvent[methodName] = expectedResult;
+      }).toThrow(
+        new InvalidOperationError({
+          message: `Writing to readonly property ${methodName} is forbidden`,
+        }),
+      );
     });
   });
 });

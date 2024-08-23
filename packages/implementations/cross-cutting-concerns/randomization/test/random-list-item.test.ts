@@ -13,6 +13,10 @@ function getMockValidatorReturning(result: boolean) {
 describe('getRandomListItem()', () => {
   const list = [1, 2, 3, 4];
 
+  beforeEach(() => {
+    jest.resetAllMocks();
+  });
+
   it('throws an invalid argument error if the isList check fails for the argument list', () => {
     expect(() =>
       getRandomListItem({

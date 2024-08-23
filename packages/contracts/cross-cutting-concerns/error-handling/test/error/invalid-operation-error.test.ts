@@ -1,23 +1,23 @@
 import { InvalidOperationError } from '../../src/error/invalid-operation-error';
 
 describe('InvalidOperationError', () => {
-  let error: InvalidOperationError;
-  let cause: RangeError;
+  const cause = new RangeError('This caused the invalid operation error');
+  const error = new InvalidOperationError({
+    message: 'Error message',
+    cause,
+  });
 
   beforeEach(() => {
     jest.resetAllMocks();
-    cause = new RangeError('This caused the invalid operation error');
-    error = new InvalidOperationError({
-      message: 'Error message',
-      cause,
+  });
+
+  describe.each([
+    ['message', 'Error message'],
+    ['cause', cause],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`getter returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(error[methodName]).toBe(expectedResult);
     });
-  });
-
-  it('returns specified error message', () => {
-    expect(error.message).toBe('Error message');
-  });
-
-  it('returns specified error cause', () => {
-    expect(error.cause).toBe(cause);
   });
 });

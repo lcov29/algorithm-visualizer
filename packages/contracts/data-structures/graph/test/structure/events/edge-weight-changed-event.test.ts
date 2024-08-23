@@ -8,27 +8,26 @@ describe('EdgeWeightChangedEvent', () => {
     newWeight: 7,
   });
 
-  describe('getter methods', () => {
-    it.each([
-      ['edgeId', 3],
-      ['newWeight', 7],
-    ])('%s() returns specified value', (methodName, expectedValue) => {
-      // @ts-expect-error reference to a method by its string name
-      expect(edgeWeightChangedEvent[methodName]).toBe(expectedValue);
-    });
+  beforeEach(() => {
+    jest.resetAllMocks();
   });
 
-  describe('setter methods', () => {
-    it.each([['edgeId'], ['newWeight']])(
-      'throws an invalid operation error when trying to write to the %s property',
-      methodName => {
-        // @ts-expect-error reference to a method by its string name
-        expect(() => (edgeWeightChangedEvent[methodName] = 1)).toThrow(
-          new InvalidOperationError({
-            message: `Writing to readonly property ${methodName} is forbidden`,
-          }),
-        );
-      },
-    );
+  describe.each([
+    ['edgeId', 3],
+    ['newWeight', 7],
+  ])('%s()', (methodName, expectedResult) => {
+    it(`getter returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(edgeWeightChangedEvent[methodName]).toBe(expectedResult);
+    });
+
+    it('setter throws an invalid operation error', () => {
+      // @ts-expect-error invoke method by string name
+      expect(() => (edgeWeightChangedEvent[methodName] = 1)).toThrow(
+        new InvalidOperationError({
+          message: `Writing to readonly property ${methodName} is forbidden`,
+        }),
+      );
+    });
   });
 });

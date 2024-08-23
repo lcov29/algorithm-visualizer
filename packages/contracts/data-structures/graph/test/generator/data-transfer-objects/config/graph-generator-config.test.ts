@@ -24,108 +24,83 @@ function buildMockArgs(
 
 describe('GraphGeneratorConfig', () => {
   let config: GraphGeneratorConfig;
+  const configArgs = buildMockArgs();
 
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
   describe('validation', () => {
-    it('throws an invalid argument error when property edgeDirection is not a valid direction option', () => {
-      expect(
-        () =>
-          new GraphGeneratorConfig(
-            // @ts-expect-error edgeDirection is not of type number
-            buildMockArgs({ edgeDirection: 'nonDefinedDirection' }),
-          ),
-      ).toThrow(
-        new InvalidArgumentError({
-          message:
-            'Argument edgeDirection is neither "unidirectional" nor "bidirectional"',
-          args: ['nonDefinedDirection'],
-        }),
-      );
+    it('accepts valid input', () => {
+      expect(() => new GraphGeneratorConfig(buildMockArgs())).not.toThrow();
     });
 
-    it('throws an invalid argument error when property allowRecursiveEdges is not a boolean', () => {
-      expect(
-        () =>
-          // @ts-expect-error edgeDirection is not of type number
-          new GraphGeneratorConfig(buildMockArgs({ allowRecursiveEdges: 123 })),
-      ).toThrow(
-        new InvalidArgumentError({
-          message: 'Argument allowRecursiveEdges is not a boolean',
-          args: [123],
-        }),
-      );
-    });
-
-    it('throws an invalid argument error when property edgeAmountPerNode has a min value below one', () => {
-      expect(() => {
-        const range = new IntegerRange({ min: 0, max: 3 });
-        new GraphGeneratorConfig(buildMockArgs({ edgeAmountPerNode: range }));
-      }).toThrow(
-        new InvalidArgumentError({
-          message: 'Argument edgeAmountPerNode.min is below one',
-          args: [0],
-        }),
-      );
-    });
-
-    it('throws an invalid argument error when property nodeAmount has a min value below two', () => {
-      expect(() => {
-        const range = new IntegerRange({ min: 1, max: 3 });
-        new GraphGeneratorConfig(buildMockArgs({ nodeAmount: range }));
-      }).toThrow(
-        new InvalidArgumentError({
-          message: 'Argument nodeAmount.min is below two',
-          args: [1],
-        }),
-      );
-    });
-  });
-
-  describe('getters', () => {
-    const configArgs = buildMockArgs();
-
-    beforeEach(() => {
-      config = new GraphGeneratorConfig(configArgs);
-    });
-
-    it.each([
-      ['nodeAmount', configArgs.nodeAmount],
-      ['edgeAmountPerNode', configArgs.edgeAmountPerNode],
-      ['edgeWeight', configArgs.edgeWeight],
-      ['edgeDirection', configArgs.edgeDirection],
-      ['allowRecursiveEdges', configArgs.allowRecursiveEdges],
-    ])('%s() returns specified value', (methodName, expectedValue) => {
-      // @ts-expect-error reference to a method by its string name
-      expect(config[methodName]).toEqual(expectedValue);
-    });
-  });
-
-  describe('setters', () => {
-    const configArgs = buildMockArgs();
-
-    beforeEach(() => {
-      config = new GraphGeneratorConfig(configArgs);
-    });
-
-    it.each([
-      ['nodeAmount', configArgs.nodeAmount],
-      ['edgeAmountPerNode', configArgs.edgeAmountPerNode],
-      ['edgeWeight', configArgs.edgeWeight],
-      ['edgeDirection', configArgs.edgeDirection],
-      ['allowRecursiveEdges', configArgs.allowRecursiveEdges],
+    describe.each([
+      [
+        'edgeDirection is not a valid direction option',
+        { edgeDirection: 'nonDefinedDirection' },
+        'Argument edgeDirection is neither "unidirectional" nor "bidirectional"',
+        ['nonDefinedDirection'],
+      ],
+      [
+        'allowRecursiveEdges is not a boolean',
+        { allowRecursiveEdges: 123 },
+        'Argument allowRecursiveEdges is not a boolean',
+        ['123'],
+      ],
+      [
+        'edgeAmountPerNode has a min value below one',
+        { edgeAmountPerNode: new IntegerRange({ min: 0, max: 3 }) },
+        'Argument edgeAmountPerNode.min is below one',
+        ['0'],
+      ],
+      [
+        'nodeAmount has a min value below two',
+        { nodeAmount: new IntegerRange({ min: 1, max: 3 }) },
+        'Argument nodeAmount.min is below two',
+        ['1'],
+      ],
     ])(
-      'throws an invalid operation error when trying to write to the %s property',
-      (methodName, writeValue) => {
-        // @ts-expect-error reference to a method by its string name
-        expect(() => (config[methodName] = writeValue)).toThrow(
-          new InvalidOperationError({
-            message: `Writing to readonly property ${methodName} is forbidden`,
-          }),
-        );
+      'when property %s',
+      (_, mockArgs, expectedErrorMessage, expectedErrorArgs) => {
+        it('throws an invalid argument error', () => {
+          expect(
+            // @ts-expect-error invalid config values
+            () => new GraphGeneratorConfig(buildMockArgs(mockArgs)),
+          ).toThrow(
+            new InvalidArgumentError({
+              message: expectedErrorMessage,
+              args: expectedErrorArgs,
+            }),
+          );
+        });
       },
     );
+  });
+
+  describe.each([
+    ['nodeAmount', configArgs.nodeAmount],
+    ['edgeAmountPerNode', configArgs.edgeAmountPerNode],
+    ['edgeWeight', configArgs.edgeWeight],
+    ['edgeDirection', configArgs.edgeDirection],
+    ['allowRecursiveEdges', configArgs.allowRecursiveEdges],
+  ])('%s()', (methodName, expectedResult) => {
+    beforeEach(() => {
+      config = new GraphGeneratorConfig(configArgs);
+    });
+
+    it(`getter returns the specified ${methodName} value`, () => {
+      // @ts-expect-error invoke method by string name
+      expect(config[methodName]).toBe(expectedResult);
+    });
+
+    it('setter throws an invalid operation error', () => {
+      // @ts-expect-error invoke method by string name
+      expect(() => (config[methodName] = expectedResult)).toThrow(
+        new InvalidOperationError({
+          message: `Writing to readonly property ${methodName} is forbidden`,
+        }),
+      );
+    });
   });
 });
