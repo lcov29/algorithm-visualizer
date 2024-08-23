@@ -42,6 +42,8 @@ export class GraphVisualizer implements IGraphVisualizer {
 
   private _initializeEventHandlerChain() {
     this._eventHandlerChain
+      .add(event => this._handleEdgeDisplayEvent(event))
+      .add(event => this._handleEdgeHideEvent(event))
       .add(event => this._handleEdgeHighlightAddedEvent(event))
       .add(event => this._handleEdgeHighlightRemovedEvent(event))
       .add(event => this._handleEdgeLabelHighlightAddedEvent(event))
@@ -54,6 +56,28 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleNodeLabelHighlightAddedEvent(event))
       .add(event => this._handleNodeLabelHighlightRemovedEvent(event))
       .add(event => this._handleNodeTitleChangedEvent(event));
+  }
+
+  private async _handleEdgeDisplayEvent(event: GraphEvent) {
+    if (event.name !== 'edge-display') {
+      return false;
+    }
+    const edge = this._graphComponentSelector.getEdge(event.edgeId);
+    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    edge?.classList.remove('hidden');
+    edgeLabel?.classList.remove('hidden');
+    return true;
+  }
+
+  private async _handleEdgeHideEvent(event: GraphEvent) {
+    if (event.name !== 'edge-hide') {
+      return false;
+    }
+    const edge = this._graphComponentSelector.getEdge(event.edgeId);
+    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    edge?.classList.add('hidden');
+    edgeLabel?.classList.add('hidden');
+    return true;
   }
 
   private async _handleEdgeHighlightAddedEvent(event: GraphEvent) {

@@ -54,3 +54,7 @@
 .edgePaths .edgeHighlighted {
   stroke: red !important;
 }
+
+.hidden {
+  display: none !important;
+}

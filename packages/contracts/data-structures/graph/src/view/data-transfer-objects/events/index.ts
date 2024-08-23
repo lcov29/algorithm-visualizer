@@ -1,3 +1,5 @@
+export { EdgeDisplayEvent } from './edge-display-event';
+export { EdgeHideEvent } from './edge-hide-event';
 export { EdgeHighlightAddedEvent } from './edge-highlight-added-event';
 export { EdgeHighlightRemovedEvent } from './edge-highlight-removed-event';
 export { EdgeLabelHighlightAddedEvent } from './edge-label-highlight-added-event';

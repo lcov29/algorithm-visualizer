@@ -1,5 +1,7 @@
 import { GraphCreatedEvent } from '../../generator';
 import {
+  EdgeDisplayEvent,
+  EdgeHideEvent,
   EdgeHighlightAddedEvent,
   EdgeHighlightRemovedEvent,
   EdgeLabelHighlightAddedEvent,
@@ -22,6 +24,8 @@ import {
 export type GraphEvent =
   | EdgeAddedEvent
   | EdgeDeletedEvent
+  | EdgeDisplayEvent
+  | EdgeHideEvent
   | EdgeHighlightAddedEvent
   | EdgeHighlightRemovedEvent
   | EdgeLabelHighlightAddedEvent
