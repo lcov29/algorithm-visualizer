@@ -42,18 +42,65 @@ export class GraphVisualizer implements IGraphVisualizer {
 
   private _initializeEventHandlerChain() {
     this._eventHandlerChain
+      .add(event => this._handleEdgeHighlightAddedEvent(event))
+      .add(event => this._handleEdgeHighlightRemovedEvent(event))
+      .add(event => this._handleEdgeLabelHighlightAddedEvent(event))
+      .add(event => this._handleEdgeLabelHighlightRemovedEvent(event))
+      .add(event => this._handleEdgeWeightChangedEvent(event))
       .add(event => this._handleGraphCreatedEvent(event))
       .add(event => this._handleNodeHighlightAddedEvent(event))
       .add(event => this._handleNodeHighlightRemovedEvent(event))
       .add(event => this._handleNodeLabelChangedEvent(event))
-      .add(event => this._handleEdgeHighlightAddedEvent(event))
-      .add(event => this._handleEdgeHighlightRemovedEvent(event))
-      .add(event => this._handleEdgeWeightChangedEvent(event))
-      .add(event => this._handleEdgeLabelHighlightAddedEvent(event))
-      .add(event => this._handleEdgeLabelHighlightRemovedEvent(event))
       .add(event => this._handleNodeLabelHighlightAddedEvent(event))
       .add(event => this._handleNodeLabelHighlightRemovedEvent(event))
       .add(event => this._handleNodeTitleChangedEvent(event));
+  }
+
+  private async _handleEdgeHighlightAddedEvent(event: GraphEvent) {
+    if (event.name !== 'edge-highlight-added') {
+      return false;
+    }
+    const edge = this._graphComponentSelector.getEdge(event.edgeId);
+    edge?.classList.add('edgeHighlighted');
+    return true;
+  }
+
+  private async _handleEdgeHighlightRemovedEvent(event: GraphEvent) {
+    if (event.name !== 'edge-highlight-removed') {
+      return false;
+    }
+    const edge = this._graphComponentSelector.getEdge(event.edgeId);
+    edge?.classList.remove('edgeHighlighted');
+    return true;
+  }
+
+  private async _handleEdgeLabelHighlightAddedEvent(event: GraphEvent) {
+    if (event.name !== 'edge-label-highlight-added') {
+      return false;
+    }
+    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    edgeLabel?.classList.add(event.highlightStyleClass);
+    return true;
+  }
+
+  private async _handleEdgeLabelHighlightRemovedEvent(event: GraphEvent) {
+    if (event.name !== 'edge-label-highlight-removed') {
+      return false;
+    }
+    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    edgeLabel?.classList.remove(event.highlightStyleClass);
+    return true;
+  }
+
+  private async _handleEdgeWeightChangedEvent(event: GraphEvent) {
+    if (event.name !== 'edge-weight-changed') {
+      return false;
+    }
+    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    if (edgeLabel?.textContent) {
+      edgeLabel.textContent = event.newWeight.toString();
+    }
+    return true;
   }
 
   private async _handleGraphCreatedEvent(event: GraphEvent) {
@@ -91,53 +138,6 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (nodeLabel?.textContent) {
       nodeLabel.textContent = event.label;
     }
-    return true;
-  }
-
-  private async _handleEdgeHighlightAddedEvent(event: GraphEvent) {
-    if (event.name !== 'edge-highlight-added') {
-      return false;
-    }
-    const edge = this._graphComponentSelector.getEdge(event.edgeId);
-    edge?.classList.add('edgeHighlighted');
-    return true;
-  }
-
-  private async _handleEdgeHighlightRemovedEvent(event: GraphEvent) {
-    if (event.name !== 'edge-highlight-removed') {
-      return false;
-    }
-    const edge = this._graphComponentSelector.getEdge(event.edgeId);
-    edge?.classList.remove('edgeHighlighted');
-    return true;
-  }
-
-  private async _handleEdgeWeightChangedEvent(event: GraphEvent) {
-    if (event.name !== 'edge-weight-changed') {
-      return false;
-    }
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
-    if (edgeLabel?.textContent) {
-      edgeLabel.textContent = event.newWeight.toString();
-    }
-    return true;
-  }
-
-  private async _handleEdgeLabelHighlightAddedEvent(event: GraphEvent) {
-    if (event.name !== 'edge-label-highlight-added') {
-      return false;
-    }
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
-    edgeLabel?.classList.add(event.highlightStyleClass);
-    return true;
-  }
-
-  private async _handleEdgeLabelHighlightRemovedEvent(event: GraphEvent) {
-    if (event.name !== 'edge-label-highlight-removed') {
-      return false;
-    }
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
-    edgeLabel?.classList.remove(event.highlightStyleClass);
     return true;
   }
 
