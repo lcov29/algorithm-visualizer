@@ -1,7 +1,7 @@
 import { GraphGeneratorConfig } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
-import { EdgeGeneratorError } from '../../src/generator/edge-generator-error';
+import { EdgeListGeneratorError } from '../../src/generator/edge-list-generator-error';
 
 describe('EdgeGeneratorError', () => {
   const cause = new RangeError('This caused the edge generator error');
@@ -13,7 +13,7 @@ describe('EdgeGeneratorError', () => {
     allowRecursiveEdges: true,
   });
   const nodes = [{ id: 1, label: 'test', availableEdgePointAmount: 5 }];
-  const error = new EdgeGeneratorError({
+  const error = new EdgeListGeneratorError({
     message: 'Edge generator error',
     config,
     nodes,

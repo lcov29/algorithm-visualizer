@@ -1,65 +1,113 @@
-import { BaseList } from '../../src/structure/base-list';
+import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
+import { IEdge } from '@algorithm-visualizer/graph-contract';
+
 import { EdgeList } from '../../src/structure/edge-list';
 
 describe('EdgeList', () => {
   let edgeList: EdgeList;
+  const mockEdge1: Omit<IEdge, 'id'> = { startNodeId: 0, endNodeId: 1 };
+  const mockEdge2: Omit<IEdge, 'id'> = { startNodeId: 1, endNodeId: 2 };
 
   beforeEach(() => {
     jest.restoreAllMocks();
     edgeList = new EdgeList();
+    edgeList.addEdge(mockEdge1);
+    edgeList.addEdge(mockEdge2);
+  });
+
+  describe('edges()', () => {
+    it('getter returns clone of edge list', () => {
+      const edges = edgeList.edges;
+      edges.push({ id: 2, startNodeId: 2, endNodeId: 3 });
+      expect(edgeList.edges).toEqual([
+        { id: 0, ...mockEdge1 },
+        { id: 1, ...mockEdge2 },
+      ]);
+    });
+
+    it('setter throws an invalid operation error', () => {
+      expect(() => {
+        edgeList.edges = [];
+      }).toThrow(
+        new InvalidOperationError({
+          message: 'Writing to readonly property edges is forbidden',
+        }),
+      );
+    });
   });
 
   describe('edge()', () => {
-    it('calls BaseList.item()', () => {
-      const mockItem = jest.fn();
-      jest.spyOn(BaseList.prototype, 'item').mockImplementationOnce(mockItem);
-      edgeList.edge(0);
-      expect(mockItem).toHaveBeenLastCalledWith(0);
+    it('returns a clone of the edge with the specified id', () => {
+      const edge = edgeList.edge(0)!;
+      edge.id = 3;
+      expect(edgeList.edge(0)).toEqual({ id: 0, ...mockEdge1 });
+    });
+
+    it('returns null when there is no edge with the specified id', () => {
+      expect(edgeList.edge(3)).toBeNull();
     });
   });
 
   describe('addEdge()', () => {
-    it('calls BaseList.add()', () => {
-      const mockAdd = jest.fn();
-      jest.spyOn(BaseList.prototype, 'add').mockImplementationOnce(mockAdd);
+    it('adds the specified edge with an ascending edge id', () => {
+      expect(edgeList.edges).toEqual([
+        { id: 0, ...mockEdge1 },
+        { id: 1, ...mockEdge2 },
+      ]);
+      edgeList.addEdge({ startNodeId: 2, endNodeId: 3 });
+      expect(edgeList.edges).toEqual([
+        { id: 0, ...mockEdge1 },
+        { id: 1, ...mockEdge2 },
+        { id: 2, startNodeId: 2, endNodeId: 3 },
+      ]);
+    });
 
-      const edgeArgument = { id: 5, startNodeId: 2, endNodeId: 4 };
-      edgeList.addEdge(edgeArgument);
-      expect(mockAdd).toHaveBeenLastCalledWith(edgeArgument);
+    it('returns the id of the added edge', () => {
+      const edgeId = edgeList.addEdge({ startNodeId: 2, endNodeId: 3 });
+      expect(edgeId).toBe(2);
+    });
+  });
+
+  describe('changeWeight()', () => {
+    it('changes the weight of the specified edge to the specified weight', () => {
+      edgeList.addEdge({ startNodeId: 2, endNodeId: 3, weight: 3 });
+      expect(edgeList.edge(2)?.weight).toBe(3);
+      edgeList.changeWeight({ edgeId: 2, newWeight: 5 });
+      expect(edgeList.edge(2)?.weight).toBe(5);
     });
   });
 
   describe('deleteEdge()', () => {
-    it('calls BaseList.delete()', () => {
-      const mockDelete = jest.fn();
-      jest
-        .spyOn(BaseList.prototype, 'delete')
-        .mockImplementationOnce(mockDelete);
+    it('removes edge with the specified id from the list', () => {
+      expect(edgeList.edges).toEqual([
+        { id: 0, ...mockEdge1 },
+        { id: 1, ...mockEdge2 },
+      ]);
+      edgeList.deleteEdge(1);
+      expect(edgeList.edges).toEqual([{ id: 0, ...mockEdge1 }]);
+    });
 
-      edgeList.deleteEdge(0);
-      expect(mockDelete).toHaveBeenLastCalledWith(0);
+    it('returns a reference to the edge list', () => {
+      expect(edgeList.deleteEdge(1)).toBe(edgeList);
     });
   });
 
   describe('getEdgesInvolving()', () => {
     beforeEach(() => {
-      edgeList
-        .addEdge({ startNodeId: 0, endNodeId: 1 })
-        .addEdge({ startNodeId: 2, endNodeId: 3 })
-        .addEdge({ startNodeId: 1, endNodeId: 2 });
+      edgeList.addEdge({ startNodeId: 2, endNodeId: 3 });
     });
 
     it('returns a list with all edges that involve the specified node ID', () => {
       const edgesA = edgeList.getEdgesInvolving(1);
       const edgesB = edgeList.getEdgesInvolving(3);
-      expect(edgesA.map(edge => edge.id)).toEqual([0, 2]);
-      expect(edgesB.map(edge => edge.id)).toEqual([1]);
+      expect(edgesA.map(edge => edge.id)).toEqual([0, 1]);
+      expect(edgesB.map(edge => edge.id)).toEqual([2]);
     });
 
     it('returns clones of edges that involve the specified node ID', () => {
       const edgeClone = edgeList.getEdgesInvolving(3)[0];
       edgeClone.startNodeId = 10;
-      expect(edgeList.edge(edgeClone.id)?.startNodeId).toBe(2);
+      expect(edgeList.getEdgesInvolving(3)[0].startNodeId).toBe(2);
     });
 
     it('returns an empty list when no edge involves the specified node iD', () => {
@@ -70,31 +118,28 @@ describe('EdgeList', () => {
 
   describe('getNavigableEdgesBetween()', () => {
     it('returns a list of all node IDs that can be reached', () => {
-      edgeList
-        .addEdge({ startNodeId: 5, endNodeId: 7 })
-        .addEdge({ startNodeId: 7, endNodeId: 5 })
-        .addEdge({ startNodeId: 5, endNodeId: 7, isDirected: true })
-        .addEdge({ startNodeId: 8, endNodeId: 9 });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 7 });
+      edgeList.addEdge({ startNodeId: 7, endNodeId: 5 });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 7, isDirected: true });
 
       const edges = edgeList.getNavigableEdgesBetween({
         startNodeId: 5,
         endNodeId: 7,
       });
-      expect(edges.map(edge => edge.id)).toEqual([0, 1, 2]);
+      expect(edges.map(edge => edge.id)).toEqual([2, 3, 4]);
     });
 
     it('excludes not navigable edges from the specified start node to the specified destination node', () => {
-      edgeList
-        .addEdge({ startNodeId: 5, endNodeId: 7 })
-        .addEdge({ startNodeId: 7, endNodeId: 5 })
-        .addEdge({ startNodeId: 5, endNodeId: 7, isDirected: true })
-        .addEdge({ startNodeId: 7, endNodeId: 5, isDirected: true });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 7 });
+      edgeList.addEdge({ startNodeId: 7, endNodeId: 5 });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 7, isDirected: true });
+      edgeList.addEdge({ startNodeId: 7, endNodeId: 5, isDirected: true });
 
       const edges = edgeList.getNavigableEdgesBetween({
         startNodeId: 5,
         endNodeId: 7,
       });
-      expect(edges.map(edge => edge.id)).toEqual([0, 1, 2]);
+      expect(edges.map(edge => edge.id)).toEqual([2, 3, 4]);
     });
 
     it('returns an empty list when no navigable edge between the specified nodes exist', () => {
@@ -109,32 +154,43 @@ describe('EdgeList', () => {
 
   describe('getNavigableNeighborNodeIdsFor()', () => {
     it('returns a list of all node IDs that can be reached by a navigable edge', () => {
-      edgeList
-        .addEdge({ startNodeId: 0, endNodeId: 1 })
-        .addEdge({ startNodeId: 0, endNodeId: 2 });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 1 });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 2 });
 
-      const neighborIds = edgeList.getNavigableNeighborNodeIdsFor(0);
+      const neighborIds = edgeList.getNavigableNeighborNodeIdsFor(5);
       expect(neighborIds).toEqual([1, 2]);
     });
 
     it('returns a list without duplicate IDs', () => {
-      edgeList
-        .addEdge({ startNodeId: 0, endNodeId: 5 })
-        .addEdge({ startNodeId: 0, endNodeId: 7 })
-        .addEdge({ startNodeId: 0, endNodeId: 7 });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 5 });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 7 });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 7 });
 
-      const neighborIds = edgeList.getNavigableNeighborNodeIdsFor(0);
+      const neighborIds = edgeList.getNavigableNeighborNodeIdsFor(5);
       expect(neighborIds).toEqual([5, 7]);
     });
 
     it('returns a list without directed edges that target the specified node ID', () => {
-      edgeList
-        .addEdge({ startNodeId: 0, endNodeId: 5 })
-        .addEdge({ startNodeId: 0, endNodeId: 6, isDirected: true })
-        .addEdge({ startNodeId: 7, endNodeId: 0, isDirected: true })
-        .addEdge({ startNodeId: 8, endNodeId: 0 });
-      const neighborIds = edgeList.getNavigableNeighborNodeIdsFor(0);
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 5 });
+      edgeList.addEdge({ startNodeId: 5, endNodeId: 6, isDirected: true });
+      edgeList.addEdge({ startNodeId: 7, endNodeId: 5, isDirected: true });
+      edgeList.addEdge({ startNodeId: 8, endNodeId: 5 });
+
+      const neighborIds = edgeList.getNavigableNeighborNodeIdsFor(5);
       expect(neighborIds).toEqual([5, 6, 8]);
+    });
+  });
+
+  describe('Iterator', () => {
+    it('enables iteration over all node ids', () => {
+      const receivedEdgeIds = [];
+      for (const edge of edgeList) {
+        receivedEdgeIds.push(edge);
+      }
+      expect(receivedEdgeIds).toEqual([
+        { id: 0, startNodeId: 0, endNodeId: 1 },
+        { id: 1, startNodeId: 1, endNodeId: 2 },
+      ]);
     });
   });
 });

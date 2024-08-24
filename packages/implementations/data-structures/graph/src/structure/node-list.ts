@@ -1,31 +1,53 @@
-import { INode, INodeList } from '@algorithm-visualizer/graph-contract';
-
-import { BaseList } from './base-list';
+import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
+import { INodeList } from '@algorithm-visualizer/graph-contract';
 
 /**
  * Data structure representing the nodes of a {@link Graph}.
  */
-export class NodeList extends BaseList<INode> implements INodeList {
+export class NodeList implements INodeList {
+  private _nodeIds: number[];
+  private _nextAvailableNodeId: number;
+
   constructor() {
-    super();
+    this._nodeIds = [];
+    this._nextAvailableNodeId = 0;
   }
 
-  node(id: number): INode | null {
-    return super.item(id);
+  get nodeIds(): number[] {
+    return this._nodeIds.map(nodeId => nodeId);
   }
 
-  addNode(node: Omit<INode, 'id'>): NodeList {
-    super.add(node);
-    return this;
+  set nodeIds(nodeIds: number[]) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property nodeIds is forbidden',
+    });
+  }
+
+  addNode(): number {
+    const newNodeId = this._nextAvailableNodeId++;
+    this._nodeIds.push(newNodeId);
+    return newNodeId;
   }
 
   deleteNode(id: number): NodeList {
-    super.delete(id);
+    this._nodeIds = this._nodeIds.filter(nodeId => nodeId !== id);
     return this;
   }
 
-  changeLabel(node: INode): NodeList {
-    super.replace(node);
-    return this;
+  hasNode(id: number): boolean {
+    return this._nodeIds.some(nodeId => nodeId === id);
+  }
+
+  [Symbol.iterator]() {
+    let index = 0;
+
+    return {
+      next: () => {
+        if (index < this._nodeIds.length) {
+          return { value: this._nodeIds[index++], done: false };
+        }
+        return { done: true };
+      },
+    };
   }
 }

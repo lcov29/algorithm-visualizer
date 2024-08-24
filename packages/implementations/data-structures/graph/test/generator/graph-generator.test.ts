@@ -67,26 +67,26 @@ describe('GraphGenerator', () => {
 
       expect(graphCreatedEvent!.name).toBe('graph-created');
 
-      expect(graphCreatedEvent!.nodes.list.length).toBeGreaterThanOrEqual(
+      expect(graphCreatedEvent!.nodes.nodeIds.length).toBeGreaterThanOrEqual(
         config.nodeAmount.min,
       );
-      expect(graphCreatedEvent!.nodes.list.length).toBeLessThanOrEqual(
+      expect(graphCreatedEvent!.nodes.nodeIds.length).toBeLessThanOrEqual(
         config.nodeAmount.max,
       );
 
-      expect(graphCreatedEvent!.edges.list.length).toBeGreaterThanOrEqual(
+      expect(graphCreatedEvent!.edges.edges.length).toBeGreaterThanOrEqual(
         (config.nodeAmount.min * config.edgeAmountPerNode.min) / 2,
       );
-      expect(graphCreatedEvent!.edges.list.length).toBeLessThanOrEqual(
+      expect(graphCreatedEvent!.edges.edges.length).toBeLessThanOrEqual(
         (config.nodeAmount.max * config.edgeAmountPerNode.max) / 2,
       );
 
-      graphCreatedEvent!.edges.list.forEach(edge => {
+      graphCreatedEvent!.edges.edges.forEach(edge => {
         expect(edge.weight).toBeGreaterThanOrEqual(config.edgeWeight!.min);
         expect(edge.weight).toBeLessThanOrEqual(config.edgeWeight!.max);
       });
 
-      graphCreatedEvent!.edges.list.forEach(edge => {
+      graphCreatedEvent!.edges.edges.forEach(edge => {
         expect(edge.isDirected).toBe(true);
       });
     });

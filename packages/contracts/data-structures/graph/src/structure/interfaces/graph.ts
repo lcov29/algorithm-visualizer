@@ -2,7 +2,6 @@ import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract'
 
 import { GraphEvent } from '../types';
 import { IEdge } from './edge';
-import { INode } from './node';
 
 /**
  * Data structure representing a graph.
@@ -11,6 +10,6 @@ import { INode } from './node';
  * @throws EventHandlingError
  */
 export interface IGraph extends IEventSubscriber<GraphEvent> {
-  readonly nodes: INode[];
+  readonly nodes: number[];
   readonly edges: IEdge[];
 }

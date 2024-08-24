@@ -1,4 +1,5 @@
-import { BaseList } from '../../src/structure/base-list';
+import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
+
 import { NodeList } from '../../src/structure/node-list';
 
 describe('NodeList', () => {
@@ -7,50 +8,70 @@ describe('NodeList', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     nodeList = new NodeList();
-    nodeList.addNode({ label: 'foo' }).addNode({ label: 'bar' });
+    nodeList.addNode();
+    nodeList.addNode();
   });
 
-  describe('node()', () => {
-    it('calls BaseList.item()', () => {
-      const mockItem = jest.fn();
-      jest.spyOn(BaseList.prototype, 'item').mockImplementationOnce(mockItem);
-      nodeList.node(0);
-      expect(mockItem).toHaveBeenLastCalledWith(0);
+  describe('nodeIds()', () => {
+    it('getter returns a clone of the specified nodeIds list', () => {
+      nodeList.nodeIds.push(3);
+      expect(nodeList.nodeIds).toEqual([0, 1]);
+    });
+
+    it('setter throws an invalid operation error', () => {
+      expect(() => (nodeList.nodeIds = [3])).toThrow(
+        new InvalidOperationError({
+          message: 'Writing to readonly property nodeIds is forbidden',
+        }),
+      );
     });
   });
 
   describe('addNode()', () => {
-    it('calls BaseList.add()', () => {
-      const mockAdd = jest.fn();
-      jest.spyOn(BaseList.prototype, 'add').mockImplementationOnce(mockAdd);
+    it('adds a new node with ascending Id', () => {
+      expect(nodeList.nodeIds).toEqual([0, 1]);
+      nodeList.addNode();
+      expect(nodeList.nodeIds).toEqual([0, 1, 2]);
+      nodeList.addNode();
+      expect(nodeList.nodeIds).toEqual([0, 1, 2, 3]);
+    });
 
-      const node = { id: 3, label: 'baz' };
-      nodeList.addNode(node);
-      expect(mockAdd).toHaveBeenLastCalledWith(node);
+    it('returns the Id of the new node', () => {
+      expect(nodeList.addNode()).toBe(2);
     });
   });
 
   describe('deleteNode()', () => {
-    it('calls BaseList.delete()', () => {
-      const mockDelete = jest.fn();
-      jest
-        .spyOn(BaseList.prototype, 'delete')
-        .mockImplementationOnce(mockDelete);
-
+    it('removes the specified node Id from the list', () => {
+      expect(nodeList.nodeIds).toEqual([0, 1]);
       nodeList.deleteNode(1);
-      expect(mockDelete).toHaveBeenLastCalledWith(1);
+      expect(nodeList.nodeIds).toEqual([0]);
+    });
+
+    it('does not modify the list when the specified node Id is not a list item', () => {
+      expect(nodeList.nodeIds).toEqual([0, 1]);
+      nodeList.deleteNode(2);
+      expect(nodeList.nodeIds).toEqual([0, 1]);
     });
   });
 
-  describe('changeLabel()', () => {
-    it('calls BaseList.replace()', () => {
-      const mockReplace = jest.fn();
-      jest
-        .spyOn(BaseList.prototype, 'replace')
-        .mockImplementationOnce(mockReplace);
-      const newLabelNode = { id: 0, label: 'newLabel' };
-      nodeList.changeLabel(newLabelNode);
-      expect(mockReplace).toHaveBeenCalledWith(newLabelNode);
+  describe('hasNode()', () => {
+    it('returns true when the specified node id is a list item', () => {
+      expect(nodeList.hasNode(0)).toBe(true);
+    });
+
+    it('returns false when the specified node id is not a list item', () => {
+      expect(nodeList.hasNode(2)).toBe(false);
+    });
+  });
+
+  describe('Iterator', () => {
+    it('enables iteration over all node ids', () => {
+      const receivedNodeIds = [];
+      for (const nodeId of nodeList) {
+        receivedNodeIds.push(nodeId);
+      }
+      expect(receivedNodeIds).toEqual([0, 1]);
     });
   });
 });

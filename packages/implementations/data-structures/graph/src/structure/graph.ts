@@ -35,11 +35,11 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
   }
 
   get nodes() {
-    return this._nodes.list;
+    return this._nodes.nodeIds;
   }
 
   get edges() {
-    return this._edges.list;
+    return this._edges.edges;
   }
 
   async handleEvent(event: GraphEvent) {
@@ -53,8 +53,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
       .add(event => this._handleEdgeWeightChangedEvent(event))
       .add(event => this._handleGraphCreatedEvent(event))
       .add(event => this._handleNodeAddedEvent(event))
-      .add(event => this._handleNodeDeletedEvent(event))
-      .add(event => this._handleNodeLabelChangedEvent(event));
+      .add(event => this._handleNodeDeletedEvent(event));
   }
 
   private async _handleEdgeAddedEvent(event: GraphEvent) {
@@ -94,12 +93,8 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
       if (event.name !== 'edge-weight-changed') {
         return false;
       }
-      const newEdge = this._edges.edge(event.edgeId);
-      if (!newEdge) {
-        return false;
-      }
-      newEdge.weight = event.newWeight;
-      this._edges.replaceEdge(newEdge);
+      const { edgeId, newWeight } = event;
+      this._edges.changeWeight({ edgeId, newWeight });
       return true;
     } catch (error) {
       throw new EventHandlingError({
@@ -124,7 +119,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
       if (event.name !== 'node-added') {
         return false;
       }
-      this._nodes.addNode(event.node);
+      this._nodes.addNode();
       return true;
     } catch (error) {
       throw new EventHandlingError({
@@ -147,27 +142,6 @@ export class Graph implements IGraph, IEventSubscriber<GraphEvent> {
     } catch (error) {
       throw new EventHandlingError({
         message: 'Error while trying to handle a node deleted event',
-        event,
-        cause: error as Error,
-      });
-    }
-  }
-
-  private async _handleNodeLabelChangedEvent(event: GraphEvent) {
-    try {
-      if (event.name !== 'node-label-changed') {
-        return false;
-      }
-      const node = this._nodes.node(event.nodeId);
-      if (!node) {
-        return false;
-      }
-      node.label = event.label;
-      this._nodes.changeLabel(node);
-      return true;
-    } catch (error) {
-      throw new EventHandlingError({
-        message: 'Error while trying to handle a node label changed event',
         event,
         cause: error as Error,
       });

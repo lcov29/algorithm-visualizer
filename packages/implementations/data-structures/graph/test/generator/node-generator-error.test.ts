@@ -1,7 +1,7 @@
 import { GraphGeneratorConfig } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
-import { NodeGeneratorError } from '../../src/generator/node-generator-error';
+import { NodeListGeneratorError } from '../../src/generator/node-list-generator-error';
 
 describe('NodeGeneratorError', () => {
   const cause = new RangeError('This caused the node generator error');
@@ -12,7 +12,7 @@ describe('NodeGeneratorError', () => {
     edgeDirection: 'unidirectional',
     allowRecursiveEdges: true,
   });
-  const error = new NodeGeneratorError({
+  const error = new NodeListGeneratorError({
     message: 'Node generator error',
     config,
     cause,

@@ -8,7 +8,6 @@ import {
   GraphGeneratorError,
   IEdgeList,
   IGraphGenerator,
-  INodeList,
 } from '@algorithm-visualizer/graph-contract';
 import {
   getRandomIntegerBetween,
@@ -16,9 +15,8 @@ import {
 } from '@algorithm-visualizer/randomization';
 
 import { EdgeList } from '../structure/edge-list';
-import { NodeList } from '../structure/node-list';
-import { EdgeGenerator } from './edge-generator';
-import { NodeGenerator } from './node-generator';
+import { EdgeListGenerator } from './edge-list-generator';
+import { generateRandomNodeList } from './node-list-generator';
 
 interface IGraphGeneratorArgs {
   subscriberManager: IEventSubscriberManager<GraphCreatedEvent>;
@@ -41,26 +39,21 @@ export class GraphGenerator implements IGraphGenerator {
 
   generateGraph(config: GraphGeneratorConfig) {
     try {
-      const nodeList: INodeList = new NodeList();
       const edgeList: IEdgeList = new EdgeList();
 
-      const nodeGenerator = new NodeGenerator({
+      const nodeList = generateRandomNodeList({
         config,
         getRandomIntegerBetween,
       });
 
-      for (const node of nodeGenerator.generateRandomNodes()) {
-        nodeList.addNode(node);
-      }
-
-      const edgeGenerator = new EdgeGenerator({
+      const edgeGenerator = new EdgeListGenerator({
         config,
-        nodes: nodeList.list,
+        nodeIds: nodeList.nodeIds,
         getRandomIntegerBetween,
         getRandomListItem,
       });
 
-      for (const edge of edgeGenerator.generateRandomEdges()) {
+      for (const edge of edgeGenerator.generateRandomEdges().edges) {
         edgeList.addEdge(edge);
       }
 

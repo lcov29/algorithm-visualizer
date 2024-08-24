@@ -1,15 +1,12 @@
-import { INode } from './node';
-
 /**
  * Data structure representing the nodes of a {@link Graph}.
  */
 export interface INodeList {
-  readonly list: INode[];
-  node: (id: number) => INode | null;
-  addNode: (node: Omit<INode, 'id'>) => INodeList;
+  readonly nodeIds: number[];
+  addNode: () => number;
   deleteNode: (id: number) => INodeList;
-  changeLabel: (node: INode) => INodeList;
+  hasNode: (id: number) => boolean;
   [Symbol.iterator]: () => {
-    next: () => { value?: INode; done: boolean };
+    next: () => { value?: number; done: boolean };
   };
 }

@@ -9,11 +9,11 @@ export interface INavigableEdgesArgs {
  * Data structure representing the edges of a {@link Graph}.
  */
 export interface IEdgeList {
-  readonly list: IEdge[];
+  readonly edges: IEdge[];
   edge: (id: number) => IEdge | null;
-  addEdge: (edge: Omit<IEdge, 'id'>) => IEdgeList;
+  addEdge: (edge: Omit<IEdge, 'id'>) => number;
+  changeWeight: (args: { edgeId: number; newWeight: number }) => void;
   deleteEdge: (id: number) => IEdgeList;
-  replaceEdge: (edge: IEdge) => IEdgeList;
   getEdgesInvolving: (nodeId: number) => IEdge[];
   getNavigableEdgesBetween: (args: INavigableEdgesArgs) => IEdge[];
   getNavigableNeighborNodeIdsFor: (nodeId: number) => number[];

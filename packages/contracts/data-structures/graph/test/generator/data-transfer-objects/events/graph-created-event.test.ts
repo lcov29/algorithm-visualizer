@@ -3,8 +3,15 @@ import { InvalidOperationError } from '@algorithm-visualizer/error-handling-cont
 import { GraphCreatedEvent, IEdgeList, INodeList } from '../../../../src';
 
 describe('GraphCreatedEvent', () => {
-  const mockNodeList = 'mockNodeList' as unknown as INodeList;
-  const mockEdgeList = 'mockEdgeList' as unknown as IEdgeList;
+  const mockNodeList = {
+    nodeIds: [0, 1, 2],
+  } as INodeList;
+  const mockEdgeList = {
+    edges: [
+      { id: 0, startNodeId: 1, endNodeId: 2 },
+      { id: 1, startNodeId: 2, endNodeId: 3 },
+    ],
+  } as IEdgeList;
   const nodeLabelChangedEvent = new GraphCreatedEvent({
     nodes: mockNodeList,
     edges: mockEdgeList,

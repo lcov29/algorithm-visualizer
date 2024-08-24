@@ -8,21 +8,18 @@ import {
   GraphEvent,
   NodeAddedEvent,
   NodeDeletedEvent,
-  NodeLabelChangedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
 import { EdgeList } from '../../src/structure/edge-list';
 import { Graph } from '../../src/structure/graph';
 import { NodeList } from '../../src/structure/node-list';
 
-const mockNodes = [
-  { id: 0, label: 'Node1' },
-  { id: 1, label: 'Node2' },
-];
+const mockNodes = [0, 1];
 
 function initializeMockNodes() {
   const nodeList = new NodeList();
-  nodeList.addNode({ label: 'Node1' }).addNode({ label: 'Node2' });
+  nodeList.addNode();
+  nodeList.addNode();
   return nodeList;
 }
 
@@ -45,9 +42,18 @@ const mockEdges = [
 
 function initializeMockEdges() {
   const edgeList = new EdgeList();
-  edgeList
-    .addEdge({ startNodeId: 1, endNodeId: 2, isDirected: true, weight: 1 })
-    .addEdge({ startNodeId: 2, endNodeId: 3, isDirected: false, weight: 2 });
+  edgeList.addEdge({
+    startNodeId: 1,
+    endNodeId: 2,
+    isDirected: true,
+    weight: 1,
+  });
+  edgeList.addEdge({
+    startNodeId: 2,
+    endNodeId: 3,
+    isDirected: false,
+    weight: 2,
+  });
   return edgeList;
 }
 
@@ -137,27 +143,24 @@ describe('Graph', () => {
     describe('when passed a graph-created event', () => {
       it('sets the nodeList and edgeList', async () => {
         const nodes = initializeMockNodes();
-        nodes.add({ label: 'Node3' });
+        nodes.addNode();
         const edges = initializeMockEdges();
-        edges.add({
+        edges.addEdge({
           startNodeId: 4,
           endNodeId: 5,
         });
         const graphCreatedEvent = new GraphCreatedEvent({ nodes, edges });
         await graph.handleEvent(graphCreatedEvent);
-        expect(graph.nodes).toEqual(nodes.list);
-        expect(graph.edges).toEqual(edges.list);
+        expect(graph.nodes).toEqual(nodes.nodeIds);
+        expect(graph.edges).toEqual(edges.edges);
       });
     });
 
     describe('when passed a node-added event', () => {
       it('adds a new node', async () => {
-        const nodeAddedEvent = new NodeAddedEvent({ label: 'newNode' });
+        const nodeAddedEvent = new NodeAddedEvent();
         await graph.handleEvent(nodeAddedEvent);
-        expect(graph.nodes).toEqual([
-          ...mockNodes,
-          { id: 2, label: 'newNode' },
-        ]);
+        expect(graph.nodes).toEqual([0, 1, 2]);
       });
     });
 
@@ -177,29 +180,6 @@ describe('Graph', () => {
       it('does not delete any nodes when the specified id is nonexistent', async () => {
         const nodeDeletedEvent = new NodeDeletedEvent({ nodeId: 8 });
         await graph.handleEvent(nodeDeletedEvent);
-        expect(graph.nodes).toEqual(mockNodes);
-      });
-    });
-
-    describe('when passed a node-label-changed event', () => {
-      it('changes the label of the specified node id', async () => {
-        const nodeLabelChangedEvent = new NodeLabelChangedEvent({
-          nodeId: 1,
-          label: 'newLabel',
-        });
-        await graph.handleEvent(nodeLabelChangedEvent);
-        expect(graph.nodes).toEqual([
-          mockNodes[0],
-          { ...mockNodes[1], label: 'newLabel' },
-        ]);
-      });
-
-      it('does not change any node label when the specified id is nonexistent', async () => {
-        const nodeLabelChangedEvent = new NodeLabelChangedEvent({
-          nodeId: 9,
-          label: 'newLabel',
-        });
-        await graph.handleEvent(nodeLabelChangedEvent);
         expect(graph.nodes).toEqual(mockNodes);
       });
     });

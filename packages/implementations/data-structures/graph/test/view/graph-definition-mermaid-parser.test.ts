@@ -1,22 +1,15 @@
 import {
   GraphCreatedEvent,
   IEdgeList,
+  INodeList,
 } from '@algorithm-visualizer/graph-contract';
-import { INodeList } from '@algorithm-visualizer/graph-contract';
 
 import { GraphDefinitionMermaidParser } from '../../src/view/graph-definition-mermaid-parser';
 
 function buildMockGraphCreatedEvent() {
-  const mockNodeList = {
-    list: [
-      { id: 0, label: 'A' },
-      { id: 1, label: 'B' },
-      { id: 2, label: 'C' },
-    ],
-  } as INodeList;
-
+  const mockNodeList = { nodeIds: [0, 1, 2] } as INodeList;
   const mockEdgeList = {
-    list: [
+    edges: [
       { id: 0, startNodeId: 0, endNodeId: 1, isDirected: true, weight: 4 },
       { id: 1, startNodeId: 1, endNodeId: 2, isDirected: false },
     ],
@@ -44,9 +37,9 @@ describe('GraphDefinitionMermaidParser', () => {
       const expectedGraph = [
         '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',
         'flowchart LR',
-        '0((A))',
-        '1((B))',
-        '2((C))',
+        '0((0))',
+        '1((1))',
+        '2((2))',
         '0 -- 4 --> 1',
         '1 --- 2',
         '\n',

@@ -1,46 +1,66 @@
+import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import {
   IEdge,
   IEdgeList,
   INavigableEdgesArgs,
 } from '@algorithm-visualizer/graph-contract';
 
-import { BaseList } from './base-list';
+export class EdgeList implements IEdgeList {
+  private _edges: IEdge[];
+  private _nextAvailableEdgeId: number;
 
-/**
- * Data structure representing the edges of a {@link Graph}.
- */
-export class EdgeList extends BaseList<IEdge> implements IEdgeList {
   constructor() {
-    super();
+    this._edges = [];
+    this._nextAvailableEdgeId = 0;
+  }
+
+  get edges(): IEdge[] {
+    return this._edges.map(edge => structuredClone(edge));
+  }
+
+  set edges(edges: IEdge[]) {
+    throw new InvalidOperationError({
+      message: 'Writing to readonly property edges is forbidden',
+    });
   }
 
   edge(id: number): IEdge | null {
-    return super.item(id);
+    const edge = this._edges.find(edge => edge.id === id);
+    return structuredClone(edge) ?? null;
   }
 
-  addEdge(edge: Omit<IEdge, 'id'>): EdgeList {
-    super.add(edge);
-    return this;
+  addEdge(edge: Omit<IEdge, 'id'>): number {
+    const newEdgeId = this._nextAvailableEdgeId++;
+    this._edges.push({
+      id: newEdgeId,
+      ...edge,
+    });
+    return newEdgeId;
   }
 
-  deleteEdge(id: number): EdgeList {
-    super.delete(id);
-    return this;
+  changeWeight(args: { edgeId: number; newWeight: number }) {
+    const { edgeId, newWeight } = args;
+    const edge = this._edges.find(edge => edge.id === edgeId);
+    if (edge) {
+      edge.weight = newWeight;
+    }
   }
 
-  replaceEdge(edge: IEdge): EdgeList {
-    super.replace(edge);
+  deleteEdge(id: number): IEdgeList {
+    this._edges = this._edges.filter(edgeId => edgeId.id !== id);
     return this;
   }
 
   getEdgesInvolving(nodeId: number): IEdge[] {
-    return super.list.filter(({ startNodeId, endNodeId }) =>
-      [startNodeId, endNodeId].includes(nodeId),
-    );
+    return this._edges
+      .filter(({ startNodeId, endNodeId }) =>
+        [startNodeId, endNodeId].includes(nodeId),
+      )
+      .map(edge => structuredClone(edge));
   }
 
   getNavigableEdgesBetween(args: INavigableEdgesArgs): IEdge[] {
-    return super.list.filter(({ startNodeId, endNodeId, isDirected }) => {
+    return this._edges.filter(({ startNodeId, endNodeId, isDirected }) => {
       const isEdgeBetweenStartEnd =
         args.startNodeId === startNodeId && args.endNodeId === endNodeId;
       const isEdgeBetweenEndStart =
@@ -50,7 +70,7 @@ export class EdgeList extends BaseList<IEdge> implements IEdgeList {
   }
 
   getNavigableNeighborNodeIdsFor(nodeId: number): number[] {
-    const neighborIds = super.list
+    const neighborIds = this._edges
       .map(({ startNodeId, endNodeId, isDirected }) => {
         const isStartNode = nodeId === startNodeId;
         if (isStartNode) {
@@ -66,5 +86,18 @@ export class EdgeList extends BaseList<IEdge> implements IEdgeList {
 
     const uniqueNeighborIDs = [...new Set(neighborIds)];
     return uniqueNeighborIDs;
+  }
+
+  [Symbol.iterator]() {
+    let index = 0;
+
+    return {
+      next: () => {
+        if (index < this._edges.length) {
+          return { value: structuredClone(this._edges[index++]), done: false };
+        }
+        return { done: true };
+      },
+    };
   }
 }
