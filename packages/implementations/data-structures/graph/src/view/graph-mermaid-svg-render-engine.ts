@@ -1,5 +1,5 @@
 import {
-  GraphCreatedEvent,
+  GraphRenderEvent,
   IGraphSVGRenderEngine,
 } from '@algorithm-visualizer/graph-contract';
 
@@ -18,11 +18,11 @@ export class GraphMermaidSVGRenderEngine
   }
 
   /**
-   * Renders the graph specified by the {@link GraphCreatedEvent} as a svg file using Mermaid.js ({@link https://mermaid.js.org/}).
+   * Renders the graph specified by the {@link GraphRenderEvent} as a svg file using Mermaid.js ({@link https://mermaid.js.org/}).
    *
-   * @param {GraphCreatedEvent} GraphCreatedEvent
+   * @param {GraphRenderEvent} GraphRenderEvent
    */
-  async render(event: GraphCreatedEvent): Promise<string> {
+  async render(event: GraphRenderEvent): Promise<string> {
     const mermaidGraphDefinition = new GraphDefinitionMermaidParser().parse({
       event,
       graphRenderDirection: this._graphRenderDirection,

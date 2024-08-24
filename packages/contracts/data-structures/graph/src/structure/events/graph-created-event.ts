@@ -1,7 +1,7 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-import { IEdgeList, INodeList } from '../../structure';
+import { IEdgeList, INodeList } from '..';
 
 interface IGraphCreatedEventArgs {
   nodes: INodeList;

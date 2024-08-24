@@ -5,7 +5,7 @@ import {
   EdgeDeletedEvent,
   EdgeWeightChangedEvent,
   GraphCreatedEvent,
-  GraphEvent,
+  GraphStructureEvent,
   NodeAddedEvent,
   NodeDeletedEvent,
 } from '@algorithm-visualizer/graph-contract';
@@ -61,7 +61,7 @@ describe('Graph', () => {
   let graph: Graph;
   let nodes: NodeList;
   let edges: EdgeList;
-  let eventHandlerChain: EventHandlerChain<GraphEvent>;
+  let eventHandlerChain: EventHandlerChain<GraphStructureEvent>;
 
   beforeEach(() => {
     jest.resetAllMocks();

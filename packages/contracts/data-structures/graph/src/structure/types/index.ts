@@ -1,2 +1,2 @@
 export { GraphBuilder } from './graph-builder';
-export { GraphEvent } from './graph-event';
+export { GraphStructureEvent } from './graph-structure-event';

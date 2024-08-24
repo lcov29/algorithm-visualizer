@@ -8,14 +8,14 @@ import {
   EdgeHideEvent,
   EdgeHighlightAddedEvent,
   EdgeHighlightRemovedEvent,
+  EdgeLabelChangedEvent,
   EdgeLabelDisplayEvent,
   EdgeLabelHideEvent,
   EdgeLabelHighlightAddedEvent,
   EdgeLabelHighlightRemovedEvent,
   EdgeLabelHighlightStyleClass,
-  EdgeWeightChangedEvent,
-  GraphCreatedEvent,
-  GraphEvent,
+  GraphRenderEvent,
+  GraphViewEvent,
   IGraphSVGRenderEngine,
   NodeDisplayEvent,
   NodeHideEvent,
@@ -31,8 +31,6 @@ import {
   NodeTitleChangedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
-import { EdgeList } from '../../src/structure/edge-list';
-import { NodeList } from '../../src/structure/node-list';
 import { GraphMermaidComponentSelector } from '../../src/view/graph-mermaid-component-selector';
 import { GraphVisualizer } from '../../src/view/graph-visualizer';
 import { MockMermaidSVGGraph } from './mocks/mock-mermaid-svg-graph';
@@ -40,7 +38,7 @@ import { MockMermaidSVGGraph } from './mocks/mock-mermaid-svg-graph';
 import { render, screen } from '@testing-library/react';
 import * as React from 'react';
 
-const eventHandlerChain = new EventHandlerChain<GraphEvent>({
+const eventHandlerChain = new EventHandlerChain<GraphViewEvent>({
   abortAfterSuccess: false,
   validator: new FunctionValidator(),
 });
@@ -76,10 +74,10 @@ describe('GraphVisualizer', () => {
   });
 
   describe('handleEvent()', () => {
-    describe('GraphCreatedEvent', () => {
-      const graphCreatedEvent = new GraphCreatedEvent({
-        nodes: new NodeList(),
-        edges: new EdgeList(),
+    describe('GraphRenderEvent', () => {
+      const graphCreatedEvent = new GraphRenderEvent({
+        nodes: [{ id: 0, label: 'A' }],
+        edges: [{ id: 0, startNodeId: 1, endNodeId: 2 }],
       });
 
       beforeEach(async () => {
@@ -103,6 +101,25 @@ describe('GraphVisualizer', () => {
     const nodeLabelHighlightStyleClass: NodeLabelHighlightStyleClass =
       'nodeLabelHighlightStyle1';
     const nodeId = 1;
+
+    describe('NodeDisplayEvent', () => {
+      it('displays the specified node', async () => {
+        const node = graphComponentSelector.getNode(nodeId);
+        await visualizer.handleEvent(new NodeHideEvent({ nodeId }));
+        expect(node?.classList).toContain(hiddenClassName);
+        await visualizer.handleEvent(new NodeDisplayEvent({ nodeId }));
+        expect(node?.classList).not.toContain(hiddenClassName);
+      });
+    });
+
+    describe('NodeHideEvent', () => {
+      it('hides the specified node', async () => {
+        const node = graphComponentSelector.getNode(nodeId);
+        expect(node?.classList).not.toContain(hiddenClassName);
+        await visualizer.handleEvent(new NodeHideEvent({ nodeId }));
+        expect(node?.classList).toContain(hiddenClassName);
+      });
+    });
 
     describe('NodeHighlightAddedEvent', () => {
       it('highlights the specified node', async () => {
@@ -146,25 +163,6 @@ describe('GraphVisualizer', () => {
           new NodeLabelChangedEvent({ nodeId, label: 'Foo' }),
         );
         expect(nodeLabel?.textContent).toBe('Foo');
-      });
-    });
-
-    describe('NodeDisplayEvent', () => {
-      it('displays the specified node', async () => {
-        const node = graphComponentSelector.getNode(nodeId);
-        await visualizer.handleEvent(new NodeHideEvent({ nodeId }));
-        expect(node?.classList).toContain(hiddenClassName);
-        await visualizer.handleEvent(new NodeDisplayEvent({ nodeId }));
-        expect(node?.classList).not.toContain(hiddenClassName);
-      });
-    });
-
-    describe('NodeHideEvent', () => {
-      it('hides the specified node', async () => {
-        const node = graphComponentSelector.getNode(nodeId);
-        expect(node?.classList).not.toContain(hiddenClassName);
-        await visualizer.handleEvent(new NodeHideEvent({ nodeId }));
-        expect(node?.classList).toContain(hiddenClassName);
       });
     });
 
@@ -281,6 +279,17 @@ describe('GraphVisualizer', () => {
       });
     });
 
+    describe('EdgeLabelChangedEvent', () => {
+      it('changes the label of the specified edge', async () => {
+        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        expect(edgeLabel?.textContent).toBe('5');
+        await visualizer.handleEvent(
+          new EdgeLabelChangedEvent({ edgeId, label: 'Foo' }),
+        );
+        expect(edgeLabel?.textContent).toBe('Foo');
+      });
+    });
+
     describe('EdgeLabelDisplayEvent', () => {
       it('displays the specified edge label', async () => {
         const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
@@ -334,12 +343,12 @@ describe('GraphVisualizer', () => {
       });
     });
 
-    describe('EdgeWeightChangedEvent', () => {
+    describe('EdgeLabelChangedEvent', () => {
       it('changes the label text of the specified edge', async () => {
         const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
         expect(edgeLabel?.textContent).not.toBe('6');
         await visualizer.handleEvent(
-          new EdgeWeightChangedEvent({ edgeId, newWeight: 6 }),
+          new EdgeLabelChangedEvent({ edgeId, label: '6' }),
         );
         expect(edgeLabel?.textContent).toBe('6');
       });

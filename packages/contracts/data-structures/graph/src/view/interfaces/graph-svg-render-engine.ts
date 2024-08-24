@@ -1,4 +1,4 @@
-import { GraphCreatedEvent } from '../../generator';
+import { GraphRenderEvent } from '../data-transfer-objects';
 
 export interface IGraphSVGRenderEngine<T> {
   /**
@@ -6,5 +6,5 @@ export interface IGraphSVGRenderEngine<T> {
    *
    * @param {GraphCreatedEvent} GraphCreatedEvent
    */
-  render: (event: GraphCreatedEvent) => Promise<T>;
+  render: (event: GraphRenderEvent) => Promise<T>;
 }

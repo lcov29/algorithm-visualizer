@@ -1,6 +1,6 @@
 import { IEventHandlerChain } from '@algorithm-visualizer/event-handling-contract';
 import {
-  GraphEvent,
+  GraphViewEvent,
   IGraphComponentSelector,
   IGraphSVGRenderEngine,
   IGraphVisualizer,
@@ -9,13 +9,13 @@ import {
 import React from 'react';
 
 interface IGraphVisualizerArgs {
-  eventHandlerChain: IEventHandlerChain<GraphEvent>;
+  eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
   graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
   graphComponentSelector: IGraphComponentSelector;
 }
 
 export class GraphVisualizer implements IGraphVisualizer {
-  private _eventHandlerChain: IEventHandlerChain<GraphEvent>;
+  private _eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
   private _graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
   private _graphComponentSelector: IGraphComponentSelector;
   private _setGraphSVGString: React.Dispatch<React.SetStateAction<string>>;
@@ -36,7 +36,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     this._setGraphSVGString = setGraphSVGString;
   }
 
-  async handleEvent(event: GraphEvent) {
+  async handleEvent(event: GraphViewEvent) {
     await this._eventHandlerChain.handle(event);
   }
 
@@ -48,10 +48,10 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleEdgeHighlightRemovedEvent(event))
       .add(event => this._handleEdgeLabelHighlightAddedEvent(event))
       .add(event => this._handleEdgeLabelHighlightRemovedEvent(event))
+      .add(event => this._handleEdgeLabelChangedEvent(event))
       .add(event => this._handleEdgeLabelDisplayEvent(event))
       .add(event => this._handleEdgeLabelHideEvent(event))
-      .add(event => this._handleEdgeWeightChangedEvent(event))
-      .add(event => this._handleGraphCreatedEvent(event))
+      .add(event => this._handleGraphRenderedEvent(event))
       .add(event => this._handleNodeHighlightAddedEvent(event))
       .add(event => this._handleNodeHighlightRemovedEvent(event))
       .add(event => this._handleNodeLabelChangedEvent(event))
@@ -64,7 +64,7 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleNodeTitleChangedEvent(event));
   }
 
-  private async _handleEdgeDisplayEvent(event: GraphEvent) {
+  private async _handleEdgeDisplayEvent(event: GraphViewEvent) {
     if (event.name !== 'edge-display') {
       return false;
     }
@@ -73,7 +73,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeHideEvent(event: GraphEvent) {
+  private async _handleEdgeHideEvent(event: GraphViewEvent) {
     if (event.name !== 'edge-hide') {
       return false;
     }
@@ -82,7 +82,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeHighlightAddedEvent(event: GraphEvent) {
+  private async _handleEdgeHighlightAddedEvent(event: GraphViewEvent) {
     if (event.name !== 'edge-highlight-added') {
       return false;
     }
@@ -91,7 +91,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeHighlightRemovedEvent(event: GraphEvent) {
+  private async _handleEdgeHighlightRemovedEvent(event: GraphViewEvent) {
     if (event.name !== 'edge-highlight-removed') {
       return false;
     }
@@ -100,7 +100,18 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeLabelDisplayEvent(event: GraphEvent) {
+  private async _handleEdgeLabelChangedEvent(event: GraphViewEvent) {
+    if (event.name !== 'edge-label-changed') {
+      return false;
+    }
+    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    if (edgeLabel?.textContent) {
+      edgeLabel.textContent = event.label;
+    }
+    return true;
+  }
+
+  private async _handleEdgeLabelDisplayEvent(event: GraphViewEvent) {
     if (event.name !== 'edge-label-display') {
       return false;
     }
@@ -109,7 +120,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeLabelHideEvent(event: GraphEvent) {
+  private async _handleEdgeLabelHideEvent(event: GraphViewEvent) {
     if (event.name !== 'edge-label-hide') {
       return false;
     }
@@ -118,7 +129,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeLabelHighlightAddedEvent(event: GraphEvent) {
+  private async _handleEdgeLabelHighlightAddedEvent(event: GraphViewEvent) {
     if (event.name !== 'edge-label-highlight-added') {
       return false;
     }
@@ -127,7 +138,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeLabelHighlightRemovedEvent(event: GraphEvent) {
+  private async _handleEdgeLabelHighlightRemovedEvent(event: GraphViewEvent) {
     if (event.name !== 'edge-label-highlight-removed') {
       return false;
     }
@@ -136,19 +147,8 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeWeightChangedEvent(event: GraphEvent) {
-    if (event.name !== 'edge-weight-changed') {
-      return false;
-    }
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
-    if (edgeLabel?.textContent) {
-      edgeLabel.textContent = event.newWeight.toString();
-    }
-    return true;
-  }
-
-  private async _handleGraphCreatedEvent(event: GraphEvent) {
-    if (event.name !== 'graph-created') {
+  private async _handleGraphRenderedEvent(event: GraphViewEvent) {
+    if (event.name !== 'graph-rendered') {
       return false;
     }
     const svg = await this._graphSVGRenderEngine.render(event);
@@ -156,7 +156,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeDisplayEvent(event: GraphEvent) {
+  private async _handleNodeDisplayEvent(event: GraphViewEvent) {
     if (event.name !== 'node-displayed') {
       return false;
     }
@@ -165,7 +165,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeHideEvent(event: GraphEvent) {
+  private async _handleNodeHideEvent(event: GraphViewEvent) {
     if (event.name !== 'node-hidden') {
       return false;
     }
@@ -174,7 +174,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeHighlightAddedEvent(event: GraphEvent) {
+  private async _handleNodeHighlightAddedEvent(event: GraphViewEvent) {
     if (event.name !== 'node-highlight-added') {
       return false;
     }
@@ -183,7 +183,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeHighlightRemovedEvent(event: GraphEvent) {
+  private async _handleNodeHighlightRemovedEvent(event: GraphViewEvent) {
     if (event.name !== 'node-highlight-removed') {
       return false;
     }
@@ -192,7 +192,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeLabelChangedEvent(event: GraphEvent) {
+  private async _handleNodeLabelChangedEvent(event: GraphViewEvent) {
     if (event.name !== 'node-label-changed') {
       return false;
     }
@@ -203,7 +203,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeLabelDisplayEvent(event: GraphEvent) {
+  private async _handleNodeLabelDisplayEvent(event: GraphViewEvent) {
     if (event.name !== 'node-label-displayed') {
       return false;
     }
@@ -212,7 +212,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeLabelHideEvent(event: GraphEvent) {
+  private async _handleNodeLabelHideEvent(event: GraphViewEvent) {
     if (event.name !== 'node-label-hidden') {
       return false;
     }
@@ -221,7 +221,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeLabelHighlightAddedEvent(event: GraphEvent) {
+  private async _handleNodeLabelHighlightAddedEvent(event: GraphViewEvent) {
     if (event.name !== 'node-label-highlight-added') {
       return false;
     }
@@ -230,7 +230,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeLabelHighlightRemovedEvent(event: GraphEvent) {
+  private async _handleNodeLabelHighlightRemovedEvent(event: GraphViewEvent) {
     if (event.name !== 'node-label-highlight-removed') {
       return false;
     }
@@ -239,7 +239,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleNodeTitleChangedEvent(event: GraphEvent) {
+  private async _handleNodeTitleChangedEvent(event: GraphViewEvent) {
     if (event.name !== 'node-title-changed') {
       return false;
     }

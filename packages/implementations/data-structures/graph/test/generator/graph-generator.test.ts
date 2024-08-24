@@ -2,8 +2,8 @@ import { EventSubscriberManager } from '@algorithm-visualizer/event-handling';
 import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract';
 import {
   GraphCreatedEvent,
-  GraphEvent,
   GraphGeneratorConfig,
+  GraphStructureEvent,
 } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
@@ -17,8 +17,10 @@ describe('GraphGenerator', () => {
   let mockSubscriber: MockGraphCreatedSubscriber;
   let graphCreatedEvent: GraphCreatedEvent | null;
 
-  class MockGraphCreatedSubscriber implements IEventSubscriber<GraphEvent> {
-    async handleEvent(event: GraphEvent) {
+  class MockGraphCreatedSubscriber
+    implements IEventSubscriber<GraphStructureEvent>
+  {
+    async handleEvent(event: GraphStructureEvent) {
       if (event.name === 'graph-created') {
         graphCreatedEvent = event;
       }

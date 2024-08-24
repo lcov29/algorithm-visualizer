@@ -1,4 +1,3 @@
-export { GraphCreatedEvent } from './graph-created-event';
 export {
   GraphGeneratorConfig,
   IGraphGeneratorConfigArgs,

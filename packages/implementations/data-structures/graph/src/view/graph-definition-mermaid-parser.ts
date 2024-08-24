@@ -1,9 +1,13 @@
-import { GraphCreatedEvent, IEdge } from '@algorithm-visualizer/graph-contract';
+import {
+  GraphRenderEvent,
+  IEdge,
+  INode,
+} from '@algorithm-visualizer/graph-contract';
 
 import { MermaidGraphRenderDirection } from './graph-render-direction-map';
 
 interface IGraphDefinitionMermaidParserArgs {
-  event: GraphCreatedEvent;
+  event: GraphRenderEvent;
   graphRenderDirection: MermaidGraphRenderDirection;
 }
 
@@ -19,14 +23,14 @@ export class GraphDefinitionMermaidParser {
     return [
       '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',
       `flowchart ${graphRenderDirection}`,
-      this._parseNodes(nodes.nodeIds),
-      this._parseEdges(edges.edges),
+      this._parseNodes(nodes),
+      this._parseEdges(edges),
       '\n',
     ].join('\n');
   }
 
-  private _parseNodes(nodes: number[]) {
-    return nodes.map(id => `${id}((${id}))`).join('\n');
+  private _parseNodes(nodes: INode[]) {
+    return nodes.map(({ id, label }) => `${id}((${label}))`).join('\n');
   }
 
   private _parseEdges(edges: IEdge[]) {

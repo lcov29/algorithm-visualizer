@@ -1,7 +1,7 @@
 import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
-  GraphEvent,
+  GraphViewEvent,
   GraphVisualizationBuilder,
   GraphVisualizationError,
 } from '@algorithm-visualizer/graph-contract';
@@ -24,7 +24,7 @@ export const buildGraphVisualizer: GraphVisualizationBuilder = args => {
   const graphSVGRenderEngine = new GraphMermaidSVGRenderEngine(
     mermaidGraphRenderDirection,
   );
-  const eventHandlerChain = new EventHandlerChain<GraphEvent>({
+  const eventHandlerChain = new EventHandlerChain<GraphViewEvent>({
     abortAfterSuccess: false,
     validator: new FunctionValidator(),
   });

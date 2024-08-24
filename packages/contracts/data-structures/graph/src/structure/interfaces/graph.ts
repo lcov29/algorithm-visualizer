@@ -1,6 +1,6 @@
 import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract';
 
-import { GraphEvent } from '../types';
+import { GraphStructureEvent } from '../types';
 import { IEdge } from './edge';
 
 /**
@@ -9,7 +9,7 @@ import { IEdge } from './edge';
  *
  * @throws EventHandlingError
  */
-export interface IGraph extends IEventSubscriber<GraphEvent> {
+export interface IGraph extends IEventSubscriber<GraphStructureEvent> {
   readonly nodes: number[];
   readonly edges: IEdge[];
 }

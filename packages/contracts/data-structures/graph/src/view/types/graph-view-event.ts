@@ -1,54 +1,44 @@
-import { GraphCreatedEvent } from '../../generator';
 import {
   EdgeDisplayEvent,
   EdgeHideEvent,
   EdgeHighlightAddedEvent,
   EdgeHighlightRemovedEvent,
+  EdgeLabelChangedEvent,
   EdgeLabelDisplayEvent,
   EdgeLabelHideEvent,
   EdgeLabelHighlightAddedEvent,
   EdgeLabelHighlightRemovedEvent,
+  GraphRenderEvent,
   NodeDisplayEvent,
   NodeHideEvent,
   NodeHighlightAddedEvent,
   NodeHighlightRemovedEvent,
+  NodeLabelChangedEvent,
   NodeLabelDisplayEvent,
   NodeLabelHideEvent,
   NodeLabelHighlightAddedEvent,
   NodeLabelHighlightRemovedEvent,
   NodeTitleChangedEvent,
-} from '../../view';
-import {
-  EdgeAddedEvent,
-  EdgeDeletedEvent,
-  EdgeWeightChangedEvent,
-  NodeAddedEvent,
-  NodeDeletedEvent,
-  NodeLabelChangedEvent,
-} from '../events';
+} from '../data-transfer-objects/events';
 
-export type GraphEvent =
-  | EdgeAddedEvent
-  | EdgeDeletedEvent
+export type GraphViewEvent =
   | EdgeDisplayEvent
   | EdgeHideEvent
   | EdgeHighlightAddedEvent
   | EdgeHighlightRemovedEvent
+  | EdgeLabelChangedEvent
   | EdgeLabelDisplayEvent
   | EdgeLabelHideEvent
   | EdgeLabelHighlightAddedEvent
   | EdgeLabelHighlightRemovedEvent
-  | EdgeWeightChangedEvent
-  | GraphCreatedEvent
-  | NodeAddedEvent
-  | NodeDeletedEvent
+  | GraphRenderEvent
   | NodeDisplayEvent
   | NodeHideEvent
   | NodeHighlightAddedEvent
   | NodeHighlightRemovedEvent
+  | NodeLabelChangedEvent
   | NodeLabelDisplayEvent
   | NodeLabelHideEvent
-  | NodeLabelChangedEvent
   | NodeLabelHighlightAddedEvent
   | NodeLabelHighlightRemovedEvent
   | NodeTitleChangedEvent;

@@ -1,20 +1,25 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { NodeLabelChangedEvent } from '../../../src';
+import { GraphCreatedEvent, IEdgeList, INodeList } from '../../../src';
 
-describe('NodeLabelChangedEvent', () => {
-  const nodeLabelChangedEvent = new NodeLabelChangedEvent({
-    nodeId: 3,
-    label: 'newLabel',
-  });
-
-  beforeEach(() => {
-    jest.resetAllMocks();
+describe('GraphCreatedEvent', () => {
+  const mockNodeList = {
+    nodeIds: [0, 1, 2],
+  } as INodeList;
+  const mockEdgeList = {
+    edges: [
+      { id: 0, startNodeId: 1, endNodeId: 2 },
+      { id: 1, startNodeId: 2, endNodeId: 3 },
+    ],
+  } as IEdgeList;
+  const nodeLabelChangedEvent = new GraphCreatedEvent({
+    nodes: mockNodeList,
+    edges: mockEdgeList,
   });
 
   describe.each([
-    ['nodeId', 3],
-    ['label', 'newLabel'],
+    ['nodes', mockNodeList],
+    ['edges', mockEdgeList],
   ])('%s()', (methodName, expectedResult) => {
     it(`getter returns the specified ${methodName} value`, () => {
       // @ts-expect-error invoke method by string name
