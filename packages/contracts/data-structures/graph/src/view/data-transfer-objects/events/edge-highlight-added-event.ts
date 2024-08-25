@@ -1,15 +1,19 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
+interface IEdgeHighlightAddedEventArgs {
+  edgeId: number;
+}
+
 /**
  * @throws InvalidOperationError
  */
 export class EdgeHighlightAddedEvent extends BaseEvent<'edge-highlight-added'> {
   private _edgeId: number;
 
-  constructor(edgeId: number) {
+  constructor(args: IEdgeHighlightAddedEventArgs) {
     super('edge-highlight-added');
-    this._edgeId = edgeId;
+    this._edgeId = args.edgeId;
   }
 
   get edgeId() {

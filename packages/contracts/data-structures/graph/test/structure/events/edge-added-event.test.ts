@@ -5,7 +5,7 @@ import { EdgeAddedEvent, IEdge } from '../../../src';
 describe('EdgeAddedEvent', () => {
   describe('edge()', () => {
     const edge: Omit<IEdge, 'id'> = { startNodeId: 1, endNodeId: 2 };
-    const edgeAddedEvent = new EdgeAddedEvent(edge);
+    const edgeAddedEvent = new EdgeAddedEvent({ edge });
 
     beforeEach(() => {
       jest.resetAllMocks();

@@ -4,7 +4,7 @@ import { EdgeHighlightAddedEvent } from '../../../../src';
 
 describe('EdgeHighlightAddedEvent', () => {
   const edgeId = 3;
-  const edgeHighlightAddedEvent = new EdgeHighlightAddedEvent(edgeId);
+  const edgeHighlightAddedEvent = new EdgeHighlightAddedEvent({ edgeId });
 
   beforeEach(() => {
     jest.resetAllMocks();

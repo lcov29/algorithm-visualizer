@@ -11,9 +11,9 @@ interface INodeHiddenEventArgs {
 export class NodeHiddenEvent extends BaseEvent<'node-hidden'> {
   private _nodeId: number;
 
-  constructor({ nodeId }: INodeHiddenEventArgs) {
+  constructor(args: INodeHiddenEventArgs) {
     super('node-hidden');
-    this._nodeId = nodeId;
+    this._nodeId = args.nodeId;
   }
 
   get nodeId() {

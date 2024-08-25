@@ -11,9 +11,9 @@ interface INodeLabelHiddenArgs {
 export class NodeLabelHiddenEvent extends BaseEvent<'node-label-hidden'> {
   private _nodeId: number;
 
-  constructor({ nodeId }: INodeLabelHiddenArgs) {
+  constructor(args: INodeLabelHiddenArgs) {
     super('node-label-hidden');
-    this._nodeId = nodeId;
+    this._nodeId = args.nodeId;
   }
 
   get nodeId() {

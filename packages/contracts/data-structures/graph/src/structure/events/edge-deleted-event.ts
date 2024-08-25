@@ -11,9 +11,9 @@ interface IEdgeDeletedEventArgs {
 export class EdgeDeletedEvent extends BaseEvent<'edge-deleted'> {
   private _edgeId: number;
 
-  constructor({ edgeId }: IEdgeDeletedEventArgs) {
+  constructor(args: IEdgeDeletedEventArgs) {
     super('edge-deleted');
-    this._edgeId = edgeId;
+    this._edgeId = args.edgeId;
   }
 
   get edgeId() {

@@ -11,9 +11,9 @@ interface INodeDeletedEventArgs {
 export class NodeDeletedEvent extends BaseEvent<'node-deleted'> {
   private _nodeId: number;
 
-  constructor({ nodeId }: INodeDeletedEventArgs) {
+  constructor(args: INodeDeletedEventArgs) {
     super('node-deleted');
-    this._nodeId = nodeId;
+    this._nodeId = args.nodeId;
   }
 
   get nodeId() {

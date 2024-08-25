@@ -11,9 +11,9 @@ interface IEdgeHiddenEventArgs {
 export class EdgeHiddenEvent extends BaseEvent<'edge-hidden'> {
   private _edgeId: number;
 
-  constructor({ edgeId }: IEdgeHiddenEventArgs) {
+  constructor(args: IEdgeHiddenEventArgs) {
     super('edge-hidden');
-    this._edgeId = edgeId;
+    this._edgeId = args.edgeId;
   }
 
   get edgeId() {

@@ -11,9 +11,9 @@ interface INodeDisplayedEventArgs {
 export class NodeDisplayedEvent extends BaseEvent<'node-displayed'> {
   private _nodeId: number;
 
-  constructor({ nodeId }: INodeDisplayedEventArgs) {
+  constructor(args: INodeDisplayedEventArgs) {
     super('node-displayed');
-    this._nodeId = nodeId;
+    this._nodeId = args.nodeId;
   }
 
   get nodeId() {

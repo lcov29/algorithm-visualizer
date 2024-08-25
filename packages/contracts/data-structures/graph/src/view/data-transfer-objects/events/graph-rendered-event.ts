@@ -13,10 +13,10 @@ export class GraphRenderedEvent extends BaseEvent<'graph-rendered'> {
   private _nodes: INode[];
   private _edges: IEdge[];
 
-  constructor({ nodes, edges }: IGraphRenderedEventArgs) {
+  constructor(args: IGraphRenderedEventArgs) {
     super('graph-rendered');
-    this._nodes = nodes;
-    this._edges = edges;
+    this._nodes = args.nodes;
+    this._edges = args.edges;
   }
 
   get nodes() {

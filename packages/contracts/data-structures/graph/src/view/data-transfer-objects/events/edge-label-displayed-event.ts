@@ -11,9 +11,9 @@ interface IEdgeLabelDisplayedEventArgs {
 export class EdgeLabelDisplayedEvent extends BaseEvent<'edge-label-displayed'> {
   private _edgeId: number;
 
-  constructor({ edgeId }: IEdgeLabelDisplayedEventArgs) {
+  constructor(args: IEdgeLabelDisplayedEventArgs) {
     super('edge-label-displayed');
-    this._edgeId = edgeId;
+    this._edgeId = args.edgeId;
   }
 
   get edgeId() {

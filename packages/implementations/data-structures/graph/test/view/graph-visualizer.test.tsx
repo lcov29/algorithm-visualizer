@@ -264,7 +264,7 @@ describe('GraphVisualizer', () => {
       it('highlights the specified edge', async () => {
         const edge = graphComponentSelector.getEdge(edgeId);
         expect(edge?.classList).not.toContain(edgeHighlightClassName);
-        await visualizer.handleEvent(new EdgeHighlightAddedEvent(edgeId));
+        await visualizer.handleEvent(new EdgeHighlightAddedEvent({ edgeId }));
         expect(edge?.classList).toContain(edgeHighlightClassName);
       });
     });
@@ -272,9 +272,9 @@ describe('GraphVisualizer', () => {
     describe('EdgeHighlightRemovedEvent', () => {
       it('removes the highlighting of the specified edge', async () => {
         const edge = graphComponentSelector.getEdge(edgeId);
-        await visualizer.handleEvent(new EdgeHighlightAddedEvent(edgeId));
+        await visualizer.handleEvent(new EdgeHighlightAddedEvent({ edgeId }));
         expect(edge?.classList).toContain(edgeHighlightClassName);
-        await visualizer.handleEvent(new EdgeHighlightRemovedEvent(edgeId));
+        await visualizer.handleEvent(new EdgeHighlightRemovedEvent({ edgeId }));
         expect(edge?.classList).not.toContain(edgeHighlightClassName);
       });
     });

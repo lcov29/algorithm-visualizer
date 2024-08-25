@@ -12,10 +12,10 @@ export class GraphCreatedEvent extends BaseEvent<'graph-created'> {
   private _nodes: INodeList;
   private _edges: IEdgeList;
 
-  constructor({ nodes, edges }: IGraphCreatedEventArgs) {
+  constructor(args: IGraphCreatedEventArgs) {
     super('graph-created');
-    this._nodes = nodes;
-    this._edges = edges;
+    this._nodes = args.nodes;
+    this._edges = args.edges;
   }
 
   get nodes() {
