@@ -44,7 +44,7 @@ describe('GraphMermaidComponentSelector', () => {
       ['second', 1, 'B'],
       ['third', 2, 'C'],
     ])('selects the %s node label', (_, nodeId, expectedNodeLabelText) => {
-      const nodeLabelElement = selector.getLabelOfNode(nodeId);
+      const nodeLabelElement = selector.getNodeLabel(nodeId);
       expect(getNodeLabelText(nodeLabelElement)).toBe(expectedNodeLabelText);
     });
   });
@@ -82,7 +82,7 @@ describe('GraphMermaidComponentSelector', () => {
     ])(
       'selects the label of the %s edge between the nodes %s and %s',
       (_, edgeId, __, ___, expectedEdgeLabelText) => {
-        const edge = selector.getLabelOfEdge(edgeId);
+        const edge = selector.getEdgeLabel(edgeId);
         const edgeLabelText = edge?.childNodes[0].textContent ?? '';
         expect(edgeLabelText).toBe(expectedEdgeLabelText);
       },

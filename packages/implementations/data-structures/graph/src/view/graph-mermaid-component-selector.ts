@@ -16,7 +16,7 @@ export class GraphMermaidComponentSelector implements IGraphComponentSelector {
     return this._select(`[id^="flowchart-${id}"]`);
   }
 
-  getLabelOfNode(id: number) {
+  getNodeLabel(id: number) {
     return this._select(`[id^=flowchart-${id}] .nodeLabel`);
   }
 
@@ -29,7 +29,7 @@ export class GraphMermaidComponentSelector implements IGraphComponentSelector {
     return this._select(`[id^="L-${startNodeId}-${endNodeId}"]`);
   }
 
-  getLabelOfEdge(id: number) {
+  getEdgeLabel(id: number) {
     return this._select(`[id="edge-label-${id}"]`);
   }
 

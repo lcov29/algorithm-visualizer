@@ -104,7 +104,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'edge-label-changed') {
       return false;
     }
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    const edgeLabel = this._graphComponentSelector.getEdgeLabel(event.edgeId);
     if (edgeLabel?.textContent) {
       edgeLabel.textContent = event.label;
     }
@@ -115,7 +115,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'edge-label-displayed') {
       return false;
     }
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    const edgeLabel = this._graphComponentSelector.getEdgeLabel(event.edgeId);
     edgeLabel?.classList.remove('hidden');
     return true;
   }
@@ -124,7 +124,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'edge-label-hidden') {
       return false;
     }
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    const edgeLabel = this._graphComponentSelector.getEdgeLabel(event.edgeId);
     edgeLabel?.classList.add('hidden');
     return true;
   }
@@ -133,7 +133,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'edge-label-highlight-added') {
       return false;
     }
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    const edgeLabel = this._graphComponentSelector.getEdgeLabel(event.edgeId);
     edgeLabel?.classList.add(event.highlightStyleClass);
     return true;
   }
@@ -142,7 +142,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'edge-label-highlight-removed') {
       return false;
     }
-    const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
+    const edgeLabel = this._graphComponentSelector.getEdgeLabel(event.edgeId);
     edgeLabel?.classList.remove(event.highlightStyleClass);
     return true;
   }
@@ -196,7 +196,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'node-label-changed') {
       return false;
     }
-    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    const nodeLabel = this._graphComponentSelector.getNodeLabel(event.nodeId);
     if (nodeLabel?.textContent) {
       nodeLabel.textContent = event.label;
     }
@@ -207,7 +207,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'node-label-displayed') {
       return false;
     }
-    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    const nodeLabel = this._graphComponentSelector.getNodeLabel(event.nodeId);
     nodeLabel?.classList.remove('hidden');
     return true;
   }
@@ -216,7 +216,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'node-label-hidden') {
       return false;
     }
-    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    const nodeLabel = this._graphComponentSelector.getNodeLabel(event.nodeId);
     nodeLabel?.classList.add('hidden');
     return true;
   }
@@ -225,7 +225,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'node-label-highlight-added') {
       return false;
     }
-    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    const nodeLabel = this._graphComponentSelector.getNodeLabel(event.nodeId);
     nodeLabel?.classList.add(event.highlightStyleClass);
     return true;
   }
@@ -234,7 +234,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'node-label-highlight-removed') {
       return false;
     }
-    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    const nodeLabel = this._graphComponentSelector.getNodeLabel(event.nodeId);
     nodeLabel?.classList.remove(event.highlightStyleClass);
     return true;
   }
@@ -243,7 +243,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'node-title-changed') {
       return false;
     }
-    const nodeLabel = this._graphComponentSelector.getLabelOfNode(event.nodeId);
+    const nodeLabel = this._graphComponentSelector.getNodeLabel(event.nodeId);
     nodeLabel?.setAttribute('title', event.title);
     return true;
   }

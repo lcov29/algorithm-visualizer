@@ -157,7 +157,7 @@ describe('GraphVisualizer', () => {
 
     describe('NodeLabelChangedEvent', () => {
       it('changes the label text of the specified node', async () => {
-        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        const nodeLabel = graphComponentSelector.getNodeLabel(nodeId);
         expect(nodeLabel?.textContent).not.toBe('Foo');
         await visualizer.handleEvent(
           new NodeLabelChangedEvent({ nodeId, label: 'Foo' }),
@@ -168,7 +168,7 @@ describe('GraphVisualizer', () => {
 
     describe('NodeLabelDisplayedEvent', () => {
       it('displays the specified node label', async () => {
-        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        const nodeLabel = graphComponentSelector.getNodeLabel(nodeId);
         await visualizer.handleEvent(new NodeLabelHiddenEvent({ nodeId }));
         expect(nodeLabel?.classList).toContain(hiddenClassName);
         await visualizer.handleEvent(new NodeLabelDisplayedEvent({ nodeId }));
@@ -178,7 +178,7 @@ describe('GraphVisualizer', () => {
 
     describe('NodeLabelHiddenEvent', () => {
       it('hides the specified node label', async () => {
-        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        const nodeLabel = graphComponentSelector.getNodeLabel(nodeId);
         expect(nodeLabel?.classList).not.toContain(hiddenClassName);
         await visualizer.handleEvent(new NodeLabelHiddenEvent({ nodeId }));
         expect(nodeLabel?.classList).toContain(hiddenClassName);
@@ -193,7 +193,7 @@ describe('GraphVisualizer', () => {
             highlightStyleClass: nodeLabelHighlightStyleClass,
           }),
         );
-        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        const nodeLabel = graphComponentSelector.getNodeLabel(nodeId);
         expect(nodeLabel?.classList).toContain(nodeLabelHighlightStyleClass);
         await visualizer.handleEvent(
           new NodeLabelHighlightRemovedEvent({
@@ -209,7 +209,7 @@ describe('GraphVisualizer', () => {
 
     describe('NodeLabelHighlightRemovedEvent', () => {
       it('removes the highlighting of the label of the specified node', async () => {
-        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        const nodeLabel = graphComponentSelector.getNodeLabel(nodeId);
         expect(nodeLabel?.classList).not.toContain(
           nodeLabelHighlightStyleClass,
         );
@@ -225,7 +225,7 @@ describe('GraphVisualizer', () => {
 
     describe('NodeTitleChangedEvent', () => {
       it('adds a title attribute to the specified node', async () => {
-        const nodeLabel = graphComponentSelector.getLabelOfNode(nodeId);
+        const nodeLabel = graphComponentSelector.getNodeLabel(nodeId);
         expect(nodeLabel?.getAttribute('title')).toBeNull();
         await visualizer.handleEvent(
           new NodeTitleChangedEvent({ nodeId, title: 'Foo' }),
@@ -281,7 +281,7 @@ describe('GraphVisualizer', () => {
 
     describe('EdgeLabelChangedEvent', () => {
       it('changes the label of the specified edge', async () => {
-        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        const edgeLabel = graphComponentSelector.getEdgeLabel(edgeId);
         expect(edgeLabel?.textContent).toBe('5');
         await visualizer.handleEvent(
           new EdgeLabelChangedEvent({ edgeId, label: 'Foo' }),
@@ -292,7 +292,7 @@ describe('GraphVisualizer', () => {
 
     describe('EdgeLabelDisplayedEvent', () => {
       it('displays the specified edge label', async () => {
-        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        const edgeLabel = graphComponentSelector.getEdgeLabel(edgeId);
         await visualizer.handleEvent(new EdgeLabelHiddenEvent({ edgeId }));
         expect(edgeLabel?.classList).toContain(hiddenClassName);
         await visualizer.handleEvent(new EdgeLabelDisplayedEvent({ edgeId }));
@@ -302,7 +302,7 @@ describe('GraphVisualizer', () => {
 
     describe('EdgeLabelHiddenEvent', () => {
       it('hides the specified edge label', async () => {
-        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        const edgeLabel = graphComponentSelector.getEdgeLabel(edgeId);
         expect(edgeLabel?.classList).not.toContain(hiddenClassName);
         await visualizer.handleEvent(new EdgeLabelHiddenEvent({ edgeId }));
         expect(edgeLabel?.classList).toContain(hiddenClassName);
@@ -311,7 +311,7 @@ describe('GraphVisualizer', () => {
 
     describe('EdgeLabelHighlightAddedEvent', () => {
       it('highlights the label of the specified edge', async () => {
-        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        const edgeLabel = graphComponentSelector.getEdgeLabel(edgeId);
         expect(edgeLabel?.classList).not.toContain(edgeLabelHighlightClassName);
         await visualizer.handleEvent(
           new EdgeLabelHighlightAddedEvent({
@@ -325,7 +325,7 @@ describe('GraphVisualizer', () => {
 
     describe('EdgeLabelHighlightRemovedEvent', () => {
       it('removes the highlighting of the label of the specified edge', async () => {
-        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        const edgeLabel = graphComponentSelector.getEdgeLabel(edgeId);
         await visualizer.handleEvent(
           new EdgeLabelHighlightAddedEvent({
             edgeId,
@@ -345,7 +345,7 @@ describe('GraphVisualizer', () => {
 
     describe('EdgeLabelChangedEvent', () => {
       it('changes the label text of the specified edge', async () => {
-        const edgeLabel = graphComponentSelector.getLabelOfEdge(edgeId);
+        const edgeLabel = graphComponentSelector.getEdgeLabel(edgeId);
         expect(edgeLabel?.textContent).not.toBe('6');
         await visualizer.handleEvent(
           new EdgeLabelChangedEvent({ edgeId, label: '6' }),
