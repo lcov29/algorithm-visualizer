@@ -6,6 +6,7 @@ import {
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
 import { EdgeListGenerator } from '../../src/generator/edge-list-generator';
+import { EdgeList } from '../../src/structure/edge-list';
 
 function getMockNodes(): number[] {
   return [0, 1, 2, 3];
@@ -24,24 +25,21 @@ function getMockConfig(
   });
 }
 
-function getRandomIntegerBetween(min: number, max: number) {
+function mockGetRandomIntegerBetween(min: number, max: number) {
   return Math.floor(min + (max - min + 1) * Math.random());
 }
 
-function getRandomListItem<T>(list: T[]) {
+function mockGetRandomListItem<T>(list: T[]) {
   const randomListIndex = Math.floor(list.length * Math.random());
   return list.at(randomListIndex) ?? null;
 }
 
-function buildEdgeGenerator(
-  nodeIds: number[],
-  config: GraphGeneratorConfig,
-): EdgeListGenerator {
+function buildEdgeGenerator(nodeIds: number[]): EdgeListGenerator {
   return new EdgeListGenerator({
+    edgeList: new EdgeList(),
+    getRandomIntegerBetween: mockGetRandomIntegerBetween,
+    getRandomListItem: mockGetRandomListItem,
     nodeIds,
-    config,
-    getRandomIntegerBetween,
-    getRandomListItem,
   });
 }
 
@@ -166,7 +164,7 @@ describe('EdgeListGenerator', () => {
     jest.resetAllMocks();
   });
 
-  describe('generateRandomEdges()', () => {
+  describe('generateRandomEdgeList()', () => {
     it.each([
       [
         'generates a valid random edge list that allows recursive edges',
@@ -189,8 +187,8 @@ describe('EdgeListGenerator', () => {
         const nodeIds = getMockNodes();
         const config = getMockConfig(configValues);
 
-        edgeListGenerator = buildEdgeGenerator(nodeIds, config);
-        const edges = edgeListGenerator.generateRandomEdges().edges;
+        edgeListGenerator = buildEdgeGenerator(nodeIds);
+        const edges = edgeListGenerator.generateRandomEdgeList(config).edges;
 
         expect(isGraphConnected(edges, nodeIds)).toBe(true);
         expect(
@@ -214,12 +212,12 @@ describe('EdgeListGenerator', () => {
       });
 
       const generator = new EdgeListGenerator({
-        nodeIds,
-        config,
+        edgeList: new EdgeList(),
         getRandomIntegerBetween: mockGetRandomIntegerBetween,
-        getRandomListItem,
+        getRandomListItem: mockGetRandomListItem,
+        nodeIds,
       });
-      const edges = generator.generateRandomEdges().edges;
+      const edges = generator.generateRandomEdgeList(config).edges;
 
       expect(isGraphConnected(edges, nodeIds)).toBe(true);
       expect(isEdgeAmountPerNodeBetween(edges, config.edgeAmountPerNode)).toBe(

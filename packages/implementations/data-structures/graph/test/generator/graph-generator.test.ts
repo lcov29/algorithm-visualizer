@@ -4,14 +4,23 @@ import {
   GraphCreatedEvent,
   GraphGeneratorConfig,
   GraphStructureEvent,
+  IGraphGenerator,
 } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
+import {
+  getRandomIntegerBetween,
+  getRandomListItem,
+} from '@algorithm-visualizer/randomization';
 
+import { EdgeListGenerator } from '../../src/generator/edge-list-generator';
 import { GraphGenerator } from '../../src/generator/graph-generator';
+import { NodeListGenerator } from '../../src/generator/node-list-generator';
+import { EdgeList } from '../../src/structure/edge-list';
+import { NodeList } from '../../src/structure/node-list';
 
 // integration test
 describe('GraphGenerator', () => {
-  let generator: GraphGenerator;
+  let generator: IGraphGenerator;
   let config: GraphGeneratorConfig;
   let subscriberId: number;
   let mockSubscriber: MockGraphCreatedSubscriber;
@@ -30,6 +39,18 @@ describe('GraphGenerator', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     generator = new GraphGenerator({
+      createEdgeListGenerator: (nodeIds: number[]) =>
+        new EdgeListGenerator({
+          edgeList: new EdgeList(),
+          getRandomIntegerBetween: getRandomIntegerBetween,
+          getRandomListItem: getRandomListItem,
+          nodeIds,
+        }),
+      createNodeListGenerator: () =>
+        new NodeListGenerator({
+          nodeList: new NodeList(),
+          getRandomIntegerBetween: getRandomIntegerBetween,
+        }),
       subscriberManager: new EventSubscriberManager(),
     });
     mockSubscriber = new MockGraphCreatedSubscriber();

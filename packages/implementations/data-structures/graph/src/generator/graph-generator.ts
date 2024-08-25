@@ -6,27 +6,27 @@ import {
   GraphCreatedEvent,
   GraphGeneratorConfig,
   GraphGeneratorError,
-  IEdgeList,
   IGraphGenerator,
 } from '@algorithm-visualizer/graph-contract';
-import {
-  getRandomIntegerBetween,
-  getRandomListItem,
-} from '@algorithm-visualizer/randomization';
 
-import { EdgeList } from '../structure/edge-list';
-import { EdgeListGenerator } from './edge-list-generator';
-import { generateRandomNodeList } from './node-list-generator';
+import { IEdgeListGenerator } from './edge-list-generator';
+import { INodeListGenerator } from './node-list-generator';
 
 interface IGraphGeneratorArgs {
+  createEdgeListGenerator: (nodeIds: number[]) => IEdgeListGenerator;
+  createNodeListGenerator: () => INodeListGenerator;
   subscriberManager: IEventSubscriberManager<GraphCreatedEvent>;
 }
 
 export class GraphGenerator implements IGraphGenerator {
+  private _createEdgeListGenerator: (nodeIds: number[]) => IEdgeListGenerator;
+  private _createNodeListGenerator: () => INodeListGenerator;
   private _subscriberManager: IEventSubscriberManager<GraphCreatedEvent>;
 
-  constructor({ subscriberManager }: IGraphGeneratorArgs) {
-    this._subscriberManager = subscriberManager;
+  constructor(args: IGraphGeneratorArgs) {
+    this._createEdgeListGenerator = args.createEdgeListGenerator;
+    this._createNodeListGenerator = args.createNodeListGenerator;
+    this._subscriberManager = args.subscriberManager;
   }
 
   addSubscriber(subscriber: IEventSubscriber<GraphCreatedEvent>) {
@@ -39,30 +39,18 @@ export class GraphGenerator implements IGraphGenerator {
 
   generateGraph(config: GraphGeneratorConfig) {
     try {
-      const edgeList: IEdgeList = new EdgeList();
+      const nodeListGenerator = this._createNodeListGenerator();
+      const nodeList = nodeListGenerator.generateRandomNodeList(config);
 
-      const nodeList = generateRandomNodeList({
-        config,
-        getRandomIntegerBetween,
-      });
+      const edgeListGenerator = this._createEdgeListGenerator(nodeList.nodeIds);
+      const edgeList = edgeListGenerator.generateRandomEdgeList(config);
 
-      const edgeGenerator = new EdgeListGenerator({
-        config,
-        nodeIds: nodeList.nodeIds,
-        getRandomIntegerBetween,
-        getRandomListItem,
-      });
-
-      for (const edge of edgeGenerator.generateRandomEdges().edges) {
-        edgeList.addEdge(edge);
-      }
-
-      const graphCreatedEvent = new GraphCreatedEvent({
-        nodes: nodeList,
-        edges: edgeList,
-      });
-
-      this._subscriberManager.notifySubscribers(graphCreatedEvent);
+      this._subscriberManager.notifySubscribers(
+        new GraphCreatedEvent({
+          nodes: nodeList,
+          edges: edgeList,
+        }),
+      );
     } catch (error) {
       throw new GraphGeneratorError({
         message:
