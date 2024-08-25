@@ -60,20 +60,6 @@ describe('GraphMermaidComponentSelector', () => {
     });
   });
 
-  describe('getEdgeBetween()', () => {
-    it.each([
-      ['first', 0, 1],
-      ['second', 1, 2],
-      ['third', 0, 2],
-    ])(
-      'selects the %s edge between the nodes %s and %s',
-      (_, startNodeId, endNodeId) => {
-        const edge = selector.getEdgeBetween({ startNodeId, endNodeId });
-        expect(edge?.id).toContain(`L-${startNodeId}-${endNodeId}`);
-      },
-    );
-  });
-
   describe('getLabelOfEdge()', () => {
     it.each([
       ['first', 0, 0, 1, '10'],

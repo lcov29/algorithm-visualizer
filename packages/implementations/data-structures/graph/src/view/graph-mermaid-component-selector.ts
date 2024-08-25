@@ -1,7 +1,4 @@
-import {
-  IEdge,
-  IGraphComponentSelector,
-} from '@algorithm-visualizer/graph-contract';
+import { IGraphComponentSelector } from '@algorithm-visualizer/graph-contract';
 
 export class GraphMermaidComponentSelector implements IGraphComponentSelector {
   private _graphRef: React.RefObject<HTMLDivElement> | null = null;
@@ -22,11 +19,6 @@ export class GraphMermaidComponentSelector implements IGraphComponentSelector {
 
   getEdge(id: number) {
     return this._select(`.edgePaths > [id$="-${id}"]`);
-  }
-
-  getEdgeBetween(args: Pick<IEdge, 'startNodeId' | 'endNodeId'>) {
-    const { startNodeId, endNodeId } = args;
-    return this._select(`[id^="L-${startNodeId}-${endNodeId}"]`);
   }
 
   getEdgeLabel(id: number) {
