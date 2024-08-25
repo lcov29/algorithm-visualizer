@@ -4,16 +4,16 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 import { IEdge } from '../../../structure';
 import { INode } from '../../interfaces/graph-node';
 
-interface IGraphCreatedEventArgs {
+interface IGraphRenderedEventArgs {
   nodes: INode[];
   edges: IEdge[];
 }
 
-export class GraphRenderEvent extends BaseEvent<'graph-rendered'> {
+export class GraphRenderedEvent extends BaseEvent<'graph-rendered'> {
   private _nodes: INode[];
   private _edges: IEdge[];
 
-  constructor({ nodes, edges }: IGraphCreatedEventArgs) {
+  constructor({ nodes, edges }: IGraphRenderedEventArgs) {
     super('graph-rendered');
     this._nodes = nodes;
     this._edges = edges;

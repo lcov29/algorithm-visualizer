@@ -1,10 +1,10 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { EdgeHideEvent } from '../../../../src';
+import { EdgeLabelHiddenEvent } from '../../../../src';
 
-describe('EdgeHideEvent', () => {
+describe('EdgeLabelHiddenEvent', () => {
   const edgeId = 3;
-  const edgeHideEvent = new EdgeHideEvent({ edgeId });
+  const edgeLabelHidden = new EdgeLabelHiddenEvent({ edgeId });
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -12,12 +12,12 @@ describe('EdgeHideEvent', () => {
 
   describe('edgeId()', () => {
     it('getter returns the specified edgeId value', () => {
-      expect(edgeHideEvent.edgeId).toEqual(edgeId);
+      expect(edgeLabelHidden.edgeId).toEqual(edgeId);
     });
 
     it('setter throws an invalid operation error', () => {
       expect(() => {
-        edgeHideEvent.edgeId = 5;
+        edgeLabelHidden.edgeId = 5;
       }).toThrow(
         new InvalidOperationError({
           message: 'Writing to readonly property edgeId is forbidden',

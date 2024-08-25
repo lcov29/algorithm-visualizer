@@ -1,17 +1,17 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface NodeDisplayArgs {
+interface INodeDisplayedEventArgs {
   nodeId: number;
 }
 
 /**
  * @throws InvalidOperationError
  */
-export class NodeDisplayEvent extends BaseEvent<'node-displayed'> {
+export class NodeDisplayedEvent extends BaseEvent<'node-displayed'> {
   private _nodeId: number;
 
-  constructor({ nodeId }: NodeDisplayArgs) {
+  constructor({ nodeId }: INodeDisplayedEventArgs) {
     super('node-displayed');
     this._nodeId = nodeId;
   }

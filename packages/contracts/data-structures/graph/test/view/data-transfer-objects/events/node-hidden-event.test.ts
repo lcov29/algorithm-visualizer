@@ -1,10 +1,10 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { NodeLabelHideEvent } from '../../../../src';
+import { NodeHiddenEvent } from '../../../../src';
 
-describe('NodeLabelHideEvent', () => {
+describe('NodeHiddenEvent', () => {
   const nodeId = 3;
-  const nodeLabelHideEvent = new NodeLabelHideEvent({ nodeId });
+  const nodeHiddenEvent = new NodeHiddenEvent({ nodeId });
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -12,12 +12,12 @@ describe('NodeLabelHideEvent', () => {
 
   describe('nodeId()', () => {
     it('getter returns the specified nodeId value', () => {
-      expect(nodeLabelHideEvent.nodeId).toEqual(nodeId);
+      expect(nodeHiddenEvent.nodeId).toEqual(nodeId);
     });
 
     it('setter throws an invalid operation error', () => {
       expect(() => {
-        nodeLabelHideEvent.nodeId = 5;
+        nodeHiddenEvent.nodeId = 5;
       }).toThrow(
         new InvalidOperationError({
           message: 'Writing to readonly property nodeId is forbidden',

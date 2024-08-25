@@ -6,6 +6,7 @@ import {
   EdgeWeightChangedEvent,
   GraphCreatedEvent,
   GraphStructureEvent,
+  IEdge,
   NodeAddedEvent,
   NodeDeletedEvent,
 } from '@algorithm-visualizer/graph-contract';
@@ -89,12 +90,13 @@ describe('Graph', () => {
   describe('handleEvent()', () => {
     describe('when passed an edge-added event', () => {
       it('adds a new edge to the graph', async () => {
-        const edgeAddedEvent = new EdgeAddedEvent({
+        const edge: Omit<IEdge, 'id'> = {
           startNodeId: 1,
           endNodeId: 3,
           isDirected: false,
           weight: 4,
-        });
+        };
+        const edgeAddedEvent = new EdgeAddedEvent({ edge });
         await graph.handleEvent(edgeAddedEvent);
         expect(graph.edges).toEqual([
           ...mockEdges,

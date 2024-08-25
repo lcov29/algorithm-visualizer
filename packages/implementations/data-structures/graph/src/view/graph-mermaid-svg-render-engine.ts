@@ -1,5 +1,5 @@
 import {
-  GraphRenderEvent,
+  GraphRenderedEvent,
   IGraphSVGRenderEngine,
 } from '@algorithm-visualizer/graph-contract';
 
@@ -22,7 +22,7 @@ export class GraphMermaidSVGRenderEngine
    *
    * @param {GraphRenderEvent} GraphRenderEvent
    */
-  async render(event: GraphRenderEvent): Promise<string> {
+  async render(event: GraphRenderedEvent): Promise<string> {
     const mermaidGraphDefinition = new GraphDefinitionMermaidParser().parse({
       event,
       graphRenderDirection: this._graphRenderDirection,

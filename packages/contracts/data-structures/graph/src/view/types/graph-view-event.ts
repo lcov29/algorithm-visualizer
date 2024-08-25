@@ -1,44 +1,44 @@
 import {
-  EdgeDisplayEvent,
-  EdgeHideEvent,
+  EdgeDisplayedEvent,
+  EdgeHiddenEvent,
   EdgeHighlightAddedEvent,
   EdgeHighlightRemovedEvent,
   EdgeLabelChangedEvent,
-  EdgeLabelDisplayEvent,
-  EdgeLabelHideEvent,
+  EdgeLabelDisplayedEvent,
+  EdgeLabelHiddenEvent,
   EdgeLabelHighlightAddedEvent,
   EdgeLabelHighlightRemovedEvent,
-  GraphRenderEvent,
-  NodeDisplayEvent,
-  NodeHideEvent,
+  GraphRenderedEvent,
+  NodeDisplayedEvent,
+  NodeHiddenEvent,
   NodeHighlightAddedEvent,
   NodeHighlightRemovedEvent,
   NodeLabelChangedEvent,
-  NodeLabelDisplayEvent,
-  NodeLabelHideEvent,
+  NodeLabelDisplayedEvent,
+  NodeLabelHiddenEvent,
   NodeLabelHighlightAddedEvent,
   NodeLabelHighlightRemovedEvent,
   NodeTitleChangedEvent,
 } from '../data-transfer-objects/events';
 
 export type GraphViewEvent =
-  | EdgeDisplayEvent
-  | EdgeHideEvent
+  | EdgeDisplayedEvent
+  | EdgeHiddenEvent
   | EdgeHighlightAddedEvent
   | EdgeHighlightRemovedEvent
   | EdgeLabelChangedEvent
-  | EdgeLabelDisplayEvent
-  | EdgeLabelHideEvent
+  | EdgeLabelDisplayedEvent
+  | EdgeLabelHiddenEvent
   | EdgeLabelHighlightAddedEvent
   | EdgeLabelHighlightRemovedEvent
-  | GraphRenderEvent
-  | NodeDisplayEvent
-  | NodeHideEvent
+  | GraphRenderedEvent
+  | NodeDisplayedEvent
+  | NodeHiddenEvent
   | NodeHighlightAddedEvent
   | NodeHighlightRemovedEvent
   | NodeLabelChangedEvent
-  | NodeLabelDisplayEvent
-  | NodeLabelHideEvent
+  | NodeLabelDisplayedEvent
+  | NodeLabelHiddenEvent
   | NodeLabelHighlightAddedEvent
   | NodeLabelHighlightRemovedEvent
   | NodeTitleChangedEvent;

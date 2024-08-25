@@ -1,18 +1,18 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface EdgeLabelDisplayEventArgs {
+interface IEdgeLabelHiddenEventArgs {
   edgeId: number;
 }
 
 /**
  * @throws InvalidOperationError
  */
-export class EdgeLabelDisplayEvent extends BaseEvent<'edge-label-display'> {
+export class EdgeLabelHiddenEvent extends BaseEvent<'edge-label-hidden'> {
   private _edgeId: number;
 
-  constructor({ edgeId }: EdgeLabelDisplayEventArgs) {
-    super('edge-label-display');
+  constructor({ edgeId }: IEdgeLabelHiddenEventArgs) {
+    super('edge-label-hidden');
     this._edgeId = edgeId;
   }
 

@@ -1,5 +1,5 @@
 import {
-  GraphRenderEvent,
+  GraphRenderedEvent,
   IEdge,
   INode,
 } from '@algorithm-visualizer/graph-contract';
@@ -7,7 +7,7 @@ import {
 import { MermaidGraphRenderDirection } from './graph-render-direction-map';
 
 interface IGraphDefinitionMermaidParserArgs {
-  event: GraphRenderEvent;
+  event: GraphRenderedEvent;
   graphRenderDirection: MermaidGraphRenderDirection;
 }
 

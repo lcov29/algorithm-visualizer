@@ -1,8 +1,8 @@
-import { GraphRenderEvent } from '@algorithm-visualizer/graph-contract';
+import { GraphRenderedEvent } from '@algorithm-visualizer/graph-contract';
 
 import { GraphDefinitionMermaidParser } from '../../src/view/graph-definition-mermaid-parser';
 
-function buildMockGraphCreatedEvent() {
+function buildMockGraphRenderedEvent() {
   const mockNodeList = [
     { id: 0, label: 'A' },
     { id: 1, label: 'B' },
@@ -13,7 +13,7 @@ function buildMockGraphCreatedEvent() {
     { id: 1, startNodeId: 1, endNodeId: 2, isDirected: false },
   ];
 
-  return new GraphRenderEvent({
+  return new GraphRenderedEvent({
     nodes: mockNodeList,
     edges: mockEdgeList,
   });
@@ -29,7 +29,7 @@ describe('GraphDefinitionMermaidParser', () => {
   describe('parse()', () => {
     it('parses the specified graph into a valid mermaid flowchart definition', () => {
       const graph = parser.parse({
-        event: buildMockGraphCreatedEvent(),
+        event: buildMockGraphRenderedEvent(),
         graphRenderDirection: 'LR',
       });
       const expectedGraph = [

@@ -42,15 +42,15 @@ export class GraphVisualizer implements IGraphVisualizer {
 
   private _initializeEventHandlerChain() {
     this._eventHandlerChain
-      .add(event => this._handleEdgeDisplayEvent(event))
-      .add(event => this._handleEdgeHideEvent(event))
+      .add(event => this._handleEdgeDisplayedEvent(event))
+      .add(event => this._handleEdgeHiddenEvent(event))
       .add(event => this._handleEdgeHighlightAddedEvent(event))
       .add(event => this._handleEdgeHighlightRemovedEvent(event))
       .add(event => this._handleEdgeLabelHighlightAddedEvent(event))
       .add(event => this._handleEdgeLabelHighlightRemovedEvent(event))
       .add(event => this._handleEdgeLabelChangedEvent(event))
-      .add(event => this._handleEdgeLabelDisplayEvent(event))
-      .add(event => this._handleEdgeLabelHideEvent(event))
+      .add(event => this._handleEdgeLabelDisplayedEvent(event))
+      .add(event => this._handleEdgeLabelHiddenEvent(event))
       .add(event => this._handleGraphRenderedEvent(event))
       .add(event => this._handleNodeHighlightAddedEvent(event))
       .add(event => this._handleNodeHighlightRemovedEvent(event))
@@ -64,8 +64,8 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleNodeTitleChangedEvent(event));
   }
 
-  private async _handleEdgeDisplayEvent(event: GraphViewEvent) {
-    if (event.name !== 'edge-display') {
+  private async _handleEdgeDisplayedEvent(event: GraphViewEvent) {
+    if (event.name !== 'edge-displayed') {
       return false;
     }
     const edge = this._graphComponentSelector.getEdge(event.edgeId);
@@ -73,8 +73,8 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeHideEvent(event: GraphViewEvent) {
-    if (event.name !== 'edge-hide') {
+  private async _handleEdgeHiddenEvent(event: GraphViewEvent) {
+    if (event.name !== 'edge-hidden') {
       return false;
     }
     const edge = this._graphComponentSelector.getEdge(event.edgeId);
@@ -111,8 +111,8 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeLabelDisplayEvent(event: GraphViewEvent) {
-    if (event.name !== 'edge-label-display') {
+  private async _handleEdgeLabelDisplayedEvent(event: GraphViewEvent) {
+    if (event.name !== 'edge-label-displayed') {
       return false;
     }
     const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
@@ -120,8 +120,8 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleEdgeLabelHideEvent(event: GraphViewEvent) {
-    if (event.name !== 'edge-label-hide') {
+  private async _handleEdgeLabelHiddenEvent(event: GraphViewEvent) {
+    if (event.name !== 'edge-label-hidden') {
       return false;
     }
     const edgeLabel = this._graphComponentSelector.getLabelOfEdge(event.edgeId);
