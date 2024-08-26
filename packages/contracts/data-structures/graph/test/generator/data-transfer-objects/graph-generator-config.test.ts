@@ -4,10 +4,7 @@ import {
 } from '@algorithm-visualizer/error-handling-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
-import {
-  GraphGeneratorConfig,
-  IGraphGeneratorConfigArgs,
-} from '../../../../src/generator';
+import { GraphGeneratorConfig, IGraphGeneratorConfigArgs } from '../../../src';
 
 function buildMockArgs(
   args: Partial<IGraphGeneratorConfigArgs> = {},

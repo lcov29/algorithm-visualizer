@@ -1,6 +1,6 @@
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
-import { GraphGeneratorConfig, GraphGeneratorError } from '../../../../src';
+import { GraphGeneratorConfig, GraphGeneratorError } from '../../../src';
 
 describe('GraphGeneratorError', () => {
   const cause = new RangeError('This caused the graph generator error');
