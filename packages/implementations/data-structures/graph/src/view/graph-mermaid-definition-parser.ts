@@ -11,7 +11,7 @@ export interface IGraphDefinitionParser {
   parse: (event: GraphRenderedEvent) => string;
 }
 
-export class GraphDefinitionMermaidParser implements IGraphDefinitionParser {
+export class GraphMermaidDefinitionParser implements IGraphDefinitionParser {
   private _mermaidRenderDirectionMap: Map<
     GraphRenderDirection,
     MermaidGraphRenderDirection

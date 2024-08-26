@@ -5,13 +5,13 @@ import {
   GraphVisualizationBuilder,
 } from '@algorithm-visualizer/graph-contract';
 
-import { GraphDefinitionMermaidParser } from './graph-definition-mermaid-parser';
 import { GraphMermaidComponentSelector } from './graph-mermaid-component-selector';
+import { GraphMermaidDefinitionParser } from './graph-mermaid-definition-parser';
 import { GraphMermaidSVGRenderEngine } from './graph-mermaid-svg-render-engine';
 import { GraphVisualizer } from './graph-visualizer';
 
 export const buildGraphVisualizer: GraphVisualizationBuilder = () => {
-  const graphDefinitionParser = new GraphDefinitionMermaidParser();
+  const graphDefinitionParser = new GraphMermaidDefinitionParser();
   const graphSVGRenderEngine = new GraphMermaidSVGRenderEngine();
   const eventHandlerChain = new EventHandlerChain<GraphViewEvent>({
     abortAfterSuccess: false,

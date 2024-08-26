@@ -31,8 +31,8 @@ import {
   NodeTitleChangedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
-import { IGraphDefinitionParser } from '../../src/view/graph-definition-mermaid-parser';
 import { GraphMermaidComponentSelector } from '../../src/view/graph-mermaid-component-selector';
+import { IGraphDefinitionParser } from '../../src/view/graph-mermaid-definition-parser';
 import { GraphVisualizer } from '../../src/view/graph-visualizer';
 import { MockMermaidSVGGraph } from './mocks/mock-mermaid-svg-graph';
 

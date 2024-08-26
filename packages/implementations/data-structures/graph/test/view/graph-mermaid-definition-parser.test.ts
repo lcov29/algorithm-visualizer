@@ -3,7 +3,7 @@ import {
   GraphRenderedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
-import { GraphDefinitionMermaidParser } from '../../src/view/graph-definition-mermaid-parser';
+import { GraphMermaidDefinitionParser } from '../../src/view/graph-mermaid-definition-parser';
 
 function buildMockGraphRenderedEvent() {
   const mockNodeList = [
@@ -25,8 +25,8 @@ function buildMockGraphRenderedEvent() {
   });
 }
 
-describe('GraphDefinitionMermaidParser', () => {
-  const parser = new GraphDefinitionMermaidParser();
+describe('GraphMermaidDefinitionParser', () => {
+  const parser = new GraphMermaidDefinitionParser();
 
   beforeEach(() => {
     jest.resetAllMocks();

@@ -6,7 +6,7 @@ import {
   IGraphVisualizer,
 } from '@algorithm-visualizer/graph-contract';
 
-import { IGraphDefinitionParser } from './graph-definition-mermaid-parser';
+import { IGraphDefinitionParser } from './graph-mermaid-definition-parser';
 
 import React from 'react';
 
