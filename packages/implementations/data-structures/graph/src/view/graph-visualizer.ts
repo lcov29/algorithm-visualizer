@@ -18,16 +18,16 @@ interface IGraphVisualizerArgs {
 }
 
 export class GraphVisualizer implements IGraphVisualizer {
+  private _eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
   private _graphComponentSelector: IGraphComponentSelector;
   private _graphDefinitionParser: IGraphDefinitionParser;
-  private _eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
   private _graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
   private _setGraphSVGString: React.Dispatch<React.SetStateAction<string>>;
 
   constructor(args: IGraphVisualizerArgs) {
+    this._eventHandlerChain = args.eventHandlerChain;
     this._graphComponentSelector = args.graphComponentSelector;
     this._graphDefinitionParser = args.graphDefinitionParser;
-    this._eventHandlerChain = args.eventHandlerChain;
     this._graphSVGRenderEngine = args.graphSVGRenderEngine;
     this._setGraphSVGString = () => {};
     this._initializeEventHandlerChain();
