@@ -14,32 +14,13 @@ The `Graph` instance is a composite object and can be modified by [graph events]
 <br>
 <br>
 
-**Class Overview**
-
 ```mermaid
 flowchart TB
-  A[BaseList]
+  A[Graph]
   B[NodeList]
   C[EdgeList]
   D[EventHandlerChain]
-  E[Graph]
-  E -. use .-> B & C & D
-  B & C -- extends --> A
-```
-
-<br>
-<br>
-
-**Graph Class**
-
-```mermaid
-classDiagram
-  direction BT
-  class Graph {
-    get nodes() INode[]
-    get edges() IEdge[]
-    handleEvent(event: GraphEvent)
-  }
+  A -. use .-> B & C & D
 ```
 
 <br>
@@ -102,4 +83,73 @@ flowchart TB
     G -- passed to --> H
   end
   H -- forward event to --> I & J
+```
+
+<br>
+<br>
+<br>
+
+## View
+
+This directory contains all classes used to visualize a given graph.
+
+It visualizes the graph based on a passed [`GraphRenderedEvent`](../../../contracts/data-structures/graph/src/view/data-transfer-objects/events/graph-rendered-event.ts) and can be modified by a set of defined [`GraphViewEvents`](../../../contracts/data-structures/graph/README.md#events-1).
+
+<br>
+<br>
+
+**Class Overview**
+
+```mermaid
+flowchart LR
+  A[GraphView.tsx]
+  B[GraphVisualizer]
+  C[EventHandlerChain]
+  D[GraphMermaidDefinitionParser]
+  E[GraphMermaidSVGRenderEngine]
+  F[GraphMermaidComponentSelector]
+  B -. uses .-> C & D & E & F
+  B  & F -- references --> A
+```
+
+<br>
+<br>
+
+**Graph Render Process Overview**
+
+```mermaid
+flowchart TB
+  A[GraphRenderEvent]
+  B[GraphVisualizer]
+  C[GraphMermaidDefinitionParser]
+  D(MermaidGraphDefinition)
+  E[GraphMermaidSVGRenderEngine]
+  F(MermaidGraphSVG)
+  G[ReactGraphView]
+  A -- passed to --> B
+  subgraph " "
+    B -- redirects event to --> C
+    C -- generates --> D
+    D -- passed to --> E
+    E -- generates --> F
+  end
+  F -- passed to --> G
+```
+
+<br>
+<br>
+
+**Graph Manipulation Process Overview**
+
+```mermaid
+flowchart TB
+  A[GraphManipulationEvent]
+  B[GraphVisualizer]
+  C[GraphMermaidComponentSelector]
+  E[ReactGraphView]
+  A -- passed to --> B
+  subgraph " "
+    B -- redirects event to --> C
+  end
+    C -- manipulates --> E
 ```
