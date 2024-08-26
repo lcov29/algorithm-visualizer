@@ -1,28 +1,10 @@
-import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
-import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
-
-interface IEdgeDeletedEventArgs {
-  edgeId: number;
-}
+import { EdgeBaseEvent, IEdgeBaseEventArgs } from './edge-base-event';
 
 /**
  * @throws InvalidOperationError
  */
-export class EdgeDeletedEvent extends BaseEvent<'edge-deleted'> {
-  private _edgeId: number;
-
-  constructor(args: IEdgeDeletedEventArgs) {
-    super('edge-deleted');
-    this._edgeId = args.edgeId;
-  }
-
-  get edgeId() {
-    return this._edgeId;
-  }
-
-  set edgeId(input: number) {
-    throw new InvalidOperationError({
-      message: 'Writing to readonly property edgeId is forbidden',
-    });
+export class EdgeDeletedEvent extends EdgeBaseEvent<'edge-deleted'> {
+  constructor(args: IEdgeBaseEventArgs) {
+    super('edge-deleted', args);
   }
 }

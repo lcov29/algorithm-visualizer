@@ -12,20 +12,15 @@ describe('EdgeWeightChangedEvent', () => {
     jest.resetAllMocks();
   });
 
-  describe.each([
-    ['edgeId', 3],
-    ['newWeight', 7],
-  ])('%s()', (methodName, expectedResult) => {
-    it(`getter returns the specified ${methodName} value`, () => {
-      // @ts-expect-error invoke method by string name
-      expect(edgeWeightChangedEvent[methodName]).toBe(expectedResult);
+  describe('newWeight()', () => {
+    it('getter returns the specified newWeight value', () => {
+      expect(edgeWeightChangedEvent.newWeight).toBe(7);
     });
 
     it('setter throws an invalid operation error', () => {
-      // @ts-expect-error invoke method by string name
-      expect(() => (edgeWeightChangedEvent[methodName] = 1)).toThrow(
+      expect(() => (edgeWeightChangedEvent.newWeight = 1)).toThrow(
         new InvalidOperationError({
-          message: `Writing to readonly property ${methodName} is forbidden`,
+          message: `Writing to readonly property newWeight is forbidden`,
         }),
       );
     });

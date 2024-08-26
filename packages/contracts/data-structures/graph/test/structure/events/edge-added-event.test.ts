@@ -30,7 +30,7 @@ describe('EdgeAddedEvent', () => {
           edgeAddedEvent.edge = { startNodeId: 6, endNodeId: 8 };
         }).toThrow(
           new InvalidOperationError({
-            message: 'Writing to readonly property min is forbidden',
+            message: 'Writing to readonly property edge is forbidden',
           }),
         );
       });

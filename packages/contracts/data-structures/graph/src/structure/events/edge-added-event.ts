@@ -24,7 +24,7 @@ export class EdgeAddedEvent extends BaseEvent<'edge-added'> {
 
   set edge(input: Omit<IEdge, 'id'>) {
     throw new InvalidOperationError({
-      message: 'Writing to readonly property min is forbidden',
+      message: 'Writing to readonly property edge is forbidden',
     });
   }
 }
