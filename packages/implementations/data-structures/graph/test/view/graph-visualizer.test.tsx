@@ -31,6 +31,7 @@ import {
   NodeTitleChangedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
+import { IGraphDefinitionParser } from '../../src/view/graph-definition-mermaid-parser';
 import { GraphMermaidComponentSelector } from '../../src/view/graph-mermaid-component-selector';
 import { GraphVisualizer } from '../../src/view/graph-visualizer';
 import { MockMermaidSVGGraph } from './mocks/mock-mermaid-svg-graph';
@@ -47,10 +48,14 @@ const graphComponentSelector = new GraphMermaidComponentSelector();
 
 const mockSetGraphSVGString = jest.fn();
 const mockRender = jest.fn();
+const mockParse = jest.fn();
 
 const mockGraphSVGRenderEngine: IGraphSVGRenderEngine<string> = {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   render: mockRender,
+};
+
+const mockGraphDefinitionParser: IGraphDefinitionParser = {
+  parse: mockParse,
 };
 
 describe('GraphVisualizer', () => {
@@ -69,28 +74,35 @@ describe('GraphVisualizer', () => {
       eventHandlerChain,
       graphComponentSelector,
       graphSVGRenderEngine: mockGraphSVGRenderEngine,
+      graphDefinitionParser: mockGraphDefinitionParser,
     });
     visualizer.setGraphViewReferences(mockGraphRef, mockSetGraphSVGString);
   });
 
   describe('handleEvent()', () => {
     describe('GraphRenderedEvent', () => {
-      const graphCreatedEvent = new GraphRenderedEvent({
+      const graphRenderedEvent = new GraphRenderedEvent({
         nodes: [{ id: 0, label: 'A' }],
         edges: [{ id: 0, startNodeId: 1, endNodeId: 2 }],
+        renderDirection: 'Left-To-Right',
       });
 
       beforeEach(async () => {
-        mockRender.mockResolvedValue('Foo');
-        await visualizer.handleEvent(graphCreatedEvent);
+        mockParse.mockReturnValue('Foo');
+        mockRender.mockResolvedValue('Bar');
+        await visualizer.handleEvent(graphRenderedEvent);
       });
 
-      it('passes the event to the svg render engine', () => {
-        expect(mockRender).toHaveBeenCalledWith(graphCreatedEvent);
+      it('passes the event to the graph definition parser', () => {
+        expect(mockParse).toHaveBeenCalledWith(graphRenderedEvent);
+      });
+
+      it('passes the parsed graph definition to the svg render engine', () => {
+        expect(mockRender).toHaveBeenCalledWith('Foo');
       });
 
       it('displays the result of the svg render engine', () => {
-        expect(mockSetGraphSVGString).toHaveBeenCalledWith('Foo');
+        expect(mockSetGraphSVGString).toHaveBeenCalledWith('Bar');
       });
     });
   });

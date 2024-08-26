@@ -1,10 +1,6 @@
-import { GraphRenderedEvent } from '../data-transfer-objects';
-
 export interface IGraphSVGRenderEngine<T> {
   /**
-   * Renders the graph specified by the {@link GraphCreatedEvent} to a svg file.
-   *
-   * @param {GraphCreatedEvent} GraphCreatedEvent
+   * Renders the graph specified by the passed mermaid graph definition to a svg file.
    */
-  render: (event: GraphRenderedEvent) => Promise<T>;
+  render: (mermaidGraphDefinition: string) => Promise<T>;
 }

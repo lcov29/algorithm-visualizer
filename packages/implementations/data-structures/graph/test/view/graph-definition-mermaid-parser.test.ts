@@ -1,4 +1,7 @@
-import { GraphRenderedEvent } from '@algorithm-visualizer/graph-contract';
+import {
+  GraphRenderDirection,
+  GraphRenderedEvent,
+} from '@algorithm-visualizer/graph-contract';
 
 import { GraphDefinitionMermaidParser } from '../../src/view/graph-definition-mermaid-parser';
 
@@ -13,9 +16,12 @@ function buildMockGraphRenderedEvent() {
     { id: 1, startNodeId: 1, endNodeId: 2, isDirected: false },
   ];
 
+  const mockRenderDirection: GraphRenderDirection = 'Left-To-Right';
+
   return new GraphRenderedEvent({
     nodes: mockNodeList,
     edges: mockEdgeList,
+    renderDirection: mockRenderDirection,
   });
 }
 
@@ -28,10 +34,7 @@ describe('GraphDefinitionMermaidParser', () => {
 
   describe('parse()', () => {
     it('parses the specified graph into a valid mermaid flowchart definition', () => {
-      const graph = parser.parse({
-        event: buildMockGraphRenderedEvent(),
-        graphRenderDirection: 'LR',
-      });
+      const graph = parser.parse(buildMockGraphRenderedEvent());
       const expectedGraph = [
         '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',
         'flowchart LR',

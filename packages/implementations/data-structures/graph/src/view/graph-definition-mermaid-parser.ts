@@ -1,32 +1,50 @@
 import {
+  GraphRenderDirection,
   GraphRenderedEvent,
   IEdge,
   INode,
 } from '@algorithm-visualizer/graph-contract';
 
-import { MermaidGraphRenderDirection } from './graph-render-direction-map';
+type MermaidGraphRenderDirection = 'LR' | 'RL' | 'TB' | 'BT';
 
-interface IGraphDefinitionMermaidParserArgs {
-  event: GraphRenderedEvent;
-  graphRenderDirection: MermaidGraphRenderDirection;
+export interface IGraphDefinitionParser {
+  parse: (event: GraphRenderedEvent) => string;
 }
 
-export class GraphDefinitionMermaidParser {
+export class GraphDefinitionMermaidParser implements IGraphDefinitionParser {
+  private _mermaidRenderDirectionMap: Map<
+    GraphRenderDirection,
+    MermaidGraphRenderDirection
+  >;
+
+  constructor() {
+    this._mermaidRenderDirectionMap = new Map<
+      GraphRenderDirection,
+      MermaidGraphRenderDirection
+    >([
+      ['Left-To-Right', 'LR'],
+      ['Right-To-Left', 'RL'],
+      ['Top-To-Bottom', 'TB'],
+      ['Bottom-To-Top', 'BT'],
+    ]);
+  }
+
   /**
    * Parses the specified graph into a valid mermaid flowchart definition.
    */
-  parse({
-    event,
-    graphRenderDirection,
-  }: IGraphDefinitionMermaidParserArgs): string {
-    const { nodes, edges } = event;
+  parse(event: GraphRenderedEvent): string {
+    const { nodes, edges, renderDirection } = event;
     return [
       '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',
-      `flowchart ${graphRenderDirection}`,
+      `flowchart ${this._parseRenderDirection(renderDirection)}`,
       this._parseNodes(nodes),
       this._parseEdges(edges),
       '\n',
     ].join('\n');
+  }
+
+  private _parseRenderDirection(direction: GraphRenderDirection) {
+    return this._mermaidRenderDirectionMap.get(direction);
   }
 
   private _parseNodes(nodes: INode[]) {

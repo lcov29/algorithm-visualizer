@@ -3,27 +3,16 @@ import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
   GraphViewEvent,
   GraphVisualizationBuilder,
-  GraphVisualizationError,
 } from '@algorithm-visualizer/graph-contract';
 
+import { GraphDefinitionMermaidParser } from './graph-definition-mermaid-parser';
 import { GraphMermaidComponentSelector } from './graph-mermaid-component-selector';
 import { GraphMermaidSVGRenderEngine } from './graph-mermaid-svg-render-engine';
-import { GraphRenderDirectionMap } from './graph-render-direction-map';
 import { GraphVisualizer } from './graph-visualizer';
 
-export const buildGraphVisualizer: GraphVisualizationBuilder = args => {
-  const { graphDirection } = args;
-  if (!GraphRenderDirectionMap.has(graphDirection)) {
-    throw new GraphVisualizationError({
-      message: `Failed to map graph render direction text ${graphDirection} to valid mermaid flowchart direction`,
-    });
-  }
-
-  const mermaidGraphRenderDirection =
-    GraphRenderDirectionMap.get(graphDirection)!;
-  const graphSVGRenderEngine = new GraphMermaidSVGRenderEngine(
-    mermaidGraphRenderDirection,
-  );
+export const buildGraphVisualizer: GraphVisualizationBuilder = () => {
+  const graphDefinitionParser = new GraphDefinitionMermaidParser();
+  const graphSVGRenderEngine = new GraphMermaidSVGRenderEngine();
   const eventHandlerChain = new EventHandlerChain<GraphViewEvent>({
     abortAfterSuccess: false,
     validator: new FunctionValidator(),
@@ -33,7 +22,8 @@ export const buildGraphVisualizer: GraphVisualizationBuilder = args => {
 
   return new GraphVisualizer({
     eventHandlerChain,
-    graphSVGRenderEngine,
     graphComponentSelector,
+    graphDefinitionParser,
+    graphSVGRenderEngine,
   });
 };

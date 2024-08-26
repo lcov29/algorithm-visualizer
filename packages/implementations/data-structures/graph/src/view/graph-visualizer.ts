@@ -6,24 +6,29 @@ import {
   IGraphVisualizer,
 } from '@algorithm-visualizer/graph-contract';
 
+import { IGraphDefinitionParser } from './graph-definition-mermaid-parser';
+
 import React from 'react';
 
 interface IGraphVisualizerArgs {
   eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
-  graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
   graphComponentSelector: IGraphComponentSelector;
+  graphDefinitionParser: IGraphDefinitionParser;
+  graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
 }
 
 export class GraphVisualizer implements IGraphVisualizer {
+  private _graphComponentSelector: IGraphComponentSelector;
+  private _graphDefinitionParser: IGraphDefinitionParser;
   private _eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
   private _graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
-  private _graphComponentSelector: IGraphComponentSelector;
   private _setGraphSVGString: React.Dispatch<React.SetStateAction<string>>;
 
   constructor(args: IGraphVisualizerArgs) {
+    this._graphComponentSelector = args.graphComponentSelector;
+    this._graphDefinitionParser = args.graphDefinitionParser;
     this._eventHandlerChain = args.eventHandlerChain;
     this._graphSVGRenderEngine = args.graphSVGRenderEngine;
-    this._graphComponentSelector = args.graphComponentSelector;
     this._setGraphSVGString = () => {};
     this._initializeEventHandlerChain();
   }
@@ -151,7 +156,8 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'graph-rendered') {
       return false;
     }
-    const svg = await this._graphSVGRenderEngine.render(event);
+    const graphDefinition = this._graphDefinitionParser.parse(event);
+    const svg = await this._graphSVGRenderEngine.render(graphDefinition);
     this._setGraphSVGString(svg);
     return true;
   }
