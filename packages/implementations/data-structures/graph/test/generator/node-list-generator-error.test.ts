@@ -1,10 +1,10 @@
 import { GraphGeneratorConfig } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
-import { EdgeListGeneratorError } from '../../src/generator/edge-list-generator-error';
+import { NodeListGeneratorError } from '../../src/generator/node-list-generator-error';
 
-describe('EdgeGeneratorError', () => {
-  const cause = new RangeError('This caused the edge generator error');
+describe('NodeListGeneratorError', () => {
+  const cause = new RangeError('This caused the node generator error');
   const config = new GraphGeneratorConfig({
     nodeAmount: new IntegerRange({ min: 2, max: 3 }),
     edgeAmountPerNode: new IntegerRange({ min: 3, max: 4 }),
@@ -12,11 +12,9 @@ describe('EdgeGeneratorError', () => {
     edgeDirection: 'unidirectional',
     allowRecursiveEdges: true,
   });
-  const nodes = [{ id: 1, label: 'test', availableEdgePointAmount: 5 }];
-  const error = new EdgeListGeneratorError({
-    message: 'Edge generator error',
+  const error = new NodeListGeneratorError({
+    message: 'Node list generator error',
     config,
-    nodes,
     cause,
   });
 
@@ -25,9 +23,8 @@ describe('EdgeGeneratorError', () => {
   });
 
   describe.each([
-    ['message', 'Edge generator error'],
+    ['message', 'Node list generator error'],
     ['config', config],
-    ['nodes', nodes],
     ['cause', cause],
   ])('%s()', (methodName, expectedResult) => {
     it(`getter returns the specified ${methodName} value`, () => {
