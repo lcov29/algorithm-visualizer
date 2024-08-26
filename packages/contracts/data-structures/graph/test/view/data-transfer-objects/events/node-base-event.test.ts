@@ -1,11 +1,11 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { EdgeBaseEvent } from '../../../src/structure/events/edge-base-event';
+import { NodeBaseEvent } from '../../../../src/view/data-transfer-objects/events/node-base-event';
 
-describe('EdgeBaseEvent', () => {
-  const edgeId = 3;
+describe('NodeBaseEvent', () => {
+  const nodeId = 3;
   // @ts-ignore instantiation of an abstract class
-  const edgeBaseEvent = new EdgeBaseEvent('edge-base', { edgeId });
+  const nodeBaseEvent = new NodeBaseEvent('node-base', { nodeId });
 
   beforeEach(() => {
     jest.resetAllMocks();
@@ -13,15 +13,15 @@ describe('EdgeBaseEvent', () => {
 
   describe('edgeId()', () => {
     it('getter returns the specified edgeId value', () => {
-      expect(edgeBaseEvent.edgeId).toBe(edgeId);
+      expect(nodeBaseEvent.nodeId).toBe(nodeId);
     });
 
     it('setter throws an invalid operation error', () => {
       expect(() => {
-        edgeBaseEvent.edgeId = edgeId;
+        nodeBaseEvent.nodeId = nodeId;
       }).toThrow(
         new InvalidOperationError({
-          message: 'Writing to readonly property edgeId is forbidden',
+          message: 'Writing to readonly property nodeId is forbidden',
         }),
       );
     });

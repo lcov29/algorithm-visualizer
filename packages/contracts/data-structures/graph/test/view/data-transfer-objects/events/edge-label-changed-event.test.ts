@@ -14,22 +14,17 @@ describe('EdgeLabelChangedEvent', () => {
     jest.resetAllMocks();
   });
 
-  describe.each([
-    ['edgeId', edgeId],
-    ['label', label],
-  ])('%s()', (methodName, expectedResult) => {
-    it(`getter returns the specified ${methodName} value`, () => {
-      // @ts-expect-error invoke method by string name
-      expect(edgeLabelChangedEvent[methodName]).toBe(expectedResult);
+  describe('label()', () => {
+    it('getter returns the specified label value', () => {
+      expect(edgeLabelChangedEvent.label).toBe(label);
     });
 
     it('setter throws an invalid operation error', () => {
       expect(() => {
-        // @ts-expect-error invoke method by string name
-        edgeLabelChangedEvent[methodName] = expectedResult;
+        edgeLabelChangedEvent.label = label;
       }).toThrow(
         new InvalidOperationError({
-          message: `Writing to readonly property ${methodName} is forbidden`,
+          message: `Writing to readonly property label is forbidden`,
         }),
       );
     });

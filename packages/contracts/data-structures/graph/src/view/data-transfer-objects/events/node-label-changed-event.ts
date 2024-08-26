@@ -1,36 +1,24 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
-import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface INodeLabelChangedEventArgs {
-  nodeId: number;
+import { INodeBaseEventArgs, NodeBaseEvent } from './node-base-event';
+
+interface INodeLabelChangedEventArgs extends INodeBaseEventArgs {
   label: string;
 }
 
 /**
  * @throws InvalidOperationError
  */
-export class NodeLabelChangedEvent extends BaseEvent<'node-label-changed'> {
-  private _nodeId: number;
+export class NodeLabelChangedEvent extends NodeBaseEvent<'node-label-changed'> {
   private _label: string;
 
   constructor(args: INodeLabelChangedEventArgs) {
-    super('node-label-changed');
-    this._nodeId = args.nodeId;
+    super('node-label-changed', args);
     this._label = args.label;
-  }
-
-  get nodeId() {
-    return this._nodeId;
   }
 
   get label() {
     return this._label;
-  }
-
-  set nodeId(input: number) {
-    throw new InvalidOperationError({
-      message: 'Writing to readonly property nodeId is forbidden',
-    });
   }
 
   set label(input: string) {

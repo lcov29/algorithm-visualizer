@@ -18,22 +18,19 @@ describe('NodeLabelHighlightAddedEvent', () => {
     jest.resetAllMocks();
   });
 
-  describe.each([
-    ['nodeId', nodeId],
-    ['highlightStyleClass', highlightStyleClass],
-  ])('%s()', (methodName, expectedResult) => {
-    it(`getter returns the specified ${methodName} value`, () => {
-      // @ts-expect-error invoke method by string name
-      expect(nodeLabelHighlightAddedEvent[methodName]).toBe(expectedResult);
+  describe('highlightStyleClass()', () => {
+    it(`getter returns the specified highlightStyleClass value`, () => {
+      expect(nodeLabelHighlightAddedEvent.highlightStyleClass).toBe(
+        highlightStyleClass,
+      );
     });
 
     it('setter throws an invalid operation error', () => {
       expect(() => {
-        // @ts-expect-error invoke method by string name
-        nodeLabelHighlightAddedEvent[methodName] = expectedResult;
+        nodeLabelHighlightAddedEvent.highlightStyleClass = highlightStyleClass;
       }).toThrow(
         new InvalidOperationError({
-          message: `Writing to readonly property ${methodName} is forbidden`,
+          message: `Writing to readonly property highlightStyleClass is forbidden`,
         }),
       );
     });

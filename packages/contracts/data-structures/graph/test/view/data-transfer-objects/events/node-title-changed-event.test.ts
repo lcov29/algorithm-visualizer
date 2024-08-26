@@ -12,20 +12,15 @@ describe('NodeTitleChangedEvent', () => {
     jest.resetAllMocks();
   });
 
-  describe.each([
-    ['nodeId', 3],
-    ['title', 'foo'],
-  ])('%s()', (methodName, expectedValue) => {
-    it(`getter returns the specified ${methodName} value`, () => {
-      // @ts-expect-error reference to a method by its string name
-      expect(nodeTitleChangedEvent[methodName]).toBe(expectedValue);
+  describe('title()', () => {
+    it(`getter returns the specified title value`, () => {
+      expect(nodeTitleChangedEvent.title).toBe('foo');
     });
 
     it('setters throws an invalid operation error', () => {
-      // @ts-expect-error reference to a method by its string name
-      expect(() => (nodeTitleChangedEvent[methodName] = expectedValue)).toThrow(
+      expect(() => (nodeTitleChangedEvent.title = 'foo')).toThrow(
         new InvalidOperationError({
-          message: `Writing to readonly property ${methodName} is forbidden`,
+          message: `Writing to readonly property title is forbidden`,
         }),
       );
     });

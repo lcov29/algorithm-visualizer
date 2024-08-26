@@ -1,38 +1,25 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
-import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { NodeLabelHighlightStyleClass } from '../../types';
+import { INodeBaseEventArgs, NodeBaseEvent } from './node-base-event';
 
-interface INodeLabelHighlightAddedEventArgs {
-  nodeId: number;
+interface INodeLabelHighlightAddedEventArgs extends INodeBaseEventArgs {
   highlightStyleClass: NodeLabelHighlightStyleClass;
 }
 
 /**
  * @throws InvalidOperationError
  */
-export class NodeLabelHighlightAddedEvent extends BaseEvent<'node-label-highlight-added'> {
-  private _nodeId: number;
+export class NodeLabelHighlightAddedEvent extends NodeBaseEvent<'node-label-highlight-added'> {
   private _highlightStyleClass: NodeLabelHighlightStyleClass;
 
   constructor(args: INodeLabelHighlightAddedEventArgs) {
-    super('node-label-highlight-added');
-    this._nodeId = args.nodeId;
+    super('node-label-highlight-added', args);
     this._highlightStyleClass = args.highlightStyleClass;
-  }
-
-  get nodeId() {
-    return this._nodeId;
   }
 
   get highlightStyleClass() {
     return this._highlightStyleClass;
-  }
-
-  set nodeId(input: number) {
-    throw new InvalidOperationError({
-      message: 'Writing to readonly property nodeId is forbidden',
-    });
   }
 
   set highlightStyleClass(input: NodeLabelHighlightStyleClass) {

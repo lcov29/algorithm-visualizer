@@ -2,37 +2,25 @@ import { InvalidOperationError } from '@algorithm-visualizer/error-handling-cont
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { EdgeLabelHighlightStyleClass } from '../../types';
+import { EdgeBaseEvent, IEdgeBaseEventArgs } from './edge-base-event';
 
-interface IEdgeLabelHighlightRemovedEventArgs {
-  edgeId: number;
+interface IEdgeLabelHighlightRemovedEventArgs extends IEdgeBaseEventArgs {
   highlightStyleClass: EdgeLabelHighlightStyleClass;
 }
 
 /**
  * @throws InvalidOperationError
  */
-export class EdgeLabelHighlightRemovedEvent extends BaseEvent<'edge-label-highlight-removed'> {
-  private _edgeId: number;
+export class EdgeLabelHighlightRemovedEvent extends EdgeBaseEvent<'edge-label-highlight-removed'> {
   private _highlightStyleClass: EdgeLabelHighlightStyleClass;
 
   constructor(args: IEdgeLabelHighlightRemovedEventArgs) {
-    super('edge-label-highlight-removed');
-    this._edgeId = args.edgeId;
+    super('edge-label-highlight-removed', args);
     this._highlightStyleClass = args.highlightStyleClass;
-  }
-
-  get edgeId() {
-    return this._edgeId;
   }
 
   get highlightStyleClass() {
     return this._highlightStyleClass;
-  }
-
-  set edgeId(input: number) {
-    throw new InvalidOperationError({
-      message: 'Writing to readonly property edgeId is forbidden',
-    });
   }
 
   set highlightStyleClass(input: EdgeLabelHighlightStyleClass) {
