@@ -15,4 +15,6 @@ flowchart RL
 
 ## Interfaces
 
+- [`IFunctionValidator`](./src/interfaces/function-validator.ts)
 - [`IIntegerValidator`](./src/interfaces/integer-validator.ts)
+- [`IListValidator`](./src/interfaces/list-validator.ts)
