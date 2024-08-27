@@ -1,5 +1,4 @@
-import { EventHandlingError } from '../../src/errors';
-import { BaseEvent } from '../../src/other/base-event';
+import { BaseEvent, EventHandlingError } from '../src/data-transfer-objects';
 
 describe('EventHandlingError', () => {
   const cause = new RangeError('This caused the invalid argument error');

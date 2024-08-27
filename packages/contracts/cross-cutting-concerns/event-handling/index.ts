@@ -1,3 +1,3 @@
-export * from './src/errors';
+export * from './src/data-transfer-objects';
 export * from './src/interfaces';
-export * from './src/other/base-event';
+export * from './src/data-transfer-objects';

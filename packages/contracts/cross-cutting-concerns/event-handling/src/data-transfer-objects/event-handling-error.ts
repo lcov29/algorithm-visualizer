@@ -1,4 +1,4 @@
-import { BaseEvent } from '../other/base-event';
+import { BaseEvent } from './base-event';
 
 interface IEventHandlingErrorArgs<T extends string> {
   message: string;

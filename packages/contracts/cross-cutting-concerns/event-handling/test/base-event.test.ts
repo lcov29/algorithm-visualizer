@@ -1,4 +1,4 @@
-import { BaseEvent } from '../../src/other/base-event';
+import { BaseEvent } from '../src/data-transfer-objects/base-event';
 
 describe('BaseEvent', () => {
   const name = 'event-name';
