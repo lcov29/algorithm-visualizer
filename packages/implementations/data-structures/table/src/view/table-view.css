@@ -1,0 +1,32 @@
+table.tableView {
+  table-layout: fixed;
+  width: max-content;
+  border-collapse: collapse;
+  border: 1px solid black;
+}
+
+.tableView th,
+.tableView td {
+  padding: 0.5rem;
+  border: 1px solid black;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.tableCellHighlightStyle1,
+.tableCellHighlightStyle1 * {
+  background-color: red;
+}
+
+.tableColumnHighlightStyle1 {
+  background-color: lightblue;
+}
+
+.tableContentHighlightStyle1 {
+  color: green;
+  font-weight: bold;
+}
+
+.tableRowHighlightStyle1 * {
+  background-color: green;
+}
