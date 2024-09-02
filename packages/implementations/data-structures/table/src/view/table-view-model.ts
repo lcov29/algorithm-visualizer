@@ -3,6 +3,7 @@ import {
   ITableViewContent,
   ITableViewModel,
   TableCellHighlightStyleClass,
+  TableContentHighlightStyleClass,
 } from '@algorithm-visualizer/table-contract';
 
 interface IGetContentArgs {
@@ -32,6 +33,13 @@ interface IChangeCellHighlightArgs {
   highlightClass?: TableCellHighlightStyleClass;
 }
 
+interface IChangeContentHighlightArgs {
+  rowId: number;
+  columnId: number;
+  contentId: number;
+  highlightClass?: TableContentHighlightStyleClass;
+}
+
 interface ISwitchRowsArgs {
   rowAId: number;
   rowBId: number;
@@ -47,6 +55,46 @@ export class TableViewModel implements ITableViewModel {
 
   constructor() {
     this._tableData = [];
+  }
+
+  changeColumnHighlight(args: IChangeColumnHighlightArgs) {
+    const { columnId, highlightClass } = args;
+    this._tableData.forEach(
+      row => (row[columnId].columnHighlightClass = highlightClass),
+    );
+  }
+
+  changeCellHighlight(args: IChangeCellHighlightArgs) {
+    const { rowId, columnId, highlightClass } = args;
+    this._tableData[rowId][columnId].cellHighlightClass = highlightClass;
+  }
+
+  changeContent(args: IChangeContentArgs) {
+    const { rowId, columnId, newContent } = args;
+    this._tableData[rowId][columnId].content = newContent;
+    console.log(this._tableData);
+  }
+
+  changeContentHighlight(args: IChangeContentHighlightArgs) {
+    const { rowId, columnId, contentId, highlightClass } = args;
+    this._tableData[rowId][columnId].content[contentId].highlightClass =
+      highlightClass;
+  }
+
+  changeRowHighlight(args: IChangeRowHighlightArgs) {
+    const { rowId, highlightClass } = args;
+    this._tableData[rowId].forEach(
+      column => (column.rowHighlightClass = highlightClass),
+    );
+  }
+
+  getContent(args: IGetContentArgs) {
+    const { rowId, columnId } = args;
+    return this._tableData[rowId][columnId].content;
+  }
+
+  getTableData() {
+    return structuredClone(this._tableData);
   }
 
   initializeTableData(data: Omit<ITableViewContent, 'highlightClass'>[][][]) {
@@ -67,47 +115,6 @@ export class TableViewModel implements ITableViewModel {
     );
   }
 
-  getTableData() {
-    return structuredClone(this._tableData);
-  }
-
-  getContent(args: IGetContentArgs) {
-    const { rowId, columnId } = args;
-    return this._tableData[rowId][columnId].content;
-  }
-
-  changeContent(args: IChangeContentArgs) {
-    const { rowId, columnId, newContent } = args;
-    this._tableData[rowId][columnId].content = newContent;
-    console.log(this._tableData);
-  }
-
-  changeColumnHighlight(args: IChangeColumnHighlightArgs) {
-    const { columnId, highlightClass } = args;
-    this._tableData.forEach(
-      row => (row[columnId].columnHighlightClass = highlightClass),
-    );
-  }
-
-  changeRowHighlight(args: IChangeRowHighlightArgs) {
-    const { rowId, highlightClass } = args;
-    this._tableData[rowId].forEach(
-      column => (column.rowHighlightClass = highlightClass),
-    );
-  }
-
-  changeCellHighlight(args: IChangeCellHighlightArgs) {
-    const { rowId, columnId, highlightClass } = args;
-    this._tableData[rowId][columnId].cellHighlightClass = highlightClass;
-  }
-
-  switchRows(args: ISwitchRowsArgs) {
-    const { rowAId, rowBId } = args;
-    const rowA = this._tableData[rowAId];
-    this._tableData[rowAId] = this._tableData[rowBId];
-    this._tableData[rowBId] = rowA;
-  }
-
   switchColumns(args: ISwitchColumnsArgs) {
     const { columnAId, columnBId } = args;
     this._tableData.forEach(row => {
@@ -115,5 +122,12 @@ export class TableViewModel implements ITableViewModel {
       row[columnAId] = row[columnBId];
       row[columnBId] = columnA;
     });
+  }
+
+  switchRows(args: ISwitchRowsArgs) {
+    const { rowAId, rowBId } = args;
+    const rowA = this._tableData[rowAId];
+    this._tableData[rowAId] = this._tableData[rowBId];
+    this._tableData[rowBId] = rowA;
   }
 }

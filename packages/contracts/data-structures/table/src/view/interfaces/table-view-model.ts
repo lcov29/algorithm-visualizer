@@ -1,4 +1,7 @@
-import { TableCellHighlightStyleClass } from '../types';
+import {
+  TableCellHighlightStyleClass,
+  TableContentHighlightStyleClass,
+} from '../types';
 import { ITableCell } from './table-cell';
 import { ITableViewContent } from './table-view-content';
 
@@ -29,6 +32,13 @@ interface IChangeCellHighlightArgs {
   highlightClass?: TableCellHighlightStyleClass;
 }
 
+interface IChangeContentHighlightArgs {
+  rowId: number;
+  columnId: number;
+  contentId: number;
+  highlightClass?: TableContentHighlightStyleClass;
+}
+
 interface ISwitchRowsArgs {
   rowAId: number;
   rowBId: number;
@@ -49,6 +59,7 @@ export interface ITableViewModel {
   changeColumnHighlight: (args: IChangeColumnHighlightArgs) => void;
   changeRowHighlight: (args: IChangeRowHighlightArgs) => void;
   changeCellHighlight: (args: IChangeCellHighlightArgs) => void;
+  changeContentHighlight: (args: IChangeContentHighlightArgs) => void;
   switchRows: (args: ISwitchRowsArgs) => void;
   switchColumns: (args: ISwitchColumnsArgs) => void;
 }

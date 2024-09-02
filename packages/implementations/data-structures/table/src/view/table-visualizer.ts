@@ -42,12 +42,14 @@ export class TableVisualizer implements ITableVisualizer {
       .add(event => this._handleColumnHighlightAddedEvent(event))
       .add(event => this._handleColumnHighlightRemovedEvent(event))
       .add(event => this._handleColumnsSwitchedEvent(event))
+      .add(event => this._handleContentHighlightAddedEvent(event))
+      .add(event => this._handleContentHighlightRemovedEvent(event))
       .add(event => this._handleContentUpdatedEvent(event))
-      .add(event => this._handleTableInitializedEvent(event))
-      .add(event => this._handleTableRenderedEvent(event))
       .add(event => this._handleRowHighlightAddedEvent(event))
       .add(event => this._handleRowHighlightRemovedEvent(event))
-      .add(event => this._handleRowsSwitchedEvent(event));
+      .add(event => this._handleRowsSwitchedEvent(event))
+      .add(event => this._handleTableInitializedEvent(event))
+      .add(event => this._handleTableRenderedEvent(event));
   }
 
   private async _handleCellHighlightAddedEvent(event: TableViewEvent) {
@@ -94,31 +96,35 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
+  private async _handleContentHighlightAddedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-content-highlight-added') {
+      return false;
+    }
+    const { rowId, columnId, contentId, highlightClass } = event;
+    this._tableModel.changeContentHighlight({
+      rowId,
+      columnId,
+      contentId,
+      highlightClass,
+    });
+    return true;
+  }
+
+  private async _handleContentHighlightRemovedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-content-highlight-removed') {
+      return false;
+    }
+    const { rowId, columnId, contentId } = event;
+    this._tableModel.changeContentHighlight({ rowId, columnId, contentId });
+    return true;
+  }
+
   private async _handleContentUpdatedEvent(event: TableViewEvent) {
     if (event.name !== 'table-content-updated') {
       return false;
     }
     const { rowId, columnId, newContent } = event;
     this._tableModel.changeContent({ rowId, columnId, newContent });
-    return true;
-  }
-
-  private async _handleTableInitializedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-initialized') {
-      return false;
-    }
-    this._tableModel.initializeTableData(event.table);
-    return true;
-  }
-
-  private async _handleTableRenderedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-rendered') {
-      return false;
-    }
-    const tableData = this._tableModel.getTableData();
-    if (this._setTableData) {
-      this._setTableData(tableData);
-    }
     return true;
   }
 
@@ -145,6 +151,25 @@ export class TableVisualizer implements ITableVisualizer {
     }
     const { rowAId, rowBId } = event;
     this._tableModel.switchRows({ rowAId, rowBId });
+    return true;
+  }
+
+  private async _handleTableInitializedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-initialized') {
+      return false;
+    }
+    this._tableModel.initializeTableData(event.table);
+    return true;
+  }
+
+  private async _handleTableRenderedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-rendered') {
+      return false;
+    }
+    const tableData = this._tableModel.getTableData();
+    if (this._setTableData) {
+      this._setTableData(tableData);
+    }
     return true;
   }
 }

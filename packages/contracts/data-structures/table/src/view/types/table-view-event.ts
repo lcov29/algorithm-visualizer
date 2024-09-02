@@ -4,6 +4,8 @@ import {
   TableColumnHighlightAddedEvent,
   TableColumnHighlightRemovedEvent,
   TableColumnsSwitchedEvent,
+  TableContentHighlightAddedEvent,
+  TableContentHighlightRemovedEvent,
   TableContentUpdatedEvent,
   TableInitializedEvent,
   TableRenderedEvent,
@@ -18,6 +20,8 @@ export type TableViewEvent =
   | TableColumnHighlightAddedEvent
   | TableColumnHighlightRemovedEvent
   | TableColumnsSwitchedEvent
+  | TableContentHighlightAddedEvent
+  | TableContentHighlightRemovedEvent
   | TableContentUpdatedEvent
   | TableInitializedEvent
   | TableRenderedEvent

@@ -3,6 +3,8 @@ export { TableCellHighlightRemovedEvent } from './table-cell-highlight-removed-e
 export { TableColumnHighlightAddedEvent } from './table-column-highlight-added-event';
 export { TableColumnHighlightRemovedEvent } from './table-column-highlight-removed-event';
 export { TableColumnsSwitchedEvent } from './table-columns-switched-event';
+export { TableContentHighlightAddedEvent } from './table-content-highlight-added-event';
+export { TableContentHighlightRemovedEvent } from './table-content-highlight-removed-event';
 export { TableContentUpdatedEvent } from './table-content-updated-event';
 export { TableInitializedEvent } from './table-initialized-event';
 export { TableRenderedEvent } from './table-rendered-event';
