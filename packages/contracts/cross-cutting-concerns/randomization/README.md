@@ -15,6 +15,7 @@ flowchart RL
 
 ## Interfaces
 
-- [`IRandomBooleanGenerator`](./src/interfaces/random-boolean-generator.ts)
-- [`IRandomIntegerGenerator`](./src/interfaces/random-integer-generator.ts)
-- [`IRandomListItemSelector`](./src/interfaces/random-list-item-selector.ts)
+- [`RandomBooleanGenerator`](./src/types/random-boolean-generator.ts)
+- [`RandomIntegerGenerator`](./src/types/random-integer-generator.ts)
+- [`RandomListItemSelector`](./src/types/random-list-item-selector.ts)
+- [`RandomListShuffler`](./src/types/random-list-shuffler.ts)

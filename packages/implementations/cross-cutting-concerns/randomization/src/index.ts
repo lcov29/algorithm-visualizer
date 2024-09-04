@@ -2,12 +2,14 @@ import {
   RandomBooleanGenerator,
   RandomIntegerGenerator,
   RandomListItemSelector,
+  RandomListShuffler,
 } from '@algorithm-visualizer/randomization-contract';
 
 import { IntegerValidator, ListValidator } from '../../data-validation';
 import { getRandomBoolean as _getRandomBoolean } from './random-boolean-generator';
 import { getRandomIntegerBetween as _getRandomIntegerBetween } from './random-integer-generator';
 import { getRandomListItem as _getRandomListItem } from './random-list-item-selector';
+import { getRandomShuffledList as _getRandomShuffledList } from './random-list-shuffler';
 
 /**
  * Generates a random boolean.
@@ -48,3 +50,6 @@ export const getRandomIntegerBetween: RandomIntegerGenerator = (
  */
 export const getRandomListItem: RandomListItemSelector = <T>(list: T[]) =>
   _getRandomListItem({ list, validator: new ListValidator() });
+
+export const getRandomShuffledList: RandomListShuffler = <T>(list: T[]) =>
+  _getRandomShuffledList({ list, validator: new ListValidator() });
