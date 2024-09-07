@@ -21,9 +21,14 @@
   },
   "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
   "scripts": {
-    "test-jest": "npx jest --config=../../../../jest.config.ts --roots=./packages/implementations/data-structures/graph --watchAll"
+    "test-jest": "npx jest --config=../../../../jest.config.ts --roots=./packages/implementations/data-structures/table --watchAll"
   },
   "dependencies": {
+    "@algorithm-visualizer/event-handling": "1.0.0",
+    "@algorithm-visualizer/event-handling-contract": "1.0.0",
+    "@algorithm-visualizer/data-validation": "1.0.0",
+    "@algorithm-visualizer/randomization": "1.0.0",
+    "@algorithm-visualizer/randomization-contract": "1.0.0",
     "@algorithm-visualizer/table-contract": "1.0.0"
   }
 }
