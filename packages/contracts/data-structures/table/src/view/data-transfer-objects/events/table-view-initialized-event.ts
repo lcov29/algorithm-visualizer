@@ -3,15 +3,15 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { ITableViewContent } from '../../interfaces';
 
-interface ITableInitializedEventArgs {
+interface ITableViewInitializedEventArgs {
   table: Omit<ITableViewContent, 'highlightClass'>[][][];
 }
 
-export class TableInitializedEvent extends BaseEvent<'table-initialized'> {
+export class TableViewInitializedEvent extends BaseEvent<'table-view-initialized'> {
   private _table: Omit<ITableViewContent, 'highlightClass'>[][][];
 
-  constructor(args: ITableInitializedEventArgs) {
-    super('table-initialized');
+  constructor(args: ITableViewInitializedEventArgs) {
+    super('table-view-initialized');
     this._table = args.table;
   }
 

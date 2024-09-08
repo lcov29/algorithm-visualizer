@@ -1,26 +1,23 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-import { TableContentHighlightStyleClass } from '../../types';
+import { TableCellHighlightStyleClass } from '../../types';
 
-interface ITableContentHighlightAddedEventArgs {
+interface ITableViewCellHighlightAddedEventArgs {
   rowId: number;
   columnId: number;
-  contentId: number;
-  highlightClass: TableContentHighlightStyleClass;
+  highlightClass: TableCellHighlightStyleClass;
 }
 
-export class TableContentHighlightAddedEvent extends BaseEvent<'table-content-highlight-added'> {
+export class TableViewCellHighlightAddedEvent extends BaseEvent<'table-view-cell-highlight-added'> {
   private _rowId: number;
   private _columnId: number;
-  private _contentId: number;
-  private _highlightClass: TableContentHighlightStyleClass;
+  private _highlightClass: TableCellHighlightStyleClass;
 
-  constructor(args: ITableContentHighlightAddedEventArgs) {
-    super('table-content-highlight-added');
+  constructor(args: ITableViewCellHighlightAddedEventArgs) {
+    super('table-view-cell-highlight-added');
     this._rowId = args.rowId;
     this._columnId = args.columnId;
-    this._contentId = args.contentId;
     this._highlightClass = args.highlightClass;
   }
 
@@ -30,10 +27,6 @@ export class TableContentHighlightAddedEvent extends BaseEvent<'table-content-hi
 
   get columnId() {
     return this._columnId;
-  }
-
-  get contentId() {
-    return this._contentId;
   }
 
   get highlightClass() {
@@ -52,13 +45,7 @@ export class TableContentHighlightAddedEvent extends BaseEvent<'table-content-hi
     });
   }
 
-  set contentId(input: number) {
-    throw new InvalidOperationError({
-      message: 'Writing to readonly property contentId is forbidden',
-    });
-  }
-
-  set highlightClass(input: TableContentHighlightStyleClass) {
+  set highlightClass(input: TableCellHighlightStyleClass) {
     throw new InvalidOperationError({
       message: 'Writing to readonly property highlightClass is forbidden',
     });

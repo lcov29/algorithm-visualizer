@@ -3,19 +3,19 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { ITableViewContent } from '../../interfaces';
 
-interface ITableContentUpdatedArgs {
+interface ITableViewContentUpdatedArgs {
   rowId: number;
   columnId: number;
   newContent: ITableViewContent[];
 }
 
-export class TableContentUpdatedEvent extends BaseEvent<'table-content-updated'> {
+export class TableViewContentUpdatedEvent extends BaseEvent<'table-view-content-updated'> {
   private _rowId: number;
   private _columnId: number;
   private _newContent: ITableViewContent[];
 
-  constructor(args: ITableContentUpdatedArgs) {
-    super('table-content-updated');
+  constructor(args: ITableViewContentUpdatedArgs) {
+    super('table-view-content-updated');
     this._rowId = args.rowId;
     this._columnId = args.columnId;
     this._newContent = args.newContent;

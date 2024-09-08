@@ -3,32 +3,32 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { TableCellHighlightStyleClass } from '../../types';
 
-interface ITableColumnHighlightAddedEventArgs {
-  columnId: number;
+interface ITableViewRowHighlightAddedEventArgs {
+  rowId: number;
   highlightClass: TableCellHighlightStyleClass;
 }
 
-export class TableColumnHighlightAddedEvent extends BaseEvent<'table-column-highlight-added'> {
-  private _columnId: number;
+export class TableViewRowHighlightAddedEvent extends BaseEvent<'table-view-row-highlight-added'> {
+  private _rowId: number;
   private _highlightClass: TableCellHighlightStyleClass;
 
-  constructor(args: ITableColumnHighlightAddedEventArgs) {
-    super('table-column-highlight-added');
-    this._columnId = args.columnId;
+  constructor(args: ITableViewRowHighlightAddedEventArgs) {
+    super('table-view-row-highlight-added');
+    this._rowId = args.rowId;
     this._highlightClass = args.highlightClass;
   }
 
-  get columnId() {
-    return this._columnId;
+  get rowId() {
+    return this._rowId;
   }
 
   get highlightClass() {
     return this._highlightClass;
   }
 
-  set columnId(input: number) {
+  set rowId(input: number) {
     throw new InvalidOperationError({
-      message: 'Writing to readonly property columnId is forbidden',
+      message: 'Writing to readonly property rowId is forbidden',
     });
   }
 

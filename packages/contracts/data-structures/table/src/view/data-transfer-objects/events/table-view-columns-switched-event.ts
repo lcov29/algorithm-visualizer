@@ -1,17 +1,17 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface ITableColumnsSwitchedEventArgs {
+interface ITableViewColumnsSwitchedEventArgs {
   columnAId: number;
   columnBId: number;
 }
 
-export class TableColumnsSwitchedEvent extends BaseEvent<'table-columns-switched'> {
+export class TableViewColumnsSwitchedEvent extends BaseEvent<'table-view-columns-switched'> {
   private _columnAId: number;
   private _columnBId: number;
 
-  constructor(args: ITableColumnsSwitchedEventArgs) {
-    super('table-columns-switched');
+  constructor(args: ITableViewColumnsSwitchedEventArgs) {
+    super('table-view-columns-switched');
     this._columnAId = args.columnAId;
     this._columnBId = args.columnBId;
   }

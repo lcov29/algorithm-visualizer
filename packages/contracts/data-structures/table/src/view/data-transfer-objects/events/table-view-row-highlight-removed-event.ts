@@ -1,15 +1,15 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface ITableRowHighlightRemovedEventArgs {
+interface ITableViewRowHighlightRemovedEventArgs {
   rowId: number;
 }
 
-export class TableRowHighlightRemovedEvent extends BaseEvent<'table-row-highlight-removed'> {
+export class TableViewRowHighlightRemovedEvent extends BaseEvent<'table-view-row-highlight-removed'> {
   private _rowId: number;
 
-  constructor(args: ITableRowHighlightRemovedEventArgs) {
-    super('table-row-highlight-removed');
+  constructor(args: ITableViewRowHighlightRemovedEventArgs) {
+    super('table-view-row-highlight-removed');
     this._rowId = args.rowId;
   }
 

@@ -37,23 +37,23 @@ export class TableVisualizer implements ITableVisualizer {
 
   private _initializeEventHandlerChain() {
     this._eventHandlerChain
-      .add(event => this._handleCellHighlightAddedEvent(event))
-      .add(event => this._handleCellHighlightRemovedEvent(event))
-      .add(event => this._handleColumnHighlightAddedEvent(event))
-      .add(event => this._handleColumnHighlightRemovedEvent(event))
-      .add(event => this._handleColumnsSwitchedEvent(event))
-      .add(event => this._handleContentHighlightAddedEvent(event))
-      .add(event => this._handleContentHighlightRemovedEvent(event))
-      .add(event => this._handleContentUpdatedEvent(event))
-      .add(event => this._handleRowHighlightAddedEvent(event))
-      .add(event => this._handleRowHighlightRemovedEvent(event))
-      .add(event => this._handleRowsSwitchedEvent(event))
-      .add(event => this._handleTableInitializedEvent(event))
-      .add(event => this._handleTableRenderedEvent(event));
+      .add(event => this._handleTableViewCellHighlightAddedEvent(event))
+      .add(event => this._handleTableViewCellHighlightRemovedEvent(event))
+      .add(event => this._handleTableViewColumnHighlightAddedEvent(event))
+      .add(event => this._handleTableViewColumnHighlightRemovedEvent(event))
+      .add(event => this._handleTableViewColumnsSwitchedEvent(event))
+      .add(event => this._handleTableViewContentHighlightAddedEvent(event))
+      .add(event => this._handleTableViewContentHighlightRemovedEvent(event))
+      .add(event => this._handleTableViewContentUpdatedEvent(event))
+      .add(event => this._handleTableViewRowHighlightAddedEvent(event))
+      .add(event => this._handleTableViewRowHighlightRemovedEvent(event))
+      .add(event => this._handleTableViewRowsSwitchedEvent(event))
+      .add(event => this._handleTableViewInitializedEvent(event))
+      .add(event => this._handleTableViewRenderedEvent(event));
   }
 
-  private async _handleCellHighlightAddedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-cell-highlight-added') {
+  private async _handleTableViewCellHighlightAddedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-view-cell-highlight-added') {
       return false;
     }
     const { rowId, columnId, highlightClass } = event;
@@ -61,8 +61,10 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
-  private async _handleCellHighlightRemovedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-cell-highlight-removed') {
+  private async _handleTableViewCellHighlightRemovedEvent(
+    event: TableViewEvent,
+  ) {
+    if (event.name !== 'table-view-cell-highlight-removed') {
       return false;
     }
     const { rowId, columnId } = event;
@@ -70,8 +72,10 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
-  private async _handleColumnHighlightAddedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-column-highlight-added') {
+  private async _handleTableViewColumnHighlightAddedEvent(
+    event: TableViewEvent,
+  ) {
+    if (event.name !== 'table-view-column-highlight-added') {
       return false;
     }
     const { columnId, highlightClass } = event;
@@ -79,16 +83,18 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
-  private async _handleColumnHighlightRemovedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-column-highlight-removed') {
+  private async _handleTableViewColumnHighlightRemovedEvent(
+    event: TableViewEvent,
+  ) {
+    if (event.name !== 'table-view-column-highlight-removed') {
       return false;
     }
     this._tableModel.changeColumnHighlight({ columnId: event.columnId });
     return true;
   }
 
-  private async _handleColumnsSwitchedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-columns-switched') {
+  private async _handleTableViewColumnsSwitchedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-view-columns-switched') {
       return false;
     }
     const { columnAId, columnBId } = event;
@@ -96,8 +102,10 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
-  private async _handleContentHighlightAddedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-content-highlight-added') {
+  private async _handleTableViewContentHighlightAddedEvent(
+    event: TableViewEvent,
+  ) {
+    if (event.name !== 'table-view-content-highlight-added') {
       return false;
     }
     const { rowId, columnId, contentId, highlightClass } = event;
@@ -110,8 +118,10 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
-  private async _handleContentHighlightRemovedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-content-highlight-removed') {
+  private async _handleTableViewContentHighlightRemovedEvent(
+    event: TableViewEvent,
+  ) {
+    if (event.name !== 'table-view-content-highlight-removed') {
       return false;
     }
     const { rowId, columnId, contentId } = event;
@@ -119,8 +129,8 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
-  private async _handleContentUpdatedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-content-updated') {
+  private async _handleTableViewContentUpdatedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-view-content-updated') {
       return false;
     }
     const { rowId, columnId, newContent } = event;
@@ -128,8 +138,8 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
-  private async _handleRowHighlightAddedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-row-highlight-added') {
+  private async _handleTableViewRowHighlightAddedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-view-row-highlight-added') {
       return false;
     }
     const { rowId, highlightClass } = event;
@@ -137,16 +147,18 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
-  private async _handleRowHighlightRemovedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-row-highlight-removed') {
+  private async _handleTableViewRowHighlightRemovedEvent(
+    event: TableViewEvent,
+  ) {
+    if (event.name !== 'table-view-row-highlight-removed') {
       return false;
     }
     this._tableModel.changeRowHighlight({ rowId: event.rowId });
     return true;
   }
 
-  private async _handleRowsSwitchedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-rows-switched') {
+  private async _handleTableViewRowsSwitchedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-view-rows-switched') {
       return false;
     }
     const { rowAId, rowBId } = event;
@@ -154,16 +166,16 @@ export class TableVisualizer implements ITableVisualizer {
     return true;
   }
 
-  private async _handleTableInitializedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-initialized') {
+  private async _handleTableViewInitializedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-view-initialized') {
       return false;
     }
     this._tableModel.initializeTableData(event.table);
     return true;
   }
 
-  private async _handleTableRenderedEvent(event: TableViewEvent) {
-    if (event.name !== 'table-rendered') {
+  private async _handleTableViewRenderedEvent(event: TableViewEvent) {
+    if (event.name !== 'table-view-rendered') {
       return false;
     }
     const tableData = this._tableModel.getTableData();

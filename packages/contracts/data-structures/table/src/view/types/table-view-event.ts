@@ -1,30 +1,30 @@
 import {
-  TableCellHighlightAddedEvent,
-  TableCellHighlightRemovedEvent,
-  TableColumnHighlightAddedEvent,
-  TableColumnHighlightRemovedEvent,
-  TableColumnsSwitchedEvent,
-  TableContentHighlightAddedEvent,
-  TableContentHighlightRemovedEvent,
-  TableContentUpdatedEvent,
-  TableInitializedEvent,
-  TableRenderedEvent,
-  TableRowHighlightAddedEvent,
-  TableRowHighlightRemovedEvent,
-  TableRowsSwitchedEvent,
+  TableViewCellHighlightAddedEvent,
+  TableViewCellHighlightRemovedEvent,
+  TableViewColumnHighlightAddedEvent,
+  TableViewColumnHighlightRemovedEvent,
+  TableViewColumnsSwitchedEvent,
+  TableViewContentHighlightAddedEvent,
+  TableViewContentHighlightRemovedEvent,
+  TableViewContentUpdatedEvent,
+  TableViewInitializedEvent,
+  TableViewRenderedEvent,
+  TableViewRowHighlightAddedEvent,
+  TableViewRowHighlightRemovedEvent,
+  TableViewRowsSwitchedEvent,
 } from '../data-transfer-objects';
 
 export type TableViewEvent =
-  | TableCellHighlightAddedEvent
-  | TableCellHighlightRemovedEvent
-  | TableColumnHighlightAddedEvent
-  | TableColumnHighlightRemovedEvent
-  | TableColumnsSwitchedEvent
-  | TableContentHighlightAddedEvent
-  | TableContentHighlightRemovedEvent
-  | TableContentUpdatedEvent
-  | TableInitializedEvent
-  | TableRenderedEvent
-  | TableRowHighlightAddedEvent
-  | TableRowHighlightRemovedEvent
-  | TableRowsSwitchedEvent;
+  | TableViewCellHighlightAddedEvent
+  | TableViewCellHighlightRemovedEvent
+  | TableViewColumnHighlightAddedEvent
+  | TableViewColumnHighlightRemovedEvent
+  | TableViewColumnsSwitchedEvent
+  | TableViewContentHighlightAddedEvent
+  | TableViewContentHighlightRemovedEvent
+  | TableViewContentUpdatedEvent
+  | TableViewInitializedEvent
+  | TableViewRenderedEvent
+  | TableViewRowHighlightAddedEvent
+  | TableViewRowHighlightRemovedEvent
+  | TableViewRowsSwitchedEvent;
