@@ -45,13 +45,13 @@ export class TableStructure<Data> implements ITableStructure<Data> {
 
   private _initializeEventHandlerChain() {
     this._eventHandlerChain
-      .add(event => this._handleTableColumnsSwitchedEvent(event))
-      .add(event => this._handleTableDataChangedEvent(event))
-      .add(event => this._handleInitializedEvent(event))
-      .add(event => this._handleRowsSwitchedEvent(event));
+      .add(event => this._handleTableStructureColumnsSwitchedEvent(event))
+      .add(event => this._handleTableStructureDataChangedEvent(event))
+      .add(event => this._handleTableStructureInitializedEvent(event))
+      .add(event => this._handleTableStructureRowsSwitchedEvent(event));
   }
 
-  private async _handleTableColumnsSwitchedEvent(
+  private async _handleTableStructureColumnsSwitchedEvent(
     event: TableStructureEvent<Data>,
   ) {
     if (event.name !== 'table-structure-columns-switched') {
@@ -66,7 +66,9 @@ export class TableStructure<Data> implements ITableStructure<Data> {
     return true;
   }
 
-  private async _handleTableDataChangedEvent(event: TableStructureEvent<Data>) {
+  private async _handleTableStructureDataChangedEvent(
+    event: TableStructureEvent<Data>,
+  ) {
     if (event.name !== 'table-structure-data-changed-event') {
       return false;
     }
@@ -75,7 +77,9 @@ export class TableStructure<Data> implements ITableStructure<Data> {
     return true;
   }
 
-  private async _handleInitializedEvent(event: TableStructureEvent<Data>) {
+  private async _handleTableStructureInitializedEvent(
+    event: TableStructureEvent<Data>,
+  ) {
     if (event.name !== 'table-structure-initialized') {
       return false;
     }
@@ -83,7 +87,9 @@ export class TableStructure<Data> implements ITableStructure<Data> {
     return true;
   }
 
-  private async _handleRowsSwitchedEvent(event: TableStructureEvent<Data>) {
+  private async _handleTableStructureRowsSwitchedEvent(
+    event: TableStructureEvent<Data>,
+  ) {
     if (event.name !== 'table-structure-rows-switched') {
       return false;
     }
