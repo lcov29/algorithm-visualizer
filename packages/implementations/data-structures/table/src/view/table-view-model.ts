@@ -72,7 +72,6 @@ export class TableViewModel implements ITableViewModel {
   changeContent(args: IChangeContentArgs) {
     const { rowId, columnId, newContent } = args;
     this._tableData[rowId][columnId].content = newContent;
-    console.log(this._tableData);
   }
 
   changeContentHighlight(args: IChangeContentHighlightArgs) {
