@@ -5,7 +5,7 @@
     "module": "esnext",
     "moduleResolution": "node",
     "target": "esnext",
-    "jsx": "react",
+    "jsx": "react-jsx",
     "lib": ["dom", "esnext"],
     "sourceMap": true,
     "strict": true,
@@ -46,6 +46,12 @@
       ],
       "@algorithm-visualizer/randomization-contract": [
         "../packages/contracts/cross-cutting-concerns/randomization"
+      ],
+      "@algorithm-visualizer/table": [
+        "../packages/implementations/data-structures/table"
+      ],
+      "@algorithm-visualizer/table-contract": [
+        "../packages/contracts/data-structures/table"
       ]
     }
   },
