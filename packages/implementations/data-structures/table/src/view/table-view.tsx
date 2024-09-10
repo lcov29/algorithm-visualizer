@@ -1,15 +1,12 @@
-import {
-  ITableCell,
-  ITableVisualizer,
-} from '@algorithm-visualizer/table-contract';
+import { ITableCell } from '@algorithm-visualizer/table-contract';
 
 import './table-view.css';
 
-import React, { JSX, useState } from 'react';
+import React, { JSX } from 'react';
 
 interface ITableViewProps {
   alignment: 'horizontal' | 'vertical';
-  tableVisualizer: ITableVisualizer;
+  data: ITableCell[][] | null;
 }
 
 function getInvertedTable(rows: ITableCell[][]): ITableCell[][] {
@@ -29,18 +26,13 @@ function getInvertedTable(rows: ITableCell[][]): ITableCell[][] {
 }
 
 export function TableView(props: ITableViewProps): JSX.Element | null {
-  const { alignment, tableVisualizer } = props;
+  const { alignment, data } = props;
 
-  const [tableData, setTableData] = useState<ITableCell[][] | null>(null);
-
-  tableVisualizer.setTableDataSetter(setTableData);
-
-  if (!tableData) {
+  if (!data) {
     return null;
   }
 
-  const tableRows =
-    alignment === 'horizontal' ? tableData : getInvertedTable(tableData);
+  const tableRows = alignment === 'horizontal' ? data : getInvertedTable(data);
 
   return (
     <table className="tableView">
