@@ -1,0 +1,150 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`TableView renders a horizontal table when alignment is set to "horizontal" 1`] = `
+<div>
+  <table
+    class="tableView"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <p>
+            Label_A: 
+            <span>
+              Text_A
+            </span>
+          </p>
+        </td>
+        <td>
+          <p>
+            Label_B: 
+            <span>
+              Text_B
+            </span>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>
+            Label_C: 
+            <span>
+              Text_C
+            </span>
+          </p>
+        </td>
+        <td>
+          <p>
+            Label_D: 
+            <span>
+              Text_D
+            </span>
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`TableView renders a vertical table when alignment is set to "vertical" 1`] = `
+<div>
+  <table
+    class="tableView"
+  >
+    <tbody>
+      <tr>
+        <td>
+          <p>
+            Label_A: 
+            <span>
+              Text_A
+            </span>
+          </p>
+        </td>
+        <td>
+          <p>
+            Label_C: 
+            <span>
+              Text_C
+            </span>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td>
+          <p>
+            Label_B: 
+            <span>
+              Text_B
+            </span>
+          </p>
+        </td>
+        <td>
+          <p>
+            Label_D: 
+            <span>
+              Text_D
+            </span>
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
+
+exports[`TableView sets the correct highlight classes 1`] = `
+<div>
+  <table
+    class="tableView"
+  >
+    <tbody>
+      <tr>
+        <td
+          class="tableCellHighlightStyle1"
+        >
+          <p>
+            Label_A: 
+            <span>
+              Text_A
+            </span>
+          </p>
+        </td>
+        <td
+          class="tableCellHighlightStyle2"
+        >
+          <p>
+            Label_B: 
+            <span>
+              Text_B
+            </span>
+          </p>
+        </td>
+      </tr>
+      <tr>
+        <td
+          class="tableCellHighlightStyle3"
+        >
+          <p>
+            Label_C: 
+            <span>
+              Text_C
+            </span>
+          </p>
+        </td>
+        <td>
+          <p>
+            Label_D: 
+            <span
+              class="tableContentHighlightStyle1"
+            >
+              Text_D
+            </span>
+          </p>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+`;
