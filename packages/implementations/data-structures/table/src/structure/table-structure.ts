@@ -1,4 +1,7 @@
-import { IEventHandlerChain } from '@algorithm-visualizer/event-handling-contract';
+import {
+  BaseEvent,
+  IEventHandlerChain,
+} from '@algorithm-visualizer/event-handling-contract';
 import {
   ITableStructure,
   TableStructureEvent,
@@ -39,8 +42,16 @@ export class TableStructure<Data> implements ITableStructure<Data> {
     return structuredClone(this._data);
   }
 
-  async handleEvent(event: TableStructureEvent<Data>) {
-    await this._eventHandlerChain.handle(event);
+  async handleEvent(event: BaseEvent<string>) {
+    if (this._isTableStructureEvent(event)) {
+      await this._eventHandlerChain.handle(event);
+    }
+  }
+
+  private _isTableStructureEvent(
+    event: BaseEvent<string>,
+  ): event is TableStructureEvent<Data> {
+    return event.name.startsWith('table-structure');
   }
 
   private _initializeEventHandlerChain() {

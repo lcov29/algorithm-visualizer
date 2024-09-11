@@ -1,4 +1,7 @@
-import { IEventHandlerChain } from '@algorithm-visualizer/event-handling-contract';
+import {
+  BaseEvent,
+  IEventHandlerChain,
+} from '@algorithm-visualizer/event-handling-contract';
 import {
   ITableCell,
   ITableViewModel,
@@ -31,8 +34,14 @@ export class TableVisualizer implements ITableVisualizer {
     this._setTableData = setter;
   }
 
-  async handleEvent(event: TableViewEvent) {
-    await this._eventHandlerChain.handle(event);
+  async handleEvent(event: BaseEvent<string>) {
+    if (this._isTableViewEvent(event)) {
+      await this._eventHandlerChain.handle(event);
+    }
+  }
+
+  private _isTableViewEvent(event: BaseEvent<string>): event is TableViewEvent {
+    return event.name.startsWith('table-view');
   }
 
   private _initializeEventHandlerChain() {
