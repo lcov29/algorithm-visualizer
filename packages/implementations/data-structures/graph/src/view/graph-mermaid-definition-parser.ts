@@ -1,6 +1,6 @@
 import {
   GraphRenderDirection,
-  GraphRenderedEvent,
+  GraphViewRenderedEvent,
   IEdge,
   INode,
 } from '@algorithm-visualizer/graph-contract';
@@ -8,7 +8,7 @@ import {
 type MermaidGraphRenderDirection = 'LR' | 'RL' | 'TB' | 'BT';
 
 export interface IGraphDefinitionParser {
-  parse: (event: GraphRenderedEvent) => string;
+  parse: (event: GraphViewRenderedEvent) => string;
 }
 
 export class GraphMermaidDefinitionParser implements IGraphDefinitionParser {
@@ -32,7 +32,7 @@ export class GraphMermaidDefinitionParser implements IGraphDefinitionParser {
   /**
    * Parses the specified graph into a valid mermaid flowchart definition.
    */
-  parse(event: GraphRenderedEvent): string {
+  parse(event: GraphViewRenderedEvent): string {
     const { nodes, edges, renderDirection } = event;
     return [
       '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',

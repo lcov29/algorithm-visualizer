@@ -1,44 +1,44 @@
 import {
-  EdgeDisplayedEvent,
-  EdgeHiddenEvent,
-  EdgeHighlightAddedEvent,
-  EdgeHighlightRemovedEvent,
-  EdgeLabelChangedEvent,
-  EdgeLabelDisplayedEvent,
-  EdgeLabelHiddenEvent,
-  EdgeLabelHighlightAddedEvent,
-  EdgeLabelHighlightRemovedEvent,
-  GraphRenderedEvent,
-  NodeDisplayedEvent,
-  NodeHiddenEvent,
-  NodeHighlightAddedEvent,
-  NodeHighlightRemovedEvent,
-  NodeLabelChangedEvent,
-  NodeLabelDisplayedEvent,
-  NodeLabelHiddenEvent,
-  NodeLabelHighlightAddedEvent,
-  NodeLabelHighlightRemovedEvent,
-  NodeTitleChangedEvent,
+  GraphViewEdgeDisplayedEvent,
+  GraphViewEdgeHiddenEvent,
+  GraphViewEdgeHighlightAddedEvent,
+  GraphViewEdgeHighlightRemovedEvent,
+  GraphViewEdgeLabelChangedEvent,
+  GraphViewEdgeLabelDisplayedEvent,
+  GraphViewEdgeLabelHiddenEvent,
+  GraphViewEdgeLabelHighlightAddedEvent,
+  GraphViewEdgeLabelHighlightRemovedEvent,
+  GraphViewNodeDisplayedEvent,
+  GraphViewNodeHiddenEvent,
+  GraphViewNodeHighlightAddedEvent,
+  GraphViewNodeHighlightRemovedEvent,
+  GraphViewNodeLabelChangedEvent,
+  GraphViewNodeLabelDisplayedEvent,
+  GraphViewNodeLabelHiddenEvent,
+  GraphViewNodeLabelHighlightAddedEvent,
+  GraphViewNodeLabelHighlightRemovedEvent,
+  GraphViewNodeTitleChangedEvent,
+  GraphViewRenderedEvent,
 } from '../data-transfer-objects/events';
 
 export type GraphViewEvent =
-  | EdgeDisplayedEvent
-  | EdgeHiddenEvent
-  | EdgeHighlightAddedEvent
-  | EdgeHighlightRemovedEvent
-  | EdgeLabelChangedEvent
-  | EdgeLabelDisplayedEvent
-  | EdgeLabelHiddenEvent
-  | EdgeLabelHighlightAddedEvent
-  | EdgeLabelHighlightRemovedEvent
-  | GraphRenderedEvent
-  | NodeDisplayedEvent
-  | NodeHiddenEvent
-  | NodeHighlightAddedEvent
-  | NodeHighlightRemovedEvent
-  | NodeLabelChangedEvent
-  | NodeLabelDisplayedEvent
-  | NodeLabelHiddenEvent
-  | NodeLabelHighlightAddedEvent
-  | NodeLabelHighlightRemovedEvent
-  | NodeTitleChangedEvent;
+  | GraphViewEdgeDisplayedEvent
+  | GraphViewEdgeHiddenEvent
+  | GraphViewEdgeHighlightAddedEvent
+  | GraphViewEdgeHighlightRemovedEvent
+  | GraphViewEdgeLabelChangedEvent
+  | GraphViewEdgeLabelDisplayedEvent
+  | GraphViewEdgeLabelHiddenEvent
+  | GraphViewEdgeLabelHighlightAddedEvent
+  | GraphViewEdgeLabelHighlightRemovedEvent
+  | GraphViewRenderedEvent
+  | GraphViewNodeDisplayedEvent
+  | GraphViewNodeHiddenEvent
+  | GraphViewNodeHighlightAddedEvent
+  | GraphViewNodeHighlightRemovedEvent
+  | GraphViewNodeLabelChangedEvent
+  | GraphViewNodeLabelDisplayedEvent
+  | GraphViewNodeLabelHiddenEvent
+  | GraphViewNodeLabelHighlightAddedEvent
+  | GraphViewNodeLabelHighlightRemovedEvent
+  | GraphViewNodeTitleChangedEvent;

@@ -1,9 +1,9 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { NodeTitleChangedEvent } from '../../../../src';
+import { GraphViewNodeTitleChangedEvent } from '../../../../src';
 
-describe('NodeTitleChangedEvent', () => {
-  const nodeTitleChangedEvent = new NodeTitleChangedEvent({
+describe('GraphViewNodeTitleChangedEvent', () => {
+  const nodeTitleChangedEvent = new GraphViewNodeTitleChangedEvent({
     nodeId: 3,
     title: 'foo',
   });
