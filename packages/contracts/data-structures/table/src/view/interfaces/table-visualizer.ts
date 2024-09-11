@@ -1,6 +1,6 @@
 import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract';
 
-import { TableViewEvent } from '../types/table-view-event';
+import { TableViewEvent } from '../types';
 import { ITableCell } from './table-cell';
 
 type ReactStateSetter = React.Dispatch<
