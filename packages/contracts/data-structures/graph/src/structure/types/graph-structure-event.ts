@@ -1,16 +1,16 @@
 import {
-  EdgeAddedEvent,
-  EdgeDeletedEvent,
-  EdgeWeightChangedEvent,
-  GraphCreatedEvent,
-  NodeAddedEvent,
-  NodeDeletedEvent,
+  GraphStructureEdgeAddedEvent,
+  GraphStructureEdgeDeletedEvent,
+  GraphStructureEdgeWeightChangedEvent,
+  GraphStructureInitializedEvent,
+  GraphStructureNodeAddedEvent,
+  GraphStructureNodeDeletedEvent,
 } from '../events';
 
 export type GraphStructureEvent =
-  | EdgeAddedEvent
-  | EdgeDeletedEvent
-  | EdgeWeightChangedEvent
-  | GraphCreatedEvent
-  | NodeAddedEvent
-  | NodeDeletedEvent;
+  | GraphStructureEdgeAddedEvent
+  | GraphStructureEdgeDeletedEvent
+  | GraphStructureEdgeWeightChangedEvent
+  | GraphStructureInitializedEvent
+  | GraphStructureNodeAddedEvent
+  | GraphStructureNodeDeletedEvent;

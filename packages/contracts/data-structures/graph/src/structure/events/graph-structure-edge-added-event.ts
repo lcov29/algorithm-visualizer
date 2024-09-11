@@ -3,18 +3,18 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { IEdge } from '../interfaces';
 
-interface IEdgeAddedEventArgs {
+interface IGraphStructureEdgeAddedEventArgs {
   edge: Omit<IEdge, 'id'>;
 }
 
 /**
  * @throws InvalidOperationError
  */
-export class EdgeAddedEvent extends BaseEvent<'edge-added'> {
+export class GraphStructureEdgeAddedEvent extends BaseEvent<'graph-structure-edge-added'> {
   private _edge: Omit<IEdge, 'id'>;
 
-  constructor(args: IEdgeAddedEventArgs) {
-    super('edge-added');
+  constructor(args: IGraphStructureEdgeAddedEventArgs) {
+    super('graph-structure-edge-added');
     this._edge = args.edge;
   }
 

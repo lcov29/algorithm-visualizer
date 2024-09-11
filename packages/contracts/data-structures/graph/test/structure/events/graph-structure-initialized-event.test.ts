@@ -1,8 +1,12 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { GraphCreatedEvent, IEdgeList, INodeList } from '../../../src';
+import {
+  GraphStructureInitializedEvent,
+  IEdgeList,
+  INodeList,
+} from '../../../src';
 
-describe('GraphCreatedEvent', () => {
+describe('GraphStructureInitializedEvent', () => {
   const mockNodeList = {
     nodeIds: [0, 1, 2],
   } as INodeList;
@@ -12,7 +16,7 @@ describe('GraphCreatedEvent', () => {
       { id: 1, startNodeId: 2, endNodeId: 3 },
     ],
   } as IEdgeList;
-  const nodeLabelChangedEvent = new GraphCreatedEvent({
+  const nodeLabelChangedEvent = new GraphStructureInitializedEvent({
     nodes: mockNodeList,
     edges: mockEdgeList,
   });

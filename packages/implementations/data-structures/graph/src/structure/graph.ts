@@ -51,14 +51,14 @@ export class Graph implements IGraph, IEventSubscriber<GraphStructureEvent> {
       .add(event => this._handleEdgeAddedEvent(event))
       .add(event => this._handleEdgeDeletedEvent(event))
       .add(event => this._handleEdgeWeightChangedEvent(event))
-      .add(event => this._handleGraphCreatedEvent(event))
+      .add(event => this._handleGraphStructureInitializedEvent(event))
       .add(event => this._handleNodeAddedEvent(event))
       .add(event => this._handleNodeDeletedEvent(event));
   }
 
   private async _handleEdgeAddedEvent(event: GraphStructureEvent) {
     try {
-      if (event.name !== 'edge-added') {
+      if (event.name !== 'graph-structure-edge-added') {
         return false;
       }
       this._edges.addEdge(event.edge);
@@ -74,7 +74,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphStructureEvent> {
 
   private async _handleEdgeDeletedEvent(event: GraphStructureEvent) {
     try {
-      if (event.name !== 'edge-deleted') {
+      if (event.name !== 'graph-structure-edge-deleted') {
         return false;
       }
       this._edges.deleteEdge(event.edgeId);
@@ -90,7 +90,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphStructureEvent> {
 
   private async _handleEdgeWeightChangedEvent(event: GraphStructureEvent) {
     try {
-      if (event.name !== 'edge-weight-changed') {
+      if (event.name !== 'graph-structure-edge-weight-changed') {
         return false;
       }
       const { edgeId, newWeight } = event;
@@ -105,8 +105,10 @@ export class Graph implements IGraph, IEventSubscriber<GraphStructureEvent> {
     }
   }
 
-  private async _handleGraphCreatedEvent(event: GraphStructureEvent) {
-    if (event.name !== 'graph-created') {
+  private async _handleGraphStructureInitializedEvent(
+    event: GraphStructureEvent,
+  ) {
+    if (event.name !== 'graph-structure-initialized') {
       return false;
     }
     this._nodes = event.nodes;
@@ -116,7 +118,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphStructureEvent> {
 
   private async _handleNodeAddedEvent(event: GraphStructureEvent) {
     try {
-      if (event.name !== 'node-added') {
+      if (event.name !== 'graph-structure-node-added') {
         return false;
       }
       this._nodes.addNode();
@@ -132,7 +134,7 @@ export class Graph implements IGraph, IEventSubscriber<GraphStructureEvent> {
 
   private async _handleNodeDeletedEvent(event: GraphStructureEvent) {
     try {
-      if (event.name !== 'node-deleted') {
+      if (event.name !== 'graph-structure-node-deleted') {
         return false;
       }
       const edgesToDelete = this._edges.getEdgesInvolving(event.nodeId);

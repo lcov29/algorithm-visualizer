@@ -3,17 +3,17 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
 import { IEdgeList, INodeList } from '..';
 
-interface IGraphCreatedEventArgs {
+interface IGraphStructureInitializedEventArgs {
   nodes: INodeList;
   edges: IEdgeList;
 }
 
-export class GraphCreatedEvent extends BaseEvent<'graph-created'> {
+export class GraphStructureInitializedEvent extends BaseEvent<'graph-structure-initialized'> {
   private _nodes: INodeList;
   private _edges: IEdgeList;
 
-  constructor(args: IGraphCreatedEventArgs) {
-    super('graph-created');
+  constructor(args: IGraphStructureInitializedEventArgs) {
+    super('graph-structure-initialized');
     this._nodes = args.nodes;
     this._edges = args.edges;
   }

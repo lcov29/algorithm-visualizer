@@ -1,14 +1,14 @@
 import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
 import {
-  EdgeAddedEvent,
-  EdgeDeletedEvent,
-  EdgeWeightChangedEvent,
-  GraphCreatedEvent,
+  GraphStructureEdgeAddedEvent,
+  GraphStructureEdgeDeletedEvent,
+  GraphStructureEdgeWeightChangedEvent,
   GraphStructureEvent,
+  GraphStructureInitializedEvent,
+  GraphStructureNodeAddedEvent,
+  GraphStructureNodeDeletedEvent,
   IEdge,
-  NodeAddedEvent,
-  NodeDeletedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
 import { EdgeList } from '../../src/structure/edge-list';
@@ -88,7 +88,7 @@ describe('Graph', () => {
   });
 
   describe('handleEvent()', () => {
-    describe('when passed an edge-added event', () => {
+    describe('when passed an graph-structure-edge-added event', () => {
       it('adds a new edge to the graph', async () => {
         const edge: Omit<IEdge, 'id'> = {
           startNodeId: 1,
@@ -96,7 +96,7 @@ describe('Graph', () => {
           isDirected: false,
           weight: 4,
         };
-        const edgeAddedEvent = new EdgeAddedEvent({ edge });
+        const edgeAddedEvent = new GraphStructureEdgeAddedEvent({ edge });
         await graph.handleEvent(edgeAddedEvent);
         expect(graph.edges).toEqual([
           ...mockEdges,
@@ -105,26 +105,34 @@ describe('Graph', () => {
       });
     });
 
-    describe('when passed an edge-deleted event', () => {
+    describe('when passed an graph-structure-edge-deleted event', () => {
       it('deletes the edge with the specified id', async () => {
-        const edgeDeletedEvent = new EdgeDeletedEvent({ edgeId: 1 });
-        await graph.handleEvent(new EdgeDeletedEvent(edgeDeletedEvent));
+        const edgeDeletedEvent = new GraphStructureEdgeDeletedEvent({
+          edgeId: 1,
+        });
+        await graph.handleEvent(
+          new GraphStructureEdgeDeletedEvent(edgeDeletedEvent),
+        );
         expect(graph.edges).toEqual([mockEdges[0]]);
       });
 
       it('does not delete any edges when the specified id is nonexistent', async () => {
-        const edgeDeletedEvent = new EdgeDeletedEvent({ edgeId: 6 });
+        const edgeDeletedEvent = new GraphStructureEdgeDeletedEvent({
+          edgeId: 6,
+        });
         await graph.handleEvent(edgeDeletedEvent);
         expect(graph.edges).toEqual(mockEdges);
       });
     });
 
-    describe('when passed an edge-weight-changed event', () => {
+    describe('when passed an graph-structure-edge-weight-changed event', () => {
       it('changes the edge weight of the specified id', async () => {
-        const edgeWeightChangedEvent = new EdgeWeightChangedEvent({
-          edgeId: 1,
-          newWeight: 100,
-        });
+        const edgeWeightChangedEvent = new GraphStructureEdgeWeightChangedEvent(
+          {
+            edgeId: 1,
+            newWeight: 100,
+          },
+        );
         await graph.handleEvent(edgeWeightChangedEvent);
         expect(graph.edges).toEqual([
           mockEdges[0],
@@ -133,16 +141,18 @@ describe('Graph', () => {
       });
 
       it('does not change any edge weight when the specified id is nonexistent', async () => {
-        const edgeWeightChangedEvent = new EdgeWeightChangedEvent({
-          edgeId: 9,
-          newWeight: 100,
-        });
+        const edgeWeightChangedEvent = new GraphStructureEdgeWeightChangedEvent(
+          {
+            edgeId: 9,
+            newWeight: 100,
+          },
+        );
         await graph.handleEvent(edgeWeightChangedEvent);
         expect(graph.edges).toEqual(mockEdges);
       });
     });
 
-    describe('when passed a graph-created event', () => {
+    describe('when passed a graph-structure-initialized event', () => {
       it('sets the nodeList and edgeList', async () => {
         const nodes = initializeMockNodes();
         nodes.addNode();
@@ -151,36 +161,45 @@ describe('Graph', () => {
           startNodeId: 4,
           endNodeId: 5,
         });
-        const graphCreatedEvent = new GraphCreatedEvent({ nodes, edges });
+        const graphCreatedEvent = new GraphStructureInitializedEvent({
+          nodes,
+          edges,
+        });
         await graph.handleEvent(graphCreatedEvent);
         expect(graph.nodes).toEqual(nodes.nodeIds);
         expect(graph.edges).toEqual(edges.edges);
       });
     });
 
-    describe('when passed a node-added event', () => {
+    describe('when passed a graph-structure-node-added event', () => {
       it('adds a new node', async () => {
-        const nodeAddedEvent = new NodeAddedEvent();
+        const nodeAddedEvent = new GraphStructureNodeAddedEvent();
         await graph.handleEvent(nodeAddedEvent);
         expect(graph.nodes).toEqual([0, 1, 2]);
       });
     });
 
-    describe('when passed a node-deleted event', () => {
+    describe('when passed a graph-structure-node-deleted event', () => {
       it('deletes the node with the specified id', async () => {
-        const nodeDeletedEvent = new NodeDeletedEvent({ nodeId: 1 });
+        const nodeDeletedEvent = new GraphStructureNodeDeletedEvent({
+          nodeId: 1,
+        });
         await graph.handleEvent(nodeDeletedEvent);
         expect(graph.nodes).toEqual([mockNodes[0]]);
       });
 
       it('deletes all edges that include the specified node', async () => {
-        const nodeDeletedEvent = new NodeDeletedEvent({ nodeId: 1 });
+        const nodeDeletedEvent = new GraphStructureNodeDeletedEvent({
+          nodeId: 1,
+        });
         await graph.handleEvent(nodeDeletedEvent);
         expect(graph.edges).toEqual([mockEdges[1]]);
       });
 
       it('does not delete any nodes when the specified id is nonexistent', async () => {
-        const nodeDeletedEvent = new NodeDeletedEvent({ nodeId: 8 });
+        const nodeDeletedEvent = new GraphStructureNodeDeletedEvent({
+          nodeId: 8,
+        });
         await graph.handleEvent(nodeDeletedEvent);
         expect(graph.nodes).toEqual(mockNodes);
       });

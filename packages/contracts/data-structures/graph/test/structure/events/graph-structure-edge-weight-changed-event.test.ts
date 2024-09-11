@@ -1,9 +1,9 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { EdgeWeightChangedEvent } from '../../../src';
+import { GraphStructureEdgeWeightChangedEvent } from '../../../src';
 
-describe('EdgeWeightChangedEvent', () => {
-  const edgeWeightChangedEvent = new EdgeWeightChangedEvent({
+describe('GraphStructureEdgeWeightChangedEvent', () => {
+  const edgeWeightChangedEvent = new GraphStructureEdgeWeightChangedEvent({
     edgeId: 3,
     newWeight: 7,
   });

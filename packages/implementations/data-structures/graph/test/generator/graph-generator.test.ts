@@ -1,9 +1,9 @@
 import { EventSubscriberManager } from '@algorithm-visualizer/event-handling';
 import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract';
 import {
-  GraphCreatedEvent,
   GraphGeneratorConfig,
   GraphStructureEvent,
+  GraphStructureInitializedEvent,
   IGraphGenerator,
 } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
@@ -24,14 +24,14 @@ describe('GraphGenerator', () => {
   let config: GraphGeneratorConfig;
   let subscriberId: number;
   let mockSubscriber: MockGraphCreatedSubscriber;
-  let graphCreatedEvent: GraphCreatedEvent | null;
+  let graphInitializedEvent: GraphStructureInitializedEvent | null;
 
   class MockGraphCreatedSubscriber
     implements IEventSubscriber<GraphStructureEvent>
   {
     async handleEvent(event: GraphStructureEvent) {
-      if (event.name === 'graph-created') {
-        graphCreatedEvent = event;
+      if (event.name === 'graph-structure-initialized') {
+        graphInitializedEvent = event;
       }
     }
   }
@@ -62,13 +62,13 @@ describe('GraphGenerator', () => {
       edgeDirection: 'unidirectional',
     });
     subscriberId = generator.addSubscriber(mockSubscriber);
-    graphCreatedEvent = null;
+    graphInitializedEvent = null;
   });
 
   describe('addSubscriber()', () => {
     it('adds a subscriber that will be notified about emitted events', () => {
       generator.generateGraph(config);
-      expect(graphCreatedEvent!.name).toBe('graph-created');
+      expect(graphInitializedEvent!.name).toBe('graph-structure-initialized');
     });
 
     it('returns the subscriber id', () => {
@@ -80,7 +80,7 @@ describe('GraphGenerator', () => {
     it('removes the specified subscriber so it will not be notified about emitted events', () => {
       generator.removeSubscriber(subscriberId);
       generator.generateGraph(config);
-      expect(graphCreatedEvent).toBeNull();
+      expect(graphInitializedEvent).toBeNull();
     });
   });
 
@@ -88,28 +88,28 @@ describe('GraphGenerator', () => {
     it('generates a random graph based on the specified configuration', () => {
       generator.generateGraph(config);
 
-      expect(graphCreatedEvent!.name).toBe('graph-created');
+      expect(graphInitializedEvent!.name).toBe('graph-structure-initialized');
 
-      expect(graphCreatedEvent!.nodes.nodeIds.length).toBeGreaterThanOrEqual(
-        config.nodeAmount.min,
-      );
-      expect(graphCreatedEvent!.nodes.nodeIds.length).toBeLessThanOrEqual(
+      expect(
+        graphInitializedEvent!.nodes.nodeIds.length,
+      ).toBeGreaterThanOrEqual(config.nodeAmount.min);
+      expect(graphInitializedEvent!.nodes.nodeIds.length).toBeLessThanOrEqual(
         config.nodeAmount.max,
       );
 
-      expect(graphCreatedEvent!.edges.edges.length).toBeGreaterThanOrEqual(
+      expect(graphInitializedEvent!.edges.edges.length).toBeGreaterThanOrEqual(
         (config.nodeAmount.min * config.edgeAmountPerNode.min) / 2,
       );
-      expect(graphCreatedEvent!.edges.edges.length).toBeLessThanOrEqual(
+      expect(graphInitializedEvent!.edges.edges.length).toBeLessThanOrEqual(
         (config.nodeAmount.max * config.edgeAmountPerNode.max) / 2,
       );
 
-      graphCreatedEvent!.edges.edges.forEach(edge => {
+      graphInitializedEvent!.edges.edges.forEach(edge => {
         expect(edge.weight).toBeGreaterThanOrEqual(config.edgeWeight!.min);
         expect(edge.weight).toBeLessThanOrEqual(config.edgeWeight!.max);
       });
 
-      graphCreatedEvent!.edges.edges.forEach(edge => {
+      graphInitializedEvent!.edges.edges.forEach(edge => {
         expect(edge.isDirected).toBe(true);
       });
     });

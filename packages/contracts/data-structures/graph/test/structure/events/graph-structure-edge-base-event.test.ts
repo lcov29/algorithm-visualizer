@@ -1,11 +1,13 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { EdgeBaseEvent } from '../../../src/structure/events/edge-base-event';
+import { GraphStructureEdgeBaseEvent } from '../../../src/structure/events/graph-structure-edge-base-event';
 
-describe('EdgeBaseEvent', () => {
+describe('GraphStructureEdgeBaseEvent', () => {
   const edgeId = 3;
   // @ts-ignore instantiation of an abstract class
-  const edgeBaseEvent = new EdgeBaseEvent('edge-base', { edgeId });
+  const edgeBaseEvent = new GraphStructureEdgeBaseEvent('edge-base', {
+    edgeId,
+  });
 
   beforeEach(() => {
     jest.resetAllMocks();

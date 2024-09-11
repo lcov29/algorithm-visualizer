@@ -1,8 +1,8 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { EdgeBaseEvent } from './edge-base-event';
+import { GraphStructureEdgeBaseEvent } from './graph-structure-edge-base-event';
 
-interface IEdgeWeightChangedEventArgs {
+interface IGraphStructureEdgeWeightChangedEventArgs {
   edgeId: number;
   newWeight: number;
 }
@@ -10,11 +10,11 @@ interface IEdgeWeightChangedEventArgs {
 /**
  * @throws InvalidOperationError
  */
-export class EdgeWeightChangedEvent extends EdgeBaseEvent<'edge-weight-changed'> {
+export class GraphStructureEdgeWeightChangedEvent extends GraphStructureEdgeBaseEvent<'graph-structure-edge-weight-changed'> {
   private _newWeight: number;
 
-  constructor(args: IEdgeWeightChangedEventArgs) {
-    super('edge-weight-changed', { edgeId: args.edgeId });
+  constructor(args: IGraphStructureEdgeWeightChangedEventArgs) {
+    super('graph-structure-edge-weight-changed', { edgeId: args.edgeId });
     this._newWeight = args.newWeight;
   }
 

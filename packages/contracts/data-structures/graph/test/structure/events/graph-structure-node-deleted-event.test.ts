@@ -1,10 +1,10 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { NodeDeletedEvent } from '../../../src';
+import { GraphStructureNodeDeletedEvent } from '../../../src';
 
-describe('NodeDeletedEvent', () => {
+describe('GraphStructureNodeDeletedEvent', () => {
   const nodeId = 5;
-  const nodeDeletedEvent = new NodeDeletedEvent({ nodeId });
+  const nodeDeletedEvent = new GraphStructureNodeDeletedEvent({ nodeId });
 
   beforeEach(() => {
     jest.resetAllMocks();

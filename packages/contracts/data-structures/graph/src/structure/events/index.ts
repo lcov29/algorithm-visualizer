@@ -1,6 +1,6 @@
-export { EdgeAddedEvent } from './edge-added-event';
-export { EdgeDeletedEvent } from './edge-deleted-event';
-export { EdgeWeightChangedEvent } from './edge-weight-changed-event';
-export { GraphCreatedEvent } from './graph-created-event';
-export { NodeAddedEvent } from './node-added-event';
-export { NodeDeletedEvent } from './node-deleted-event';
+export { GraphStructureEdgeAddedEvent } from './graph-structure-edge-added-event';
+export { GraphStructureEdgeDeletedEvent } from './graph-structure-edge-deleted-event';
+export { GraphStructureEdgeWeightChangedEvent } from './graph-structure-edge-weight-changed-event';
+export { GraphStructureInitializedEvent } from './graph-structure-initialized-event';
+export { GraphStructureNodeAddedEvent } from './graph-structure-node-added-event';
+export { GraphStructureNodeDeletedEvent } from './graph-structure-node-deleted-event';

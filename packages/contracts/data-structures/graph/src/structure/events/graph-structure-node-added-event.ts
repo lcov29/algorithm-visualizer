@@ -3,8 +3,8 @@ import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 /**
  * @throws InvalidOperationError
  */
-export class NodeAddedEvent extends BaseEvent<'node-added'> {
+export class GraphStructureNodeAddedEvent extends BaseEvent<'graph-structure-node-added'> {
   constructor() {
-    super('node-added');
+    super('graph-structure-node-added');
   }
 }

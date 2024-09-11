@@ -1,19 +1,19 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-export interface IEdgeBaseEventArgs {
+export interface IGraphStructureEdgeBaseEventArgs {
   edgeId: number;
 }
 
 /**
  * @throws InvalidOperationError
  */
-export abstract class EdgeBaseEvent<
+export abstract class GraphStructureEdgeBaseEvent<
   Name extends string,
 > extends BaseEvent<Name> {
   private _edgeId: number;
 
-  constructor(name: Name, args: IEdgeBaseEventArgs) {
+  constructor(name: Name, args: IGraphStructureEdgeBaseEventArgs) {
     super(name);
     this._edgeId = args.edgeId;
   }

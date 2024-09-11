@@ -1,10 +1,10 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { EdgeAddedEvent, IEdge } from '../../../src';
+import { GraphStructureEdgeAddedEvent, IEdge } from '../../../src';
 
-describe('EdgeAddedEvent', () => {
+describe('GraphStructureEdgeAddedEvent', () => {
   const edge: Omit<IEdge, 'id'> = { startNodeId: 1, endNodeId: 2 };
-  const edgeAddedEvent = new EdgeAddedEvent({ edge });
+  const edgeAddedEvent = new GraphStructureEdgeAddedEvent({ edge });
 
   beforeEach(() => {
     jest.resetAllMocks();

@@ -1,18 +1,18 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-interface INodeDeletedEventArgs {
+interface IGraphStructureNodeDeletedEventArgs {
   nodeId: number;
 }
 
 /**
  * @throws InvalidOperationError
  */
-export class NodeDeletedEvent extends BaseEvent<'node-deleted'> {
+export class GraphStructureNodeDeletedEvent extends BaseEvent<'graph-structure-node-deleted'> {
   private _nodeId: number;
 
-  constructor(args: INodeDeletedEventArgs) {
-    super('node-deleted');
+  constructor(args: IGraphStructureNodeDeletedEventArgs) {
+    super('graph-structure-node-deleted');
     this._nodeId = args.nodeId;
   }
 
