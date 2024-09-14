@@ -4,7 +4,7 @@ import { GraphViewNodeBaseEvent } from '../../../../src/view/data-transfer-objec
 
 describe('GraphViewNodeBaseEvent', () => {
   const nodeId = 3;
-  // @ts-ignore instantiation of an abstract class
+  // @ts-expect-error instantiation of an abstract class
   const nodeBaseEvent = new GraphViewNodeBaseEvent('graph-view-node-base', {
     nodeId,
   });

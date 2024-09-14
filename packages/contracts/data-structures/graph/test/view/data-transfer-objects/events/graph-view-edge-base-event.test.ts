@@ -4,7 +4,7 @@ import { GraphViewEdgeBaseEvent } from '../../../../src/view/data-transfer-objec
 
 describe('GraphViewEdgeBaseEvent', () => {
   const edgeId = 3;
-  // @ts-ignore instantiation of an abstract class
+  // @ts-expect-error instantiation of an abstract class
   const edgeBaseEvent = new GraphViewEdgeBaseEvent('edge-base', { edgeId });
 
   beforeEach(() => {

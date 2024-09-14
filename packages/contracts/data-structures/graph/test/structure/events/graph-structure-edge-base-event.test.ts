@@ -4,7 +4,7 @@ import { GraphStructureEdgeBaseEvent } from '../../../src/structure/events/graph
 
 describe('GraphStructureEdgeBaseEvent', () => {
   const edgeId = 3;
-  // @ts-ignore instantiation of an abstract class
+  // @ts-expect-error instantiation of an abstract class
   const edgeBaseEvent = new GraphStructureEdgeBaseEvent('edge-base', {
     edgeId,
   });
