@@ -1,11 +1,6 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import {
-  GraphRenderDirection,
-  GraphViewInitializedEvent,
-  IEdge,
-  INode,
-} from '../../../../src';
+import { GraphViewInitializedEvent, IEdge, INode } from '../../../../src';
 
 describe('GraphViewInitializedEvent', () => {
   const mockNodes: INode[] = [
@@ -17,12 +12,10 @@ describe('GraphViewInitializedEvent', () => {
     { id: 0, startNodeId: 0, endNodeId: 1 },
     { id: 1, startNodeId: 1, endNodeId: 2 },
   ];
-  const mockRenderDirection: GraphRenderDirection = 'Left-To-Right';
 
   const graphViewInitializedEvent = new GraphViewInitializedEvent({
     nodes: mockNodes,
     edges: mockEdges,
-    renderDirection: mockRenderDirection,
   });
 
   beforeEach(() => {
@@ -32,7 +25,6 @@ describe('GraphViewInitializedEvent', () => {
   describe.each([
     ['nodes', mockNodes],
     ['edges', mockEdges],
-    ['renderDirection', mockRenderDirection],
   ])('%s()', (methodName, expectedResult) => {
     it(`getter returns the specified ${methodName} value`, () => {
       // @ts-expect-error invoke method by string name

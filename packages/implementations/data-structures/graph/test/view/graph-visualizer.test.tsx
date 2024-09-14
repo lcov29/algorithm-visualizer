@@ -78,7 +78,6 @@ describe('GraphVisualizer', () => {
       const graphInitializedEvent = new GraphViewInitializedEvent({
         nodes: [{ id: 0, label: 'A' }],
         edges: [{ id: 0, startNodeId: 1, endNodeId: 2 }],
-        renderDirection: 'Left-To-Right',
       });
 
       beforeEach(async () => {

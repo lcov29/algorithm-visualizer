@@ -1,7 +1,4 @@
-import {
-  GraphRenderDirection,
-  GraphViewInitializedEvent,
-} from '@algorithm-visualizer/graph-contract';
+import { GraphViewInitializedEvent } from '@algorithm-visualizer/graph-contract';
 
 import { GraphMermaidDefinitionParser } from '../../src/view/mermaid-renderer/graph-mermaid-definition-parser';
 
@@ -16,17 +13,17 @@ function buildMockGraphRenderedEvent() {
     { id: 1, startNodeId: 1, endNodeId: 2, isDirected: false },
   ];
 
-  const mockRenderDirection: GraphRenderDirection = 'Left-To-Right';
-
   return new GraphViewInitializedEvent({
     nodes: mockNodeList,
     edges: mockEdgeList,
-    renderDirection: mockRenderDirection,
   });
 }
 
 describe('GraphMermaidDefinitionParser', () => {
-  const parser = new GraphMermaidDefinitionParser();
+  const parser = new GraphMermaidDefinitionParser({
+    direction: 'LR',
+    curveStyle: 'monotoneX',
+  });
 
   beforeEach(() => {
     jest.resetAllMocks();

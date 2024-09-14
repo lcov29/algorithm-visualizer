@@ -1,50 +1,41 @@
 import {
-  GraphRenderDirection,
   GraphViewInitializedEvent,
   IEdge,
   INode,
+  MermaidCurveStyle,
+  MermaidFlowchartDirection,
 } from '@algorithm-visualizer/graph-contract';
-
-type MermaidGraphRenderDirection = 'LR' | 'RL' | 'TB' | 'BT';
 
 export interface IGraphDefinitionParser {
   parse: (event: GraphViewInitializedEvent) => string;
 }
 
-export class GraphMermaidDefinitionParser implements IGraphDefinitionParser {
-  private _mermaidRenderDirectionMap: Map<
-    GraphRenderDirection,
-    MermaidGraphRenderDirection
-  >;
+interface IGraphMermaidDefinitionParserArgs {
+  curveStyle: MermaidCurveStyle;
+  direction: MermaidFlowchartDirection;
+}
 
-  constructor() {
-    this._mermaidRenderDirectionMap = new Map<
-      GraphRenderDirection,
-      MermaidGraphRenderDirection
-    >([
-      ['Left-To-Right', 'LR'],
-      ['Right-To-Left', 'RL'],
-      ['Top-To-Bottom', 'TB'],
-      ['Bottom-To-Top', 'BT'],
-    ]);
+export class GraphMermaidDefinitionParser implements IGraphDefinitionParser {
+  private _curveStyle: MermaidCurveStyle;
+  private _direction: MermaidFlowchartDirection;
+
+  constructor(args: IGraphMermaidDefinitionParserArgs) {
+    this._curveStyle = args.curveStyle;
+    this._direction = args.direction;
   }
 
   /**
    * Parses the specified graph into a valid mermaid flowchart definition.
    */
   parse(event: GraphViewInitializedEvent): string {
-    const { nodes, edges, renderDirection } = event;
+    const { nodes, edges } = event;
     return [
-      '%%{ init: { "flowchart": { "curve": "monotoneX" } } }%%',
-      `flowchart ${this._parseRenderDirection(renderDirection)}`,
+      `%%{ init: { "flowchart": { "curve": "${this._curveStyle}" } } }%%`,
+      `flowchart ${this._direction}`,
       this._parseNodes(nodes),
       this._parseEdges(edges),
       '\n',
     ].join('\n');
-  }
-
-  private _parseRenderDirection(direction: GraphRenderDirection) {
-    return this._mermaidRenderDirectionMap.get(direction);
   }
 
   private _parseNodes(nodes: INode[]) {

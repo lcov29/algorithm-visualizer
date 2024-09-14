@@ -2,6 +2,8 @@ import {
   GraphViewInitializedEvent,
   GraphVisualizationError,
   IGraphRenderer,
+  MermaidCurveStyle,
+  MermaidFlowchartDirection,
 } from '@algorithm-visualizer/graph-contract';
 
 import { GraphMermaid } from './graph-mermaid';
@@ -10,13 +12,18 @@ import { GraphMermaidDefinitionParser } from './graph-mermaid-definition-parser'
 import mermaid from 'mermaid';
 import React from 'react';
 
-export class GraphMermaidRenderer implements IGraphRenderer {
-  private _mermaidDefinitionParser: GraphMermaidDefinitionParser;
-  private _graphRef: React.RefObject<HTMLDivElement> | null;
+interface IGraphMermaidRendererArgs {
+  curveStyle: MermaidCurveStyle;
+  direction: MermaidFlowchartDirection;
+}
 
-  constructor() {
-    this._mermaidDefinitionParser = new GraphMermaidDefinitionParser();
+export class GraphMermaidRenderer implements IGraphRenderer {
+  private _graphRef: React.RefObject<HTMLDivElement> | null;
+  private _mermaidDefinitionParser: GraphMermaidDefinitionParser;
+
+  constructor(args: IGraphMermaidRendererArgs) {
     this._graphRef = null;
+    this._mermaidDefinitionParser = new GraphMermaidDefinitionParser(args);
   }
 
   /**
