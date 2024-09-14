@@ -5,25 +5,21 @@ import {
   GraphVisualizationBuilder,
 } from '@algorithm-visualizer/graph-contract';
 
-import { GraphMermaidComponentSelector } from './graph-mermaid-component-selector';
-import { GraphMermaidDefinitionParser } from './graph-mermaid-definition-parser';
-import { GraphMermaidSVGRenderEngine } from './graph-mermaid-svg-render-engine';
 import { GraphVisualizer } from './graph-visualizer';
+import { GraphMermaidComponentSelector } from './mermaid-renderer/graph-mermaid-component-selector';
+import { GraphMermaidRenderer } from './mermaid-renderer/graph-mermaid-renderer';
 
 export const buildGraphVisualizer: GraphVisualizationBuilder = () => {
-  const graphDefinitionParser = new GraphMermaidDefinitionParser();
-  const graphSVGRenderEngine = new GraphMermaidSVGRenderEngine();
+  const graphRenderer = new GraphMermaidRenderer();
+  const graphComponentSelector = new GraphMermaidComponentSelector();
   const eventHandlerChain = new EventHandlerChain<GraphViewEvent>({
     abortAfterSuccess: false,
     validator: new FunctionValidator(),
   });
 
-  const graphComponentSelector = new GraphMermaidComponentSelector();
-
   return new GraphVisualizer({
-    eventHandlerChain,
+    graphRenderer,
     graphComponentSelector,
-    graphDefinitionParser,
-    graphSVGRenderEngine,
+    eventHandlerChain,
   });
 };

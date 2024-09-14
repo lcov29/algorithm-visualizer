@@ -1,7 +1,5 @@
 import { IGraphVisualizer } from '@algorithm-visualizer/graph-contract';
 
-import './graph-view.css';
-
 import React, { JSX, useRef, useState } from 'react';
 
 interface IGraphViewProps {
@@ -11,20 +9,10 @@ interface IGraphViewProps {
 export function GraphView({
   graphVisualizer,
 }: IGraphViewProps): JSX.Element | null {
-  const [graphSVGString, setGraphSVGString] = useState<string>('');
+  const [graph, setGraph] = useState<JSX.Element | null>(null);
   const graphRef = useRef<HTMLDivElement>(null);
 
-  graphVisualizer.setGraphViewReferences(graphRef, setGraphSVGString);
+  graphVisualizer.setGraphViewReferences(graphRef, setGraph);
 
-  if (!graphSVGString) {
-    return null;
-  }
-
-  return (
-    <div
-      className="graph-view"
-      ref={graphRef}
-      dangerouslySetInnerHTML={{ __html: graphSVGString }}
-    />
-  );
+  return <div className="graph-view">{graph}</div>;
 }

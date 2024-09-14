@@ -1,7 +1,7 @@
 /**
  * @jest-environment jsdom
  */
-import { GraphMermaidComponentSelector } from '../../src/view/graph-mermaid-component-selector';
+import { GraphMermaidComponentSelector } from '../../src/view/mermaid-renderer/graph-mermaid-component-selector';
 import { MockMermaidSVGGraph } from './mocks/mock-mermaid-svg-graph';
 
 import { render, screen } from '@testing-library/react';

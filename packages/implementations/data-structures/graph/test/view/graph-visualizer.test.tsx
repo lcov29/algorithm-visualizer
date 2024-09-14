@@ -26,14 +26,13 @@ import {
   GraphViewNodeLabelHighlightAddedEvent,
   GraphViewNodeLabelHighlightRemovedEvent,
   GraphViewNodeTitleChangedEvent,
-  IGraphSVGRenderEngine,
+  IGraphRenderer,
   NodeHighlightStyleClass,
   NodeLabelHighlightStyleClass,
 } from '@algorithm-visualizer/graph-contract';
 
-import { GraphMermaidComponentSelector } from '../../src/view/graph-mermaid-component-selector';
-import { IGraphDefinitionParser } from '../../src/view/graph-mermaid-definition-parser';
 import { GraphVisualizer } from '../../src/view/graph-visualizer';
+import { GraphMermaidComponentSelector } from '../../src/view/mermaid-renderer/graph-mermaid-component-selector';
 import { MockMermaidSVGGraph } from './mocks/mock-mermaid-svg-graph';
 
 import { render, screen } from '@testing-library/react';
@@ -46,16 +45,12 @@ const eventHandlerChain = new EventHandlerChain<GraphViewEvent>({
 
 const graphComponentSelector = new GraphMermaidComponentSelector();
 
-const mockSetGraphSVGString = jest.fn();
+const mockSetGraph = jest.fn();
 const mockRender = jest.fn();
-const mockParse = jest.fn();
 
-const mockGraphSVGRenderEngine: IGraphSVGRenderEngine<string> = {
+const mockGraphRenderer: IGraphRenderer = {
   render: mockRender,
-};
-
-const mockGraphDefinitionParser: IGraphDefinitionParser = {
-  parse: mockParse,
+  setGraphReference: jest.fn(),
 };
 
 describe('GraphVisualizer', () => {
@@ -73,36 +68,30 @@ describe('GraphVisualizer', () => {
     visualizer = new GraphVisualizer({
       eventHandlerChain,
       graphComponentSelector,
-      graphSVGRenderEngine: mockGraphSVGRenderEngine,
-      graphDefinitionParser: mockGraphDefinitionParser,
+      graphRenderer: mockGraphRenderer,
     });
-    visualizer.setGraphViewReferences(mockGraphRef, mockSetGraphSVGString);
+    visualizer.setGraphViewReferences(mockGraphRef, mockSetGraph);
   });
 
   describe('handleEvent()', () => {
-    describe('GraphViewRenderedEvent', () => {
-      const graphRenderedEvent = new GraphViewInitializedEvent({
+    describe('GraphViewInitializedEvent', () => {
+      const graphInitializedEvent = new GraphViewInitializedEvent({
         nodes: [{ id: 0, label: 'A' }],
         edges: [{ id: 0, startNodeId: 1, endNodeId: 2 }],
         renderDirection: 'Left-To-Right',
       });
 
       beforeEach(async () => {
-        mockParse.mockReturnValue('Foo');
-        mockRender.mockResolvedValue('Bar');
-        await visualizer.handleEvent(graphRenderedEvent);
+        mockRender.mockResolvedValue(<p>Foo</p>);
+        await visualizer.handleEvent(graphInitializedEvent);
       });
 
-      it('passes the event to the graph definition parser', () => {
-        expect(mockParse).toHaveBeenCalledWith(graphRenderedEvent);
+      it('passes the event to the graph renderer', () => {
+        expect(mockRender).toHaveBeenCalledWith(graphInitializedEvent);
       });
 
-      it('passes the parsed graph definition to the svg render engine', () => {
-        expect(mockRender).toHaveBeenCalledWith('Foo');
-      });
-
-      it('displays the result of the svg render engine', () => {
-        expect(mockSetGraphSVGString).toHaveBeenCalledWith('Bar');
+      it('sets the graph to the generated react element', () => {
+        expect(mockSetGraph).toHaveBeenCalledWith(<p>Foo</p>);
       });
     });
   });

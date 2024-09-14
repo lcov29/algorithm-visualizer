@@ -1,16 +1,43 @@
-import { IGraphSVGRenderEngine } from '@algorithm-visualizer/graph-contract';
+import {
+  GraphViewInitializedEvent,
+  GraphVisualizationError,
+  IGraphRenderer,
+} from '@algorithm-visualizer/graph-contract';
+
+import { GraphMermaid } from './graph-mermaid';
+import { GraphMermaidDefinitionParser } from './graph-mermaid-definition-parser';
 
 import mermaid from 'mermaid';
+import React from 'react';
 
-export class GraphMermaidSVGRenderEngine
-  implements IGraphSVGRenderEngine<string>
-{
+export class GraphMermaidRenderer implements IGraphRenderer {
+  private _mermaidDefinitionParser: GraphMermaidDefinitionParser;
+  private _graphRef: React.RefObject<HTMLDivElement> | null;
+
+  constructor() {
+    this._mermaidDefinitionParser = new GraphMermaidDefinitionParser();
+    this._graphRef = null;
+  }
+
   /**
    * Renders the graph specified by the passed mermaid graph definition to a svg file.
    */
-  async render(mermaidGraphDefinition: string): Promise<string> {
-    const { svg } = await mermaid.render('graph', mermaidGraphDefinition);
-    return this._indexEdges(svg);
+  async render(event: GraphViewInitializedEvent) {
+    if (!this._graphRef) {
+      throw new GraphVisualizationError({
+        message:
+          'Failed to render the mermaid graph, because the GraphMermaidRenderer.render() was called without initializing the graphRef.',
+      });
+    }
+
+    const graphDefinition = this._mermaidDefinitionParser.parse(event);
+    const { svg } = await mermaid.render('graph', graphDefinition);
+    const indexedSVG = this._indexEdges(svg);
+    return <GraphMermaid svgString={indexedSVG} graphRef={this._graphRef} />;
+  }
+
+  setGraphReference(graphRef: React.RefObject<HTMLDivElement>) {
+    this._graphRef = graphRef;
   }
 
   private _indexEdges(svgString: string) {

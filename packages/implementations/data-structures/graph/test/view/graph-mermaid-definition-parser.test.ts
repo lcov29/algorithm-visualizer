@@ -3,7 +3,7 @@ import {
   GraphViewInitializedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
-import { GraphMermaidDefinitionParser } from '../../src/view/graph-mermaid-definition-parser';
+import { GraphMermaidDefinitionParser } from '../../src/view/mermaid-renderer/graph-mermaid-definition-parser';
 
 function buildMockGraphRenderedEvent() {
   const mockNodeList = [

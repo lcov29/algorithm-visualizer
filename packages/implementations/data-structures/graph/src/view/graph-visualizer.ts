@@ -2,43 +2,39 @@ import { IEventHandlerChain } from '@algorithm-visualizer/event-handling-contrac
 import {
   GraphViewEvent,
   IGraphComponentSelector,
-  IGraphSVGRenderEngine,
+  IGraphRenderer,
   IGraphVisualizer,
 } from '@algorithm-visualizer/graph-contract';
-
-import { IGraphDefinitionParser } from './graph-mermaid-definition-parser';
 
 import React from 'react';
 
 interface IGraphVisualizerArgs {
   eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
   graphComponentSelector: IGraphComponentSelector;
-  graphDefinitionParser: IGraphDefinitionParser;
-  graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
+  graphRenderer: IGraphRenderer;
 }
 
 export class GraphVisualizer implements IGraphVisualizer {
   private _eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
   private _graphComponentSelector: IGraphComponentSelector;
-  private _graphDefinitionParser: IGraphDefinitionParser;
-  private _graphSVGRenderEngine: IGraphSVGRenderEngine<string>;
-  private _setGraphSVGString: React.Dispatch<React.SetStateAction<string>>;
+  private _graphRenderer: IGraphRenderer;
+  private _setGraph: React.Dispatch<React.SetStateAction<JSX.Element | null>>;
 
   constructor(args: IGraphVisualizerArgs) {
     this._eventHandlerChain = args.eventHandlerChain;
     this._graphComponentSelector = args.graphComponentSelector;
-    this._graphDefinitionParser = args.graphDefinitionParser;
-    this._graphSVGRenderEngine = args.graphSVGRenderEngine;
-    this._setGraphSVGString = () => {};
+    this._graphRenderer = args.graphRenderer;
+    this._setGraph = () => {};
     this._initializeEventHandlerChain();
   }
 
   setGraphViewReferences(
     graphRef: React.RefObject<HTMLDivElement>,
-    setGraphSVGString: React.Dispatch<React.SetStateAction<string>>,
+    setGraph: React.Dispatch<React.SetStateAction<JSX.Element | null>>,
   ) {
     this._graphComponentSelector.setGraphReference(graphRef);
-    this._setGraphSVGString = setGraphSVGString;
+    this._graphRenderer.setGraphReference(graphRef);
+    this._setGraph = setGraph;
   }
 
   async handleEvent(event: GraphViewEvent) {
@@ -156,9 +152,8 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'graph-view-initialized') {
       return false;
     }
-    const graphDefinition = this._graphDefinitionParser.parse(event);
-    const svg = await this._graphSVGRenderEngine.render(graphDefinition);
-    this._setGraphSVGString(svg);
+    const graph = await this._graphRenderer.render(event);
+    this._setGraph(graph);
     return true;
   }
 

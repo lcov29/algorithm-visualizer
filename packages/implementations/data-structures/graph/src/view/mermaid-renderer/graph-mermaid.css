@@ -1,0 +1,60 @@
+.graph-mermaid-view .node > circle {
+  fill: green !important;
+  stroke: black !important;
+  stroke-width: 2px !important;
+}
+
+.graph-mermaid-view .nodeHighlightStyle1 > circle {
+  fill: red !important;
+}
+
+.graph-mermaid-view .nodeHighlightStyle2 > circle {
+  fill: lightblue !important;
+}
+
+.graph-mermaid-view .nodeHighlightStyle3 > circle {
+  fill: darkmagenta !important;
+}
+
+.graph-mermaid-view .nodeHighlightStyle4 > circle {
+  fill: dimgray !important;
+}
+
+.graph-mermaid-view .edgeLabel.edgeLabelHighlightStyle1 {
+  color: red !important;
+}
+
+.graph-mermaid-view .edgeLabel.edgeLabelHighlightStyle2 {
+  color: green !important;
+}
+
+.graph-mermaid-view .nodeLabel {
+  color: black !important;
+}
+
+.graph-mermaid-view .nodeLabel.nodeLabelHighlightStyle1 {
+  color: red !important;
+}
+
+.graph-mermaid-view .nodeLabel.nodeLabelHighlightStyle2 {
+  color: green !important;
+}
+
+.graph-mermaid-view .edgePaths path {
+  stroke: black !important;
+  stroke-width: 3px !important;
+}
+
+.graph-mermaid-view .edgeLabel {
+  background: none !important;
+  color: blue !important;
+  font-weight: bolder;
+}
+
+.graph-mermaid-view .edgePaths .edgeHighlighted {
+  stroke: red !important;
+}
+
+.graph-mermaid-view .hidden {
+  display: none !important;
+}
