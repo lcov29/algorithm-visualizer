@@ -19,11 +19,12 @@
   },
   "homepage": "https://github.com/lcov29/algorithm-visualizer#readme",
   "scripts": {
-    "format": "npx prettier . --write",
-    "test-format": "npx prettier . --check",
-    "test-jest": "npx jest --passWithNoTests",
     "build": "webpack --env mode=prod",
-    "start": "webpack serve --env mode=dev"
+    "format": "npx prettier . --write",
+    "lint": "npx eslint .",
+    "start": "webpack serve --env mode=dev",
+    "test-format": "npx prettier . --check",
+    "test-jest": "npx jest --passWithNoTests"
   },
   "workspaces": [
     "./packages/**/*"
@@ -51,6 +52,7 @@
     "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.34.2",
+    "globals": "^15.9.0",
     "html-webpack-plugin": "^5.6.0",
     "jest": "^29.7.0",
     "jest-environment-jsdom": "^29.7.0",

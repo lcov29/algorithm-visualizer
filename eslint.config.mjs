@@ -17,6 +17,19 @@ export default [
     },
   },
   {
-    ignores: ['node_modules', 'dist', 'build-utils', 'webpack.config.js'],
+    ignores: [
+      'node_modules',
+      'dist',
+      'build-utils',
+      '__mocks__',
+      'webpack.config.js',
+    ],
+  },
+  {
+    settings: {
+      react: {
+        version: 'detect',
+      },
+    },
   },
 ];
