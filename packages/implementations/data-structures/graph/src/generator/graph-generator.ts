@@ -5,7 +5,7 @@ import {
 import {
   GraphGeneratorConfig,
   GraphGeneratorError,
-  GraphStructureInitializedEvent,
+  GraphGeneratorGraphGeneratedEvent,
   IGraphGenerator,
 } from '@algorithm-visualizer/graph-contract';
 
@@ -15,13 +15,13 @@ import { INodeListGenerator } from './node-list-generator';
 interface IGraphGeneratorArgs {
   createEdgeListGenerator: (nodeIds: number[]) => IEdgeListGenerator;
   createNodeListGenerator: () => INodeListGenerator;
-  subscriberManager: IEventSubscriberManager<GraphStructureInitializedEvent>;
+  subscriberManager: IEventSubscriberManager<GraphGeneratorGraphGeneratedEvent>;
 }
 
 export class GraphGenerator implements IGraphGenerator {
   private _createEdgeListGenerator: (nodeIds: number[]) => IEdgeListGenerator;
   private _createNodeListGenerator: () => INodeListGenerator;
-  private _subscriberManager: IEventSubscriberManager<GraphStructureInitializedEvent>;
+  private _subscriberManager: IEventSubscriberManager<GraphGeneratorGraphGeneratedEvent>;
 
   constructor(args: IGraphGeneratorArgs) {
     this._createEdgeListGenerator = args.createEdgeListGenerator;
@@ -29,7 +29,9 @@ export class GraphGenerator implements IGraphGenerator {
     this._subscriberManager = args.subscriberManager;
   }
 
-  addSubscriber(subscriber: IEventSubscriber<GraphStructureInitializedEvent>) {
+  addSubscriber(
+    subscriber: IEventSubscriber<GraphGeneratorGraphGeneratedEvent>,
+  ) {
     return this._subscriberManager.addSubscriber(subscriber);
   }
 
@@ -46,7 +48,7 @@ export class GraphGenerator implements IGraphGenerator {
       const edgeList = edgeListGenerator.generateRandomEdgeList(config);
 
       this._subscriberManager.notifySubscribers(
-        new GraphStructureInitializedEvent({
+        new GraphGeneratorGraphGeneratedEvent({
           nodes: nodeList,
           edges: edgeList,
         }),

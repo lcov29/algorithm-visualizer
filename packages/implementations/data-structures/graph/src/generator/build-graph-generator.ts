@@ -1,7 +1,7 @@
 import { EventSubscriberManager } from '@algorithm-visualizer/event-handling';
 import {
-  GraphCreatedEvent,
   GraphGeneratorBuilder,
+  GraphGeneratorGraphGeneratedEvent,
 } from '@algorithm-visualizer/graph-contract';
 import {
   getRandomIntegerBetween,
@@ -37,7 +37,8 @@ export const buildGraphGenerator: GraphGeneratorBuilder = () => {
     });
   };
 
-  const subscriberManager = new EventSubscriberManager<GraphCreatedEvent>();
+  const subscriberManager =
+    new EventSubscriberManager<GraphGeneratorGraphGeneratedEvent>();
 
   return new GraphGenerator({
     createEdgeListGenerator,
