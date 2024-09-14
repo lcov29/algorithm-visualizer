@@ -2,12 +2,12 @@ import { InvalidOperationError } from '@algorithm-visualizer/error-handling-cont
 
 import {
   GraphRenderDirection,
-  GraphViewRenderedEvent,
+  GraphViewInitializedEvent,
   IEdge,
   INode,
 } from '../../../../src';
 
-describe('GraphViewRenderedEvent', () => {
+describe('GraphViewInitializedEvent', () => {
   const mockNodes: INode[] = [
     { id: 0, label: 'A' },
     { id: 1, label: 'B' },
@@ -19,7 +19,7 @@ describe('GraphViewRenderedEvent', () => {
   ];
   const mockRenderDirection: GraphRenderDirection = 'Left-To-Right';
 
-  const graphViewRenderedEvent = new GraphViewRenderedEvent({
+  const graphViewInitializedEvent = new GraphViewInitializedEvent({
     nodes: mockNodes,
     edges: mockEdges,
     renderDirection: mockRenderDirection,
@@ -36,13 +36,13 @@ describe('GraphViewRenderedEvent', () => {
   ])('%s()', (methodName, expectedResult) => {
     it(`getter returns the specified ${methodName} value`, () => {
       // @ts-expect-error invoke method by string name
-      expect(graphViewRenderedEvent[methodName]).toBe(expectedResult);
+      expect(graphViewInitializedEvent[methodName]).toBe(expectedResult);
     });
 
     it('setter throws an invalid operation error', () => {
       expect(() => {
         // @ts-expect-error invoke method by string name
-        graphViewRenderedEvent[methodName] = expectedResult;
+        graphViewInitializedEvent[methodName] = expectedResult;
       }).toThrow(
         new InvalidOperationError({
           message: `Writing to readonly property ${methodName} is forbidden`,

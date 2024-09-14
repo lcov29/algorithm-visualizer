@@ -15,6 +15,7 @@ import {
   GraphViewEdgeLabelHighlightAddedEvent,
   GraphViewEdgeLabelHighlightRemovedEvent,
   GraphViewEvent,
+  GraphViewInitializedEvent,
   GraphViewNodeDisplayedEvent,
   GraphViewNodeHiddenEvent,
   GraphViewNodeHighlightAddedEvent,
@@ -25,7 +26,6 @@ import {
   GraphViewNodeLabelHighlightAddedEvent,
   GraphViewNodeLabelHighlightRemovedEvent,
   GraphViewNodeTitleChangedEvent,
-  GraphViewRenderedEvent,
   IGraphSVGRenderEngine,
   NodeHighlightStyleClass,
   NodeLabelHighlightStyleClass,
@@ -81,7 +81,7 @@ describe('GraphVisualizer', () => {
 
   describe('handleEvent()', () => {
     describe('GraphViewRenderedEvent', () => {
-      const graphRenderedEvent = new GraphViewRenderedEvent({
+      const graphRenderedEvent = new GraphViewInitializedEvent({
         nodes: [{ id: 0, label: 'A' }],
         edges: [{ id: 0, startNodeId: 1, endNodeId: 2 }],
         renderDirection: 'Left-To-Right',

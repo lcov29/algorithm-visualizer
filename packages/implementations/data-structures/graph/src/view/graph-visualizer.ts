@@ -56,7 +56,7 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleEdgeLabelChangedEvent(event))
       .add(event => this._handleEdgeLabelDisplayedEvent(event))
       .add(event => this._handleEdgeLabelHiddenEvent(event))
-      .add(event => this._handleGraphRenderedEvent(event))
+      .add(event => this._handleGraphInitializedEvent(event))
       .add(event => this._handleNodeHighlightAddedEvent(event))
       .add(event => this._handleNodeHighlightRemovedEvent(event))
       .add(event => this._handleNodeLabelChangedEvent(event))
@@ -152,8 +152,8 @@ export class GraphVisualizer implements IGraphVisualizer {
     return true;
   }
 
-  private async _handleGraphRenderedEvent(event: GraphViewEvent) {
-    if (event.name !== 'graph-view-rendered') {
+  private async _handleGraphInitializedEvent(event: GraphViewEvent) {
+    if (event.name !== 'graph-view-initialized') {
       return false;
     }
     const graphDefinition = this._graphDefinitionParser.parse(event);

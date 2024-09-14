@@ -8,6 +8,7 @@ import {
   GraphViewEdgeLabelHiddenEvent,
   GraphViewEdgeLabelHighlightAddedEvent,
   GraphViewEdgeLabelHighlightRemovedEvent,
+  GraphViewInitializedEvent,
   GraphViewNodeDisplayedEvent,
   GraphViewNodeHiddenEvent,
   GraphViewNodeHighlightAddedEvent,
@@ -18,7 +19,6 @@ import {
   GraphViewNodeLabelHighlightAddedEvent,
   GraphViewNodeLabelHighlightRemovedEvent,
   GraphViewNodeTitleChangedEvent,
-  GraphViewRenderedEvent,
 } from '../data-transfer-objects/events';
 
 export type GraphViewEvent =
@@ -31,7 +31,7 @@ export type GraphViewEvent =
   | GraphViewEdgeLabelHiddenEvent
   | GraphViewEdgeLabelHighlightAddedEvent
   | GraphViewEdgeLabelHighlightRemovedEvent
-  | GraphViewRenderedEvent
+  | GraphViewInitializedEvent
   | GraphViewNodeDisplayedEvent
   | GraphViewNodeHiddenEvent
   | GraphViewNodeHighlightAddedEvent

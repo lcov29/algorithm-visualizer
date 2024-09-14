@@ -5,19 +5,19 @@ import { IEdge } from '../../../structure';
 import { INode } from '../../interfaces/graph-node';
 import { GraphRenderDirection } from '../../types';
 
-interface IGraphViewRenderedEventArgs {
+interface IGraphViewInitializedEventArgs {
   nodes: INode[];
   edges: IEdge[];
   renderDirection: GraphRenderDirection;
 }
 
-export class GraphViewRenderedEvent extends BaseEvent<'graph-view-rendered'> {
+export class GraphViewInitializedEvent extends BaseEvent<'graph-view-initialized'> {
   private _nodes: INode[];
   private _edges: IEdge[];
   private _renderDirection: GraphRenderDirection;
 
-  constructor(args: IGraphViewRenderedEventArgs) {
-    super('graph-view-rendered');
+  constructor(args: IGraphViewInitializedEventArgs) {
+    super('graph-view-initialized');
     this._nodes = args.nodes;
     this._edges = args.edges;
     this._renderDirection = args.renderDirection;

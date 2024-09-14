@@ -7,7 +7,7 @@ export { GraphViewEdgeLabelDisplayedEvent } from './graph-view-edge-label-displa
 export { GraphViewEdgeLabelHiddenEvent } from './graph-view-edge-label-hidden-event';
 export { GraphViewEdgeLabelHighlightAddedEvent } from './graph-view-edge-label-highlight-added-event';
 export { GraphViewEdgeLabelHighlightRemovedEvent } from './graph-view-edge-label-highlight-removed-event';
-export { GraphViewRenderedEvent } from './graph-view-rendered-event';
+export { GraphViewInitializedEvent } from './graph-view-initialized-event';
 export { GraphViewNodeDisplayedEvent } from './graph-view-node-displayed-event';
 export { GraphViewNodeHiddenEvent } from './graph-view-node-hidden-event';
 export { GraphViewNodeHighlightAddedEvent } from './graph-view-node-highlight-added-event';

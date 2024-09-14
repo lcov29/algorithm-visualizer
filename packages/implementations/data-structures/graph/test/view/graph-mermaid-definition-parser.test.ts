@@ -1,6 +1,6 @@
 import {
   GraphRenderDirection,
-  GraphViewRenderedEvent,
+  GraphViewInitializedEvent,
 } from '@algorithm-visualizer/graph-contract';
 
 import { GraphMermaidDefinitionParser } from '../../src/view/graph-mermaid-definition-parser';
@@ -18,7 +18,7 @@ function buildMockGraphRenderedEvent() {
 
   const mockRenderDirection: GraphRenderDirection = 'Left-To-Right';
 
-  return new GraphViewRenderedEvent({
+  return new GraphViewInitializedEvent({
     nodes: mockNodeList,
     edges: mockEdgeList,
     renderDirection: mockRenderDirection,
