@@ -23,6 +23,9 @@ jobs:
       - name: Run format test
         run: npm run test-format
 
+      - name: Run Linter
+        run: npm run lint
+
       - name: Run unit tests
         run: npm run test-jest
 
