@@ -60,13 +60,15 @@ export class EdgeList implements IEdgeList {
   }
 
   getNavigableEdgesBetween(args: INavigableEdgesArgs): IEdge[] {
-    return this._edges.filter(({ startNodeId, endNodeId, isDirected }) => {
-      const isEdgeBetweenStartEnd =
-        args.startNodeId === startNodeId && args.endNodeId === endNodeId;
-      const isEdgeBetweenEndStart =
-        args.startNodeId === endNodeId && args.endNodeId === startNodeId;
-      return isEdgeBetweenStartEnd || (!isDirected && isEdgeBetweenEndStart);
-    });
+    return this._edges
+      .filter(({ startNodeId, endNodeId, isDirected }) => {
+        const isEdgeBetweenStartEnd =
+          args.startNodeId === startNodeId && args.endNodeId === endNodeId;
+        const isEdgeBetweenEndStart =
+          args.startNodeId === endNodeId && args.endNodeId === startNodeId;
+        return isEdgeBetweenStartEnd || (!isDirected && isEdgeBetweenEndStart);
+      })
+      .map(edge => structuredClone(edge));
   }
 
   getNavigableNeighborNodeIdsFor(nodeId: number): number[] {

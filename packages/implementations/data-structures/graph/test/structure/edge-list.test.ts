@@ -117,29 +117,56 @@ describe('EdgeList', () => {
   });
 
   describe('getNavigableEdgesBetween()', () => {
-    it('returns a list of all node IDs that can be reached', () => {
-      edgeList.addEdge({ startNodeId: 5, endNodeId: 7 });
-      edgeList.addEdge({ startNodeId: 7, endNodeId: 5 });
-      edgeList.addEdge({ startNodeId: 5, endNodeId: 7, isDirected: true });
+    const edgeA = { startNodeId: 5, endNodeId: 7 };
+    const edgeB = { startNodeId: 7, endNodeId: 5 };
+    const edgeC = { startNodeId: 5, endNodeId: 7, isDirected: true };
+
+    it('returns a list of navigable edges between the specified nodes', () => {
+      edgeList.addEdge(edgeA);
+      edgeList.addEdge(edgeB);
+      edgeList.addEdge(edgeC);
 
       const edges = edgeList.getNavigableEdgesBetween({
         startNodeId: 5,
         endNodeId: 7,
       });
-      expect(edges.map(edge => edge.id)).toEqual([2, 3, 4]);
+      expect(edges).toEqual([
+        { id: 2, ...edgeA },
+        { id: 3, ...edgeB },
+        { id: 4, ...edgeC },
+      ]);
+    });
+
+    it('returns clones of all navigable edges between the specified nodes', () => {
+      edgeList.addEdge(edgeA);
+      edgeList.addEdge(edgeB);
+      edgeList.addEdge(edgeC);
+
+      const edgeArgs = { startNodeId: 5, endNodeId: 7 };
+      edgeList.getNavigableEdgesBetween(edgeArgs)[0].id = 53;
+      const edges = edgeList.getNavigableEdgesBetween(edgeArgs);
+      expect(edges).toEqual([
+        { id: 2, ...edgeA },
+        { id: 3, ...edgeB },
+        { id: 4, ...edgeC },
+      ]);
     });
 
     it('excludes not navigable edges from the specified start node to the specified destination node', () => {
-      edgeList.addEdge({ startNodeId: 5, endNodeId: 7 });
-      edgeList.addEdge({ startNodeId: 7, endNodeId: 5 });
-      edgeList.addEdge({ startNodeId: 5, endNodeId: 7, isDirected: true });
+      edgeList.addEdge(edgeA);
+      edgeList.addEdge(edgeB);
+      edgeList.addEdge(edgeC);
       edgeList.addEdge({ startNodeId: 7, endNodeId: 5, isDirected: true });
 
       const edges = edgeList.getNavigableEdgesBetween({
         startNodeId: 5,
         endNodeId: 7,
       });
-      expect(edges.map(edge => edge.id)).toEqual([2, 3, 4]);
+      expect(edges).toEqual([
+        { id: 2, ...edgeA },
+        { id: 3, ...edgeB },
+        { id: 4, ...edgeC },
+      ]);
     });
 
     it('returns an empty list when no navigable edge between the specified nodes exist', () => {
