@@ -76,14 +76,14 @@ describe('Graph', () => {
   });
 
   describe('nodes()', () => {
-    it('returns a list of the indexed nodes', () => {
-      expect(graph.nodes).toEqual(mockNodes);
+    it('returns a reduced clone of the node list', () => {
+      expect(graph.nodeList.nodeIds).toEqual(mockNodes);
     });
   });
 
   describe('edges()', () => {
-    it('returns a list of the indexed edges', () => {
-      expect(graph.edges).toEqual(mockEdges);
+    it('returns a reduced clone of the edge list', () => {
+      expect(graph.edgeList.edges).toEqual(mockEdges);
     });
   });
 
@@ -98,7 +98,7 @@ describe('Graph', () => {
         };
         const edgeAddedEvent = new GraphStructureEdgeAddedEvent({ edge });
         await graph.handleEvent(edgeAddedEvent);
-        expect(graph.edges).toEqual([
+        expect(graph.edgeList.edges).toEqual([
           ...mockEdges,
           { id: 2, startNodeId: 1, endNodeId: 3, isDirected: false, weight: 4 },
         ]);
@@ -113,7 +113,7 @@ describe('Graph', () => {
         await graph.handleEvent(
           new GraphStructureEdgeDeletedEvent(edgeDeletedEvent),
         );
-        expect(graph.edges).toEqual([mockEdges[0]]);
+        expect(graph.edgeList.edges).toEqual([mockEdges[0]]);
       });
 
       it('does not delete any edges when the specified id is nonexistent', async () => {
@@ -121,7 +121,7 @@ describe('Graph', () => {
           edgeId: 6,
         });
         await graph.handleEvent(edgeDeletedEvent);
-        expect(graph.edges).toEqual(mockEdges);
+        expect(graph.edgeList.edges).toEqual(mockEdges);
       });
     });
 
@@ -134,7 +134,7 @@ describe('Graph', () => {
           },
         );
         await graph.handleEvent(edgeWeightChangedEvent);
-        expect(graph.edges).toEqual([
+        expect(graph.edgeList.edges).toEqual([
           mockEdges[0],
           { ...mockEdges[1], weight: 100 },
         ]);
@@ -148,7 +148,7 @@ describe('Graph', () => {
           },
         );
         await graph.handleEvent(edgeWeightChangedEvent);
-        expect(graph.edges).toEqual(mockEdges);
+        expect(graph.edgeList.edges).toEqual(mockEdges);
       });
     });
 
@@ -166,8 +166,8 @@ describe('Graph', () => {
           edges,
         });
         await graph.handleEvent(graphCreatedEvent);
-        expect(graph.nodes).toEqual(nodes.nodeIds);
-        expect(graph.edges).toEqual(edges.edges);
+        expect(graph.nodeList.nodeIds).toEqual(nodes.nodeIds);
+        expect(graph.edgeList.edges).toEqual(edges.edges);
       });
     });
 
@@ -175,7 +175,7 @@ describe('Graph', () => {
       it('adds a new node', async () => {
         const nodeAddedEvent = new GraphStructureNodeAddedEvent();
         await graph.handleEvent(nodeAddedEvent);
-        expect(graph.nodes).toEqual([0, 1, 2]);
+        expect(graph.nodeList.nodeIds).toEqual([0, 1, 2]);
       });
     });
 
@@ -185,7 +185,7 @@ describe('Graph', () => {
           nodeId: 1,
         });
         await graph.handleEvent(nodeDeletedEvent);
-        expect(graph.nodes).toEqual([mockNodes[0]]);
+        expect(graph.nodeList.nodeIds).toEqual([mockNodes[0]]);
       });
 
       it('deletes all edges that include the specified node', async () => {
@@ -193,7 +193,7 @@ describe('Graph', () => {
           nodeId: 1,
         });
         await graph.handleEvent(nodeDeletedEvent);
-        expect(graph.edges).toEqual([mockEdges[1]]);
+        expect(graph.edgeList.edges).toEqual([mockEdges[1]]);
       });
 
       it('does not delete any nodes when the specified id is nonexistent', async () => {
@@ -201,7 +201,7 @@ describe('Graph', () => {
           nodeId: 8,
         });
         await graph.handleEvent(nodeDeletedEvent);
-        expect(graph.nodes).toEqual(mockNodes);
+        expect(graph.nodeList.nodeIds).toEqual(mockNodes);
       });
     });
   });

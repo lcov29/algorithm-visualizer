@@ -22,3 +22,9 @@ export interface IEdgeList {
     next: () => { value?: IEdge; done: boolean };
   };
 }
+
+export interface IReducedEdgeList
+  extends Omit<
+    IEdgeList,
+    'addEdge' | 'deleteEdge' | 'changeWeight' | 'clone'
+  > {}

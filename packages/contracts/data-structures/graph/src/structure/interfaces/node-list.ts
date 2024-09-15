@@ -11,3 +11,6 @@ export interface INodeList {
     next: () => { value?: number; done: boolean };
   };
 }
+
+export interface IReducedNodeList
+  extends Omit<INodeList, 'addNode' | 'deleteNode' | 'clone'> {}

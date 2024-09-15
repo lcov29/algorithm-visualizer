@@ -8,6 +8,8 @@ import {
   IEdgeList,
   IGraph,
   INodeList,
+  IReducedEdgeList,
+  IReducedNodeList,
 } from '@algorithm-visualizer/graph-contract';
 
 interface IGraphArgs {
@@ -34,12 +36,12 @@ export class Graph implements IGraph, IEventSubscriber<GraphStructureEvent> {
     this._initializeEventHandlerChain();
   }
 
-  get nodes() {
-    return this._nodes.nodeIds;
+  get nodeList(): IReducedNodeList {
+    return this._nodes.clone();
   }
 
-  get edges() {
-    return this._edges.edges;
+  get edgeList(): IReducedEdgeList {
+    return this._edges.clone();
   }
 
   async handleEvent(event: GraphStructureEvent) {
