@@ -59,13 +59,15 @@ export class GraphMermaidRenderer implements IGraphRenderer {
   }
 
   private _indexEdgeLabels(svgString: string) {
-    const edgeLabelRegEx = /<span class="edgeLabel">.*?<\/span>/g;
-    const edgeLabels = svgString.match(edgeLabelRegEx) ?? [];
+    const edgeLabelSpanRegEx = /<span class="edgeLabel">.*?<\/span>/g;
+    const edgeLabelSpans = svgString.match(edgeLabelSpanRegEx) ?? [];
 
-    edgeLabels.forEach((edgeLabel, index) => {
-      const positionIndex = svgString.search(edgeLabel);
-      const start = svgString.substring(0, positionIndex + 5);
-      const end = svgString.substring(positionIndex + 6, svgString.length);
+    edgeLabelSpans.forEach((edgeLabelSpan, index) => {
+      const spanPosition = svgString.search(edgeLabelSpan);
+      const insertPosition = spanPosition + '<span'.length;
+
+      const start = svgString.substring(0, insertPosition);
+      const end = svgString.substring(insertPosition + 1, svgString.length);
       svgString = `${start} id="edge-label-${index}" ${end}`;
     });
 
