@@ -6,7 +6,7 @@ import {
   MermaidFlowchartDirection,
 } from '@algorithm-visualizer/graph-contract';
 
-export interface IGraphDefinitionParser {
+export interface IGraphMermaidDefinitionParser {
   parse: (event: GraphViewInitializedEvent) => string;
 }
 
@@ -15,7 +15,9 @@ interface IGraphMermaidDefinitionParserArgs {
   direction: MermaidFlowchartDirection;
 }
 
-export class GraphMermaidDefinitionParser implements IGraphDefinitionParser {
+export class GraphMermaidDefinitionParser
+  implements IGraphMermaidDefinitionParser
+{
   private _curveStyle: MermaidCurveStyle;
   private _direction: MermaidFlowchartDirection;
 

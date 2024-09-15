@@ -8,6 +8,7 @@ import {
 
 import { GraphVisualizer } from './graph-visualizer';
 import { GraphMermaidComponentSelector } from './mermaid-renderer/graph-mermaid-component-selector';
+import { GraphMermaidDefinitionParser } from './mermaid-renderer/graph-mermaid-definition-parser';
 import { GraphMermaidRenderer } from './mermaid-renderer/graph-mermaid-renderer';
 
 interface IGraphVisualizationBuilderArgs {
@@ -21,7 +22,10 @@ export function buildGraphVisualizer(
     curveStyle: 'monotoneX',
   },
 ) {
-  const graphRenderer = new GraphMermaidRenderer(args);
+  const graphMermaidDefinitionParser = new GraphMermaidDefinitionParser(args);
+  const graphRenderer = new GraphMermaidRenderer({
+    graphMermaidDefinitionParser,
+  });
   const graphComponentSelector = new GraphMermaidComponentSelector();
   const eventHandlerChain = new EventHandlerChain<GraphViewEvent>({
     abortAfterSuccess: false,

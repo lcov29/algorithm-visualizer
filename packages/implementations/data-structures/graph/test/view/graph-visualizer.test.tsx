@@ -33,7 +33,7 @@ import {
 
 import { GraphVisualizer } from '../../src/view/graph-visualizer';
 import { GraphMermaidComponentSelector } from '../../src/view/mermaid-renderer/graph-mermaid-component-selector';
-import { MockMermaidSVGGraph } from './mocks/mock-mermaid-svg-graph';
+import { MockMermaidSVGGraph } from './mermaid/mocks/mock-mermaid-svg-graph';
 
 import { render, screen } from '@testing-library/react';
 import * as React from 'react';
