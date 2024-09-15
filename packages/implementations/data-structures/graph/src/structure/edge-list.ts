@@ -5,13 +5,18 @@ import {
   INavigableEdgesArgs,
 } from '@algorithm-visualizer/graph-contract';
 
+interface IEdgeListArgs {
+  edges: IEdge[];
+  nextAvailableEdgeId: number;
+}
+
 export class EdgeList implements IEdgeList {
   private _edges: IEdge[];
   private _nextAvailableEdgeId: number;
 
-  constructor() {
-    this._edges = [];
-    this._nextAvailableEdgeId = 0;
+  constructor(args?: IEdgeListArgs) {
+    this._edges = args?.edges ?? [];
+    this._nextAvailableEdgeId = args?.nextAvailableEdgeId ?? 0;
   }
 
   get edges(): IEdge[] {
@@ -49,6 +54,13 @@ export class EdgeList implements IEdgeList {
   deleteEdge(id: number): IEdgeList {
     this._edges = this._edges.filter(edgeId => edgeId.id !== id);
     return this;
+  }
+
+  clone() {
+    return new EdgeList({
+      edges: structuredClone(this._edges),
+      nextAvailableEdgeId: this._nextAvailableEdgeId,
+    });
   }
 
   getEdgesInvolving(nodeId: number): IEdge[] {

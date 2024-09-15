@@ -17,6 +17,7 @@ export interface IEdgeList {
   getEdgesInvolving: (nodeId: number) => IEdge[];
   getNavigableEdgesBetween: (args: INavigableEdgesArgs) => IEdge[];
   getNavigableNeighborNodeIdsFor: (nodeId: number) => number[];
+  clone: () => IEdgeList;
   [Symbol.iterator]: () => {
     next: () => { value?: IEdge; done: boolean };
   };

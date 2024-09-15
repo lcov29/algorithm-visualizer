@@ -65,6 +65,18 @@ describe('NodeList', () => {
     });
   });
 
+  describe('clone()', () => {
+    it('returns a clone ', () => {
+      const clone = nodeList.clone();
+      nodeList.deleteNode(0);
+      nodeList.addNode();
+      clone.addNode();
+      clone.addNode();
+      expect(nodeList.nodeIds).toEqual([1, 2]);
+      expect(clone.nodeIds).toEqual([0, 1, 2, 3]);
+    });
+  });
+
   describe('Iterator', () => {
     it('enables iteration over all node ids', () => {
       const receivedNodeIds = [];

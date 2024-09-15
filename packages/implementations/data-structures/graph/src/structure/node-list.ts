@@ -1,6 +1,11 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { INodeList } from '@algorithm-visualizer/graph-contract';
 
+interface INodeListArgs {
+  nodeIds: number[];
+  nextAvailableNodeId: number;
+}
+
 /**
  * Data structure representing the nodes of a {@link Graph}.
  */
@@ -8,9 +13,9 @@ export class NodeList implements INodeList {
   private _nodeIds: number[];
   private _nextAvailableNodeId: number;
 
-  constructor() {
-    this._nodeIds = [];
-    this._nextAvailableNodeId = 0;
+  constructor(args?: INodeListArgs) {
+    this._nodeIds = args?.nodeIds ?? [];
+    this._nextAvailableNodeId = args?.nextAvailableNodeId ?? 0;
   }
 
   get nodeIds(): number[] {
@@ -36,6 +41,13 @@ export class NodeList implements INodeList {
 
   hasNode(id: number): boolean {
     return this._nodeIds.some(nodeId => nodeId === id);
+  }
+
+  clone() {
+    return new NodeList({
+      nodeIds: structuredClone(this._nodeIds),
+      nextAvailableNodeId: this._nextAvailableNodeId,
+    });
   }
 
   [Symbol.iterator]() {

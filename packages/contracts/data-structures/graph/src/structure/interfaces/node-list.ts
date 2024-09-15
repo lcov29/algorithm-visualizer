@@ -6,6 +6,7 @@ export interface INodeList {
   addNode: () => number;
   deleteNode: (id: number) => INodeList;
   hasNode: (id: number) => boolean;
+  clone: () => INodeList;
   [Symbol.iterator]: () => {
     next: () => { value?: number; done: boolean };
   };

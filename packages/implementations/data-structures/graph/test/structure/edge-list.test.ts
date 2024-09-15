@@ -92,6 +92,20 @@ describe('EdgeList', () => {
     });
   });
 
+  describe('clone()', () => {
+    it('returns a clone', () => {
+      const edgeListClone = edgeList.clone();
+      edgeList.deleteEdge(0);
+      edgeListClone.addEdge({ startNodeId: 10, endNodeId: 12 });
+      expect(edgeList.edges).toEqual([{ id: 1, ...mockEdge2 }]);
+      expect(edgeListClone.edges).toEqual([
+        { id: 0, ...mockEdge1 },
+        { id: 1, ...mockEdge2 },
+        { id: 2, startNodeId: 10, endNodeId: 12 },
+      ]);
+    });
+  });
+
   describe('getEdgesInvolving()', () => {
     beforeEach(() => {
       edgeList.addEdge({ startNodeId: 2, endNodeId: 3 });
