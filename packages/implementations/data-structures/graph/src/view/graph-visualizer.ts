@@ -1,6 +1,7 @@
 import { IEventHandlerChain } from '@algorithm-visualizer/event-handling-contract';
 import {
   GraphViewEvent,
+  GraphViewInitializedEvent,
   IGraphComponentSelector,
   IGraphRenderer,
   IGraphVisualizer,
@@ -18,12 +19,14 @@ export class GraphVisualizer implements IGraphVisualizer {
   private _eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
   private _graphComponentSelector: IGraphComponentSelector;
   private _graphRenderer: IGraphRenderer;
+  private _cachedGraphInitializedEvent: GraphViewInitializedEvent | null;
   private _setGraph: React.Dispatch<React.SetStateAction<JSX.Element | null>>;
 
   constructor(args: IGraphVisualizerArgs) {
     this._eventHandlerChain = args.eventHandlerChain;
     this._graphComponentSelector = args.graphComponentSelector;
     this._graphRenderer = args.graphRenderer;
+    this._cachedGraphInitializedEvent = null;
     this._setGraph = () => {};
     this._initializeEventHandlerChain();
   }
@@ -62,7 +65,8 @@ export class GraphVisualizer implements IGraphVisualizer {
       .add(event => this._handleNodeLabelHideEvent(event))
       .add(event => this._handleNodeLabelHighlightAddedEvent(event))
       .add(event => this._handleNodeLabelHighlightRemovedEvent(event))
-      .add(event => this._handleNodeTitleChangedEvent(event));
+      .add(event => this._handleNodeTitleChangedEvent(event))
+      .add(event => this._handleViewResetEvent(event));
   }
 
   private async _handleEdgeDisplayedEvent(event: GraphViewEvent) {
@@ -152,6 +156,7 @@ export class GraphVisualizer implements IGraphVisualizer {
     if (event.name !== 'graph-view-initialized') {
       return false;
     }
+    this._cachedGraphInitializedEvent = event;
     const graph = await this._graphRenderer.render(event);
     this._setGraph(graph);
     return true;
@@ -246,6 +251,20 @@ export class GraphVisualizer implements IGraphVisualizer {
     }
     const nodeLabel = this._graphComponentSelector.getNodeLabel(event.nodeId);
     nodeLabel?.setAttribute('title', event.title);
+    return true;
+  }
+
+  private async _handleViewResetEvent(event: GraphViewEvent) {
+    if (
+      event.name !== 'graph-view-reset' ||
+      !this._cachedGraphInitializedEvent
+    ) {
+      return false;
+    }
+    const graph = await this._graphRenderer.render(
+      this._cachedGraphInitializedEvent,
+    );
+    this._setGraph(graph);
     return true;
   }
 }

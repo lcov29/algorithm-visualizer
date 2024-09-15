@@ -19,6 +19,7 @@ import {
   GraphViewNodeLabelHighlightAddedEvent,
   GraphViewNodeLabelHighlightRemovedEvent,
   GraphViewNodeTitleChangedEvent,
+  GraphViewResetEvent,
 } from '../data-transfer-objects/events';
 
 export type GraphViewEvent =
@@ -41,4 +42,5 @@ export type GraphViewEvent =
   | GraphViewNodeLabelHiddenEvent
   | GraphViewNodeLabelHighlightAddedEvent
   | GraphViewNodeLabelHighlightRemovedEvent
-  | GraphViewNodeTitleChangedEvent;
+  | GraphViewNodeTitleChangedEvent
+  | GraphViewResetEvent;

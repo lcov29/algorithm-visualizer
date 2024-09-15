@@ -18,3 +18,4 @@ export { GraphViewNodeLabelHiddenEvent } from './graph-view-node-label-hidden-ev
 export { GraphViewNodeLabelHighlightAddedEvent } from './graph-view-node-label-highlight-added-event';
 export { GraphViewNodeLabelHighlightRemovedEvent } from './graph-view-node-label-highlight-removed-event';
 export { GraphViewNodeTitleChangedEvent } from './graph-view-node-title-changed-event';
+export { GraphViewResetEvent } from './graph-view-reset-event';
