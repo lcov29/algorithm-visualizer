@@ -2,9 +2,9 @@ import {
   GraphViewInitializedEvent,
   IEdge,
   INode,
-  MermaidCurveStyle,
-  MermaidFlowchartDirection,
 } from '@algorithm-visualizer/graph-contract';
+
+import { MermaidCurveStyle, MermaidFlowchartDirection } from './mermaid-types';
 
 export interface IGraphMermaidDefinitionParser {
   parse: (event: GraphViewInitializedEvent) => string;

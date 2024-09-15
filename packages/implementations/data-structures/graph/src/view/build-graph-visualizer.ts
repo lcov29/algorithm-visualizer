@@ -1,15 +1,15 @@
 import { FunctionValidator } from '@algorithm-visualizer/data-validation';
 import { EventHandlerChain } from '@algorithm-visualizer/event-handling';
-import {
-  GraphViewEvent,
-  MermaidCurveStyle,
-  MermaidFlowchartDirection,
-} from '@algorithm-visualizer/graph-contract';
+import { GraphViewEvent } from '@algorithm-visualizer/graph-contract';
 
 import { GraphVisualizer } from './graph-visualizer';
 import { GraphMermaidComponentSelector } from './mermaid-renderer/graph-mermaid-component-selector';
 import { GraphMermaidDefinitionParser } from './mermaid-renderer/graph-mermaid-definition-parser';
 import { GraphMermaidRenderer } from './mermaid-renderer/graph-mermaid-renderer';
+import {
+  MermaidCurveStyle,
+  MermaidFlowchartDirection,
+} from './mermaid-renderer/mermaid-types';
 
 interface IGraphVisualizationBuilderArgs {
   direction: MermaidFlowchartDirection;
