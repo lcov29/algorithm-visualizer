@@ -110,12 +110,11 @@ export class EdgeGenerator implements IEdgeGenerator {
       // amounts of all other nodes. Otherwise node A would be forced to
       // connect with itself after it has consumed the available edge points
       // of all the other nodes.
-      const availableEdgePointTotal = this._getAvailableEdgePointsTotal();
       const nodeWithEdgePointAmountGreaterThanEdgePointTotalOfAllOtherNodes =
         this._nodes.find(
           node =>
-            availableEdgePointTotal - node.availableEdgePointAmount <
-            availableEdgePointTotal / 2,
+            node.availableEdgePointAmount >
+            this._getAvailableEdgePointsTotal() / 2,
         );
 
       if (nodeWithEdgePointAmountGreaterThanEdgePointTotalOfAllOtherNodes) {
