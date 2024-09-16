@@ -2,27 +2,19 @@ import { GraphGeneratorConfig } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 import { RandomIntegerGenerator } from '@algorithm-visualizer/randomization-contract';
 
-import { NodeListGenerator } from '../../src/generator/node-list-generator';
-import { NodeList } from '../../src/structure/node-list';
+import { NodeGenerator } from '../../src/generator/node-generator';
 
-describe('NodeListGenerator()', () => {
+describe('NodeGenerator()', () => {
   const mockConfig = {
     nodeAmount: new IntegerRange({ min: 4, max: 6 }),
   } as Partial<GraphGeneratorConfig> as GraphGeneratorConfig;
-
-  const mockAddNode = jest.fn();
-
-  const mockNodeList = {
-    addNode: mockAddNode,
-  } as Partial<NodeList> as NodeList;
 
   const mockGetRandomIntegerBetween: RandomIntegerGenerator = (
     min: number,
     max: number,
   ) => max;
 
-  const nodeListGenerator = new NodeListGenerator({
-    nodeList: mockNodeList,
+  const nodeGenerator = new NodeGenerator({
     getRandomIntegerBetween: mockGetRandomIntegerBetween,
   });
 
@@ -30,10 +22,17 @@ describe('NodeListGenerator()', () => {
     jest.resetAllMocks();
   });
 
-  describe('NodeListGenerator', () => {
+  describe('NodeGenerator', () => {
     it('returns a list of ascending node Ids', () => {
-      nodeListGenerator.generateRandomNodeList(mockConfig);
-      expect(mockAddNode).toHaveBeenCalledTimes(6);
+      const nodes = nodeGenerator.generateRandomNodes(mockConfig);
+      expect(nodes).toEqual([
+        { id: 0 },
+        { id: 1 },
+        { id: 2 },
+        { id: 3 },
+        { id: 4 },
+        { id: 5 },
+      ]);
     });
   });
 });

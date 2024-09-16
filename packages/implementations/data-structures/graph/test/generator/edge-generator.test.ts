@@ -1,15 +1,15 @@
 import {
   DirectionOption,
   GraphGeneratorConfig,
-  IEdge,
+  IGeneratedEdge,
+  IGeneratedNode,
 } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 
-import { EdgeListGenerator } from '../../src/generator/edge-list-generator';
-import { EdgeList } from '../../src/structure/edge-list';
+import { EdgeGenerator } from '../../src/generator/edge-generator';
 
-function getMockNodes(): number[] {
-  return [0, 1, 2, 3];
+function getMockGeneratedNodes(): IGeneratedNode[] {
+  return [{ id: 0 }, { id: 1 }, { id: 2 }, { id: 3 }];
 }
 
 function getMockConfig(
@@ -34,87 +34,62 @@ function mockGetRandomListItem<T>(list: T[]) {
   return list.at(randomListIndex) ?? null;
 }
 
-function buildEdgeGenerator(nodeIds: number[]): EdgeListGenerator {
-  return new EdgeListGenerator({
-    edgeList: new EdgeList(),
+function buildEdgeGenerator(nodes: IGeneratedNode[]): EdgeGenerator {
+  return new EdgeGenerator({
     getRandomIntegerBetween: mockGetRandomIntegerBetween,
     getRandomListItem: mockGetRandomListItem,
-    nodeIds,
+    nodes,
   });
 }
 
 function getReachableNeighborNodeIdsFor(
-  nodeId: number,
-  edges: Omit<IEdge, 'id'>[],
+  node: IGeneratedNode,
+  edges: IGeneratedEdge[],
 ) {
   return edges
     .filter(({ startNodeId, endNodeId, isDirected }) => {
-      const isNodeInvolved = [startNodeId, endNodeId].includes(nodeId);
-      const isSpecifiedNodeStart = nodeId === startNodeId;
+      const isNodeInvolved = [startNodeId, endNodeId].includes(node.id);
+      const isSpecifiedNodeStart = node.id === startNodeId;
       return isNodeInvolved && (isSpecifiedNodeStart || !isDirected);
     })
     .map(({ startNodeId, endNodeId, isDirected }) => {
       if (isDirected) {
-        return endNodeId;
+        return { id: endNodeId };
       }
-      const isSpecifiedNodeStart = nodeId === startNodeId;
-      return isSpecifiedNodeStart ? endNodeId : startNodeId;
+      const isSpecifiedNodeStart = node.id === startNodeId;
+      return { id: isSpecifiedNodeStart ? endNodeId : startNodeId };
     });
 }
 
-function isNodeIdListEqual(listA: number[], listB: number[]) {
-  if (listA.length !== listB.length) {
-    return false;
-  }
-  listA.sort();
-  listB.sort();
-  return listA.every((item, index) => listB.at(index) === item);
-}
-
 function isGraphConnected(
-  edges: Omit<IEdge, 'id'>[],
-  nodeIds: number[],
+  edges: IGeneratedEdge[],
+  nodes: IGeneratedNode[],
 ): boolean {
-  if (!edges.length || !nodeIds.length) {
+  if (!edges.length || !nodes.length) {
     return false;
   }
 
-  const isEachNodeConnected = nodeIds.every(nodeId =>
-    edges.some(edge => [edge.startNodeId, edge.endNodeId].includes(nodeId)),
+  const isEachNodeConnected = nodes.every(node =>
+    edges.some(edge => [edge.startNodeId, edge.endNodeId].includes(node.id)),
   );
 
   if (!isEachNodeConnected) {
     return false;
   }
 
-  const startNodeId = nodeIds.at(0)!;
-  const reachedNodeIds = new Set<number>([startNodeId]);
-  const checkedNodeIds = new Set<number>([startNodeId]);
-  const nodeIdsToCheck: number[] = [startNodeId];
+  const startNodeId = nodes[0].id!;
+  const reachedNodes = new Set<number>([startNodeId]);
 
-  while (nodeIdsToCheck.length) {
-    const checkNodeId = nodeIdsToCheck.shift()!;
-    const neighborNodeIds = getReachableNeighborNodeIdsFor(
-      checkNodeId,
-      edges,
-    ).filter(nodeId => !checkedNodeIds.has(nodeId));
-    nodeIdsToCheck.push(...neighborNodeIds);
-    neighborNodeIds.forEach(nodeId => reachedNodeIds.add(nodeId));
-    checkedNodeIds.add(checkNodeId);
+  nodes.forEach(node => {
+    const neighborNodes = getReachableNeighborNodeIdsFor(node, edges);
+    neighborNodes.forEach(neighborNode => reachedNodes.add(neighborNode.id));
+  });
 
-    const hasEveryNodeBeenReached = isNodeIdListEqual(nodeIds, [
-      ...reachedNodeIds,
-    ]);
-    if (hasEveryNodeBeenReached) {
-      break;
-    }
-  }
-
-  return isNodeIdListEqual(nodeIds, [...reachedNodeIds]);
+  return nodes.length === reachedNodes.size;
 }
 
 function isEdgeAmountPerNodeBetween(
-  edges: Omit<IEdge, 'id'>[],
+  edges: IGeneratedEdge[],
   range: IntegerRange,
 ) {
   const edgeAmountNodeMap = new Map<number, number>();
@@ -137,14 +112,14 @@ function isEdgeAmountPerNodeBetween(
   return true;
 }
 
-function isEdgeWeightBetween(edges: Omit<IEdge, 'id'>[], range: IntegerRange) {
+function isEdgeWeightBetween(edges: IGeneratedEdge[], range: IntegerRange) {
   return edges.every(
     ({ weight }) => weight && weight >= range.min && weight <= range.max,
   );
 }
 
 function isEdgeDirectionEqual(
-  edges: Omit<IEdge, 'id'>[],
+  edges: IGeneratedEdge[],
   direction: DirectionOption,
 ) {
   return edges.every(
@@ -152,19 +127,19 @@ function isEdgeDirectionEqual(
   );
 }
 
-function hasRecursiveEdges(edges: Omit<IEdge, 'id'>[]) {
+function hasRecursiveEdges(edges: IGeneratedEdge[]) {
   return edges.some(({ startNodeId, endNodeId }) => startNodeId === endNodeId);
 }
 
-describe('EdgeListGenerator', () => {
-  let edgeListGenerator: EdgeListGenerator;
+describe('EdgeGenerator', () => {
+  let edgeGenerator: EdgeGenerator;
   const mockGetRandomIntegerBetween = jest.fn();
 
   beforeEach(() => {
     jest.resetAllMocks();
   });
 
-  describe('generateRandomEdgeList()', () => {
+  describe('generateRandomEdges()', () => {
     it.each([
       [
         'generates a valid random edge list that allows recursive edges',
@@ -184,13 +159,13 @@ describe('EdgeListGenerator', () => {
       ],
     ])('%s', (_, configValues) => {
       for (let i = 0; i < 1_000; i++) {
-        const nodeIds = getMockNodes();
+        const nodes = getMockGeneratedNodes();
         const config = getMockConfig(configValues);
 
-        edgeListGenerator = buildEdgeGenerator(nodeIds);
-        const edges = edgeListGenerator.generateRandomEdgeList(config).edges;
+        edgeGenerator = buildEdgeGenerator(nodes);
+        const edges = edgeGenerator.generateRandomEdges(config);
 
-        expect(isGraphConnected(edges, nodeIds)).toBe(true);
+        expect(isGraphConnected(edges, nodes)).toBe(true);
         expect(
           isEdgeAmountPerNodeBetween(edges, config.edgeAmountPerNode),
         ).toBe(true);
@@ -205,21 +180,20 @@ describe('EdgeListGenerator', () => {
     it('prevents situations where it would be forced to return at least one recursive edge despite the configuration forbidding it', () => {
       mockGetRandomIntegerBetween.mockReturnValueOnce(5).mockReturnValue(1);
 
-      const nodeIds = getMockNodes();
+      const nodes = getMockGeneratedNodes();
       const config = getMockConfig({
         allowRecursiveEdges: false,
         edgeAmountPerNode: new IntegerRange({ min: 1, max: 5 }),
       });
 
-      const generator = new EdgeListGenerator({
-        edgeList: new EdgeList(),
+      const generator = new EdgeGenerator({
         getRandomIntegerBetween: mockGetRandomIntegerBetween,
         getRandomListItem: mockGetRandomListItem,
-        nodeIds,
+        nodes,
       });
-      const edges = generator.generateRandomEdgeList(config).edges;
+      const edges = generator.generateRandomEdges(config);
 
-      expect(isGraphConnected(edges, nodeIds)).toBe(true);
+      expect(isGraphConnected(edges, nodes)).toBe(true);
       expect(isEdgeAmountPerNodeBetween(edges, config.edgeAmountPerNode)).toBe(
         true,
       );

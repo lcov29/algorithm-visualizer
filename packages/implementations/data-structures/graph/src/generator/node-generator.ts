@@ -1,39 +1,35 @@
 import {
   GraphGeneratorConfig,
-  INodeList,
+  IGeneratedNode,
 } from '@algorithm-visualizer/graph-contract';
 import { RandomIntegerGenerator } from '@algorithm-visualizer/randomization-contract';
 
-import { NodeListGeneratorError } from './node-list-generator-error';
+import { NodeGeneratorError } from './node-generator-error';
 
-export interface INodeListGenerator {
-  generateRandomNodeList: (config: GraphGeneratorConfig) => INodeList;
+export interface INodeGenerator {
+  generateRandomNodes: (config: GraphGeneratorConfig) => IGeneratedNode[];
 }
 
-interface INodeListGeneratorArgs {
-  nodeList: INodeList;
+interface INodeGeneratorArgs {
   getRandomIntegerBetween: RandomIntegerGenerator;
 }
 
-export class NodeListGenerator implements INodeListGenerator {
-  private _nodeList: INodeList;
+export class NodeGenerator implements INodeGenerator {
   private _getRandomIntegerBetween: RandomIntegerGenerator;
 
-  constructor(args: INodeListGeneratorArgs) {
-    this._nodeList = args.nodeList;
+  constructor(args: INodeGeneratorArgs) {
     this._getRandomIntegerBetween = args.getRandomIntegerBetween;
   }
 
-  generateRandomNodeList(config: GraphGeneratorConfig) {
+  generateRandomNodes(config: GraphGeneratorConfig) {
     try {
       const { min, max } = config.nodeAmount;
       const nodeAmount = this._getRandomIntegerBetween(min, max);
-      for (let i = 0; i < nodeAmount; i++) {
-        this._nodeList.addNode();
-      }
-      return this._nodeList;
+      return new Array(nodeAmount)
+        .fill(null)
+        .map((_, index) => ({ id: index }));
     } catch (error) {
-      throw new NodeListGeneratorError({
+      throw new NodeGeneratorError({
         message:
           'Failed to generate random nodes according to the passed configuration',
         config,

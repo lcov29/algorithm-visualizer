@@ -6,26 +6,27 @@ import {
   GraphGeneratorConfig,
   GraphGeneratorError,
   GraphGeneratorGraphGeneratedEvent,
+  IGeneratedNode,
   IGraphGenerator,
 } from '@algorithm-visualizer/graph-contract';
 
-import { IEdgeListGenerator } from './edge-list-generator';
-import { INodeListGenerator } from './node-list-generator';
+import { IEdgeGenerator } from './edge-generator';
+import { INodeGenerator } from './node-generator';
 
 interface IGraphGeneratorArgs {
-  createEdgeListGenerator: (nodeIds: number[]) => IEdgeListGenerator;
-  createNodeListGenerator: () => INodeListGenerator;
+  createEdgeGenerator: (nodes: IGeneratedNode[]) => IEdgeGenerator;
+  createNodeGenerator: () => INodeGenerator;
   subscriberManager: IEventSubscriberManager<GraphGeneratorGraphGeneratedEvent>;
 }
 
 export class GraphGenerator implements IGraphGenerator {
-  private _createEdgeListGenerator: (nodeIds: number[]) => IEdgeListGenerator;
-  private _createNodeListGenerator: () => INodeListGenerator;
+  private _createEdgeGenerator: (nodes: IGeneratedNode[]) => IEdgeGenerator;
+  private _createNodeGenerator: () => INodeGenerator;
   private _subscriberManager: IEventSubscriberManager<GraphGeneratorGraphGeneratedEvent>;
 
   constructor(args: IGraphGeneratorArgs) {
-    this._createEdgeListGenerator = args.createEdgeListGenerator;
-    this._createNodeListGenerator = args.createNodeListGenerator;
+    this._createEdgeGenerator = args.createEdgeGenerator;
+    this._createNodeGenerator = args.createNodeGenerator;
     this._subscriberManager = args.subscriberManager;
   }
 
@@ -41,17 +42,14 @@ export class GraphGenerator implements IGraphGenerator {
 
   generateGraph(config: GraphGeneratorConfig) {
     try {
-      const nodeListGenerator = this._createNodeListGenerator();
-      const nodeList = nodeListGenerator.generateRandomNodeList(config);
+      const nodeGenerator = this._createNodeGenerator();
+      const nodes = nodeGenerator.generateRandomNodes(config);
 
-      const edgeListGenerator = this._createEdgeListGenerator(nodeList.nodeIds);
-      const edgeList = edgeListGenerator.generateRandomEdgeList(config);
+      const edgeGenerator = this._createEdgeGenerator(nodes);
+      const edges = edgeGenerator.generateRandomEdges(config);
 
       this._subscriberManager.notifySubscribers(
-        new GraphGeneratorGraphGeneratedEvent({
-          nodes: nodeList,
-          edges: edgeList,
-        }),
+        new GraphGeneratorGraphGeneratedEvent({ nodes, edges }),
       );
     } catch (error) {
       throw new GraphGeneratorError({

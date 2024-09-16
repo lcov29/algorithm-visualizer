@@ -2,37 +2,30 @@ import { EventSubscriberManager } from '@algorithm-visualizer/event-handling';
 import {
   GraphGeneratorBuilder,
   GraphGeneratorGraphGeneratedEvent,
+  IGeneratedNode,
 } from '@algorithm-visualizer/graph-contract';
 import {
   getRandomIntegerBetween,
   getRandomListItem,
 } from '@algorithm-visualizer/randomization';
 
-import { EdgeList } from '../structure/edge-list';
-import { NodeList } from '../structure/node-list';
-import { EdgeListGenerator, IEdgeListGenerator } from './edge-list-generator';
+import { EdgeGenerator, IEdgeGenerator } from './edge-generator';
 import { GraphGenerator } from './graph-generator';
-import { INodeListGenerator, NodeListGenerator } from './node-list-generator';
+import { INodeGenerator, NodeGenerator } from './node-generator';
 
-export type NodeListGeneratorFactory = () => INodeListGenerator;
-export type EdgeListGeneratorFactory = (
-  nodeIds: number[],
-) => IEdgeListGenerator;
+export type NodeGeneratorFactory = () => INodeGenerator;
+export type EdgeGeneratorFactory = (nodes: IGeneratedNode[]) => IEdgeGenerator;
 
 export const buildGraphGenerator: GraphGeneratorBuilder = () => {
-  const createEdgeListGenerator: EdgeListGeneratorFactory = (
-    nodeIds: number[],
-  ) =>
-    new EdgeListGenerator({
-      edgeList: new EdgeList(),
+  const createEdgeGenerator: EdgeGeneratorFactory = (nodes: IGeneratedNode[]) =>
+    new EdgeGenerator({
       getRandomIntegerBetween: getRandomIntegerBetween,
       getRandomListItem: getRandomListItem,
-      nodeIds,
+      nodes,
     });
 
-  const createNodeListGenerator: NodeListGeneratorFactory = () => {
-    return new NodeListGenerator({
-      nodeList: new NodeList(),
+  const createNodeGenerator: NodeGeneratorFactory = () => {
+    return new NodeGenerator({
       getRandomIntegerBetween: getRandomIntegerBetween,
     });
   };
@@ -41,8 +34,8 @@ export const buildGraphGenerator: GraphGeneratorBuilder = () => {
     new EventSubscriberManager<GraphGeneratorGraphGeneratedEvent>();
 
   return new GraphGenerator({
-    createEdgeListGenerator,
-    createNodeListGenerator,
+    createEdgeGenerator,
+    createNodeGenerator,
     subscriberManager,
   });
 };

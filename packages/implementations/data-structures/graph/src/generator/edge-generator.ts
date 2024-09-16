@@ -1,53 +1,53 @@
 import {
   GraphGeneratorConfig,
-  IEdge,
-  IEdgeList,
+  IGeneratedEdge,
+  IGeneratedNode,
 } from '@algorithm-visualizer/graph-contract';
 import {
   RandomIntegerGenerator,
   RandomListItemSelector,
 } from '@algorithm-visualizer/randomization-contract';
 
-import { EdgeListGeneratorError } from './edge-list-generator-error';
+import { EdgeGeneratorError } from './edge-generator-error';
 
 export interface IEdgeNode {
   id: number;
   availableEdgePointAmount: number;
 }
 
-export interface IEdgeListGenerator {
-  generateRandomEdgeList(config: GraphGeneratorConfig): IEdgeList;
+export interface IEdgeGenerator {
+  generateRandomEdges(config: GraphGeneratorConfig): IGeneratedEdge[];
 }
 
-export interface IEdgeListGeneratorArgs {
-  edgeList: IEdgeList;
+export interface IEdgeGeneratorArgs {
   getRandomIntegerBetween: RandomIntegerGenerator;
   getRandomListItem: RandomListItemSelector;
-  nodeIds: number[];
+  nodes: IGeneratedNode[];
 }
 
-export class EdgeListGenerator implements IEdgeListGenerator {
+export class EdgeGenerator implements IEdgeGenerator {
   private _config: GraphGeneratorConfig | undefined;
-  private _edges: Omit<IEdge, 'id'>[];
-  private _edgeList: IEdgeList;
+  private _edges: IGeneratedEdge[];
   private _getRandomIntegerBetween: RandomIntegerGenerator;
   private _getRandomListItem: RandomListItemSelector;
   private _nodes: IEdgeNode[];
+  private _nextAvailableEdgeId;
 
-  constructor(args: IEdgeListGeneratorArgs) {
+  constructor(args: IEdgeGeneratorArgs) {
     this._edges = [];
-    this._edgeList = args.edgeList;
     this._getRandomIntegerBetween = args.getRandomIntegerBetween;
     this._getRandomListItem = args.getRandomListItem;
-    this._nodes = args.nodeIds.map(nodeId => ({
-      id: nodeId,
+    this._nextAvailableEdgeId = 0;
+    this._nodes = args.nodes.map(({ id }) => ({
+      id,
       availableEdgePointAmount: 0,
     }));
   }
 
-  generateRandomEdgeList(config: GraphGeneratorConfig): IEdgeList {
+  generateRandomEdges(config: GraphGeneratorConfig): IGeneratedEdge[] {
     try {
       this._config = config;
+      this._nextAvailableEdgeId = 0;
       this._initializeAvailableEdgePointAmounts();
 
       if (!this._config.allowRecursiveEdges) {
@@ -66,17 +66,13 @@ export class EdgeListGenerator implements IEdgeListGenerator {
         this._addRandomEdgeWeights();
       }
 
-      for (const edge of this._edges) {
-        this._edgeList.addEdge(edge);
-      }
-
-      return this._edgeList;
+      return this._edges;
     } catch (error) {
       this._throwEdgeListGeneratorError(
         'Failed to generate random edges according to the passed configuration',
         error,
       );
-      return this._edgeList;
+      return this._edges;
     }
   }
 
@@ -223,6 +219,7 @@ export class EdgeListGenerator implements IEdgeListGenerator {
 
   private _createEdgeBetween(startNode: IEdgeNode, endNode: IEdgeNode) {
     this._edges.push({
+      id: this._nextAvailableEdgeId++,
       startNodeId: startNode.id,
       endNodeId: endNode.id,
       isDirected: this._config!.edgeDirection === 'unidirectional',
@@ -236,7 +233,7 @@ export class EdgeListGenerator implements IEdgeListGenerator {
   }
 
   private _throwEdgeListGeneratorError(message: string, cause: unknown) {
-    throw new EdgeListGeneratorError({
+    throw new EdgeGeneratorError({
       message,
       config: this._config!,
       nodes: this._nodes,

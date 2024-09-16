@@ -2,28 +2,30 @@ import { InvalidOperationError } from '@algorithm-visualizer/error-handling-cont
 
 import {
   GraphGeneratorGraphGeneratedEvent,
-  IEdgeList,
-  INodeList,
+  IGeneratedEdge,
+  IGeneratedNode,
 } from '../../../src';
 
 describe('GraphGeneratorGraphGeneratedEvent', () => {
-  const mockNodeList = {
-    nodeIds: [0, 1, 2],
-  } as INodeList;
-  const mockEdgeList = {
-    edges: [
-      { id: 0, startNodeId: 1, endNodeId: 2 },
-      { id: 1, startNodeId: 2, endNodeId: 3 },
-    ],
-  } as IEdgeList;
+  const mockGeneratedNodes: IGeneratedNode[] = [
+    { id: 0 },
+    { id: 1 },
+    { id: 2 },
+  ];
+
+  const mockGeneratedEdges: IGeneratedEdge[] = [
+    { id: 0, startNodeId: 1, endNodeId: 2 },
+    { id: 1, startNodeId: 2, endNodeId: 3 },
+  ];
+
   const graphGeneratedEvent = new GraphGeneratorGraphGeneratedEvent({
-    nodes: mockNodeList,
-    edges: mockEdgeList,
+    nodes: mockGeneratedNodes,
+    edges: mockGeneratedEdges,
   });
 
   describe.each([
-    ['nodes', mockNodeList],
-    ['edges', mockEdgeList],
+    ['nodes', mockGeneratedNodes],
+    ['edges', mockGeneratedEdges],
   ])('%s()', (methodName, expectedResult) => {
     it(`getter returns the specified ${methodName} value`, () => {
       // @ts-expect-error invoke method by string name

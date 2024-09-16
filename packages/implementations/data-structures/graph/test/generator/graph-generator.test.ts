@@ -3,6 +3,7 @@ import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract'
 import {
   GraphGeneratorConfig,
   GraphGeneratorGraphGeneratedEvent,
+  IGeneratedNode,
   IGraphGenerator,
 } from '@algorithm-visualizer/graph-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
@@ -11,11 +12,9 @@ import {
   getRandomListItem,
 } from '@algorithm-visualizer/randomization';
 
-import { EdgeListGenerator } from '../../src/generator/edge-list-generator';
+import { EdgeGenerator } from '../../src/generator/edge-generator';
 import { GraphGenerator } from '../../src/generator/graph-generator';
-import { NodeListGenerator } from '../../src/generator/node-list-generator';
-import { EdgeList } from '../../src/structure/edge-list';
-import { NodeList } from '../../src/structure/node-list';
+import { NodeGenerator } from '../../src/generator/node-generator';
 
 // integration test
 describe('GraphGenerator', () => {
@@ -38,16 +37,14 @@ describe('GraphGenerator', () => {
   beforeEach(() => {
     jest.resetAllMocks();
     generator = new GraphGenerator({
-      createEdgeListGenerator: (nodeIds: number[]) =>
-        new EdgeListGenerator({
-          edgeList: new EdgeList(),
+      createEdgeGenerator: (nodes: IGeneratedNode[]) =>
+        new EdgeGenerator({
           getRandomIntegerBetween: getRandomIntegerBetween,
           getRandomListItem: getRandomListItem,
-          nodeIds,
+          nodes,
         }),
-      createNodeListGenerator: () =>
-        new NodeListGenerator({
-          nodeList: new NodeList(),
+      createNodeGenerator: () =>
+        new NodeGenerator({
           getRandomIntegerBetween: getRandomIntegerBetween,
         }),
       subscriberManager: new EventSubscriberManager(),
@@ -86,29 +83,27 @@ describe('GraphGenerator', () => {
   describe('generateGraph()', () => {
     it('generates a random graph based on the specified configuration', () => {
       generator.generateGraph(config);
+      const generatedNodeAmount = graphGeneratedEvent?.nodes.length;
+      const generatedEdgeAmount = graphGeneratedEvent?.edges.length;
 
       expect(graphGeneratedEvent!.name).toBe('graph-generator-graph-generated');
 
-      expect(graphGeneratedEvent!.nodes.nodeIds.length).toBeGreaterThanOrEqual(
-        config.nodeAmount.min,
-      );
-      expect(graphGeneratedEvent!.nodes.nodeIds.length).toBeLessThanOrEqual(
-        config.nodeAmount.max,
-      );
+      expect(generatedNodeAmount).toBeGreaterThanOrEqual(config.nodeAmount.min);
+      expect(generatedNodeAmount).toBeLessThanOrEqual(config.nodeAmount.max);
 
-      expect(graphGeneratedEvent!.edges.edges.length).toBeGreaterThanOrEqual(
+      expect(generatedEdgeAmount).toBeGreaterThanOrEqual(
         (config.nodeAmount.min * config.edgeAmountPerNode.min) / 2,
       );
-      expect(graphGeneratedEvent!.edges.edges.length).toBeLessThanOrEqual(
+      expect(generatedEdgeAmount).toBeLessThanOrEqual(
         (config.nodeAmount.max * config.edgeAmountPerNode.max) / 2,
       );
 
-      graphGeneratedEvent!.edges.edges.forEach(edge => {
+      graphGeneratedEvent!.edges.forEach(edge => {
         expect(edge.weight).toBeGreaterThanOrEqual(config.edgeWeight!.min);
         expect(edge.weight).toBeLessThanOrEqual(config.edgeWeight!.max);
       });
 
-      graphGeneratedEvent!.edges.edges.forEach(edge => {
+      graphGeneratedEvent!.edges.forEach(edge => {
         expect(edge.isDirected).toBe(true);
       });
     });
