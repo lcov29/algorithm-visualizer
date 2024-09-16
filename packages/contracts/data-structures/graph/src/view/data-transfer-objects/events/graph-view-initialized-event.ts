@@ -1,17 +1,16 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-import { IEdge } from '../../../structure';
-import { INode } from '../../interfaces/graph-node';
+import { IGraphViewEdge, IGraphViewNode } from '../../interfaces';
 
 interface IGraphViewInitializedEventArgs {
-  nodes: INode[];
-  edges: IEdge[];
+  nodes: IGraphViewNode[];
+  edges: IGraphViewEdge[];
 }
 
 export class GraphViewInitializedEvent extends BaseEvent<'graph-view-initialized'> {
-  private _nodes: INode[];
-  private _edges: IEdge[];
+  private _nodes: IGraphViewNode[];
+  private _edges: IGraphViewEdge[];
 
   constructor(args: IGraphViewInitializedEventArgs) {
     super('graph-view-initialized');
@@ -27,13 +26,13 @@ export class GraphViewInitializedEvent extends BaseEvent<'graph-view-initialized
     return this._edges;
   }
 
-  set nodes(input: INode[]) {
+  set nodes(input: IGraphViewNode[]) {
     throw new InvalidOperationError({
       message: 'Writing to readonly property nodes is forbidden',
     });
   }
 
-  set edges(input: IEdge[]) {
+  set edges(input: IGraphViewEdge[]) {
     throw new InvalidOperationError({
       message: 'Writing to readonly property edges is forbidden',
     });

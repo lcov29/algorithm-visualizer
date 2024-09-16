@@ -1,9 +1,12 @@
-import { IEventHandlerChain } from '@algorithm-visualizer/event-handling-contract';
+import {
+  BaseEvent,
+  IEventHandlerChain,
+} from '@algorithm-visualizer/event-handling-contract';
 import {
   GraphViewEvent,
   GraphViewInitializedEvent,
-  IGraphComponentSelector,
-  IGraphRenderer,
+  IGraphViewComponentSelector,
+  IGraphViewRenderer,
   IGraphVisualizer,
 } from '@algorithm-visualizer/graph-contract';
 
@@ -11,14 +14,14 @@ import React from 'react';
 
 interface IGraphVisualizerArgs {
   eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
-  graphComponentSelector: IGraphComponentSelector;
-  graphRenderer: IGraphRenderer;
+  graphComponentSelector: IGraphViewComponentSelector;
+  graphRenderer: IGraphViewRenderer;
 }
 
 export class GraphVisualizer implements IGraphVisualizer {
   private _eventHandlerChain: IEventHandlerChain<GraphViewEvent>;
-  private _graphComponentSelector: IGraphComponentSelector;
-  private _graphRenderer: IGraphRenderer;
+  private _graphComponentSelector: IGraphViewComponentSelector;
+  private _graphRenderer: IGraphViewRenderer;
   private _cachedGraphInitializedEvent: GraphViewInitializedEvent | null;
   private _setGraph: React.Dispatch<React.SetStateAction<JSX.Element | null>>;
 
@@ -40,8 +43,14 @@ export class GraphVisualizer implements IGraphVisualizer {
     this._setGraph = setGraph;
   }
 
-  async handleEvent(event: GraphViewEvent) {
-    await this._eventHandlerChain.handle(event);
+  async handleEvent(event: BaseEvent<string>) {
+    if (this._isGraphViewEvent(event)) {
+      await this._eventHandlerChain.handle(event);
+    }
+  }
+
+  private _isGraphViewEvent(event: BaseEvent<string>): event is GraphViewEvent {
+    return event.name.startsWith('graph-view');
   }
 
   private _initializeEventHandlerChain() {

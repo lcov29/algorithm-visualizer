@@ -27,7 +27,7 @@ import {
   GraphViewNodeLabelHighlightRemovedEvent,
   GraphViewNodeTitleChangedEvent,
   GraphViewResetEvent,
-  IGraphRenderer,
+  IGraphViewRenderer,
   NodeHighlightStyleClass,
   NodeLabelHighlightStyleClass,
 } from '@algorithm-visualizer/graph-contract';
@@ -49,7 +49,7 @@ const graphComponentSelector = new GraphMermaidComponentSelector();
 const mockSetGraph = jest.fn();
 const mockRender = jest.fn();
 
-const mockGraphRenderer: IGraphRenderer = {
+const mockGraphRenderer: IGraphViewRenderer = {
   render: mockRender,
   setGraphReference: jest.fn(),
 };

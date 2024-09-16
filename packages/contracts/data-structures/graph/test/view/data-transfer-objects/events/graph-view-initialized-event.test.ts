@@ -1,14 +1,18 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { GraphViewInitializedEvent, IEdge, INode } from '../../../../src';
+import {
+  GraphViewInitializedEvent,
+  IGraphViewEdge,
+  IGraphViewNode,
+} from '../../../../src';
 
 describe('GraphViewInitializedEvent', () => {
-  const mockNodes: INode[] = [
+  const mockNodes: IGraphViewNode[] = [
     { id: 0, label: 'A' },
     { id: 1, label: 'B' },
     { id: 2, label: 'C' },
   ];
-  const mockEdges: IEdge[] = [
+  const mockEdges: IGraphViewEdge[] = [
     { id: 0, startNodeId: 0, endNodeId: 1 },
     { id: 1, startNodeId: 1, endNodeId: 2 },
   ];

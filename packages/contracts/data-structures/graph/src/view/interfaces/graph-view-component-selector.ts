@@ -1,4 +1,4 @@
-export interface IGraphComponentSelector {
+export interface IGraphViewComponentSelector {
   getEdge: (id: number) => Element | null;
   getEdgeLabel: (id: number) => Element | null;
   getNode: (id: number) => Element | null;

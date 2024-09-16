@@ -1,6 +1,8 @@
-import { IGraphComponentSelector } from '@algorithm-visualizer/graph-contract';
+import { IGraphViewComponentSelector } from '@algorithm-visualizer/graph-contract';
 
-export class GraphMermaidComponentSelector implements IGraphComponentSelector {
+export class GraphMermaidComponentSelector
+  implements IGraphViewComponentSelector
+{
   private _graphRef: React.RefObject<HTMLDivElement> | null = null;
 
   constructor() {}

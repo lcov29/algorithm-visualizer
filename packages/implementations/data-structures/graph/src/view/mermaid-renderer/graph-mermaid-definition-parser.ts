@@ -1,7 +1,7 @@
 import {
   GraphViewInitializedEvent,
-  IEdge,
-  INode,
+  IGraphViewEdge,
+  IGraphViewNode,
 } from '@algorithm-visualizer/graph-contract';
 
 import { MermaidCurveStyle, MermaidFlowchartDirection } from './mermaid-types';
@@ -40,11 +40,11 @@ export class GraphMermaidDefinitionParser
     ].join('\n');
   }
 
-  private _parseNodes(nodes: INode[]) {
+  private _parseNodes(nodes: IGraphViewNode[]) {
     return nodes.map(({ id, label }) => `${id}((${label}))`).join('\n');
   }
 
-  private _parseEdges(edges: IEdge[]) {
+  private _parseEdges(edges: IGraphViewEdge[]) {
     return edges
       .map(edge => {
         const { startNodeId, endNodeId, isDirected, weight } = edge;

@@ -1,7 +1,7 @@
 import {
   GraphViewInitializedEvent,
   GraphVisualizationError,
-  IGraphRenderer,
+  IGraphViewRenderer,
 } from '@algorithm-visualizer/graph-contract';
 
 import { GraphMermaid } from './graph-mermaid';
@@ -14,7 +14,7 @@ interface IGraphMermaidRendererArgs {
   graphMermaidDefinitionParser: IGraphMermaidDefinitionParser;
 }
 
-export class GraphMermaidRenderer implements IGraphRenderer {
+export class GraphMermaidRenderer implements IGraphViewRenderer {
   private _graphRef: React.RefObject<HTMLDivElement> | null;
   private _mermaidDefinitionParser: IGraphMermaidDefinitionParser;
 
