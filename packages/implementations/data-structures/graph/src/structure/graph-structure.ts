@@ -1,20 +1,24 @@
 import {
+  BaseEvent,
   EventHandlingError,
   IEventHandlerChain,
   IEventSubscriber,
 } from '@algorithm-visualizer/event-handling-contract';
 import {
   GraphStructureEvent,
-  IEdgeList,
   IGraph,
-  INodeList,
-  IReducedEdgeList,
-  IReducedNodeList,
+  IGraphStructureEdgeList,
+  IGraphStructureNodeList,
+  IReducedGraphStructureEdgeList,
+  IReducedGraphStructureNodeList,
 } from '@algorithm-visualizer/graph-contract';
 
-interface IGraphArgs {
-  nodes: INodeList;
-  edges: IEdgeList;
+import { GraphStructureEdgeList } from './graph-structure-edge-list';
+import { GraphStructureNodeList } from './graph-structure-node-list';
+
+interface IGraphStructureArgs {
+  nodes: IGraphStructureNodeList;
+  edges: IGraphStructureEdgeList;
   eventHandlerChain: IEventHandlerChain<GraphStructureEvent>;
 }
 
@@ -24,28 +28,38 @@ interface IGraphArgs {
  *
  * @throws EventHandlingError
  */
-export class Graph implements IGraph, IEventSubscriber<GraphStructureEvent> {
-  private _nodes: INodeList;
-  private _edges: IEdgeList;
+export class GraphStructure
+  implements IGraph, IEventSubscriber<GraphStructureEvent>
+{
+  private _nodes: IGraphStructureNodeList;
+  private _edges: IGraphStructureEdgeList;
   private _eventHandlerChain: IEventHandlerChain<GraphStructureEvent>;
 
-  constructor({ nodes, edges, eventHandlerChain }: IGraphArgs) {
+  constructor({ nodes, edges, eventHandlerChain }: IGraphStructureArgs) {
     this._nodes = nodes;
     this._edges = edges;
     this._eventHandlerChain = eventHandlerChain;
     this._initializeEventHandlerChain();
   }
 
-  get nodeList(): IReducedNodeList {
+  get nodeList(): IReducedGraphStructureNodeList {
     return this._nodes.clone();
   }
 
-  get edgeList(): IReducedEdgeList {
+  get edgeList(): IReducedGraphStructureEdgeList {
     return this._edges.clone();
   }
 
-  async handleEvent(event: GraphStructureEvent) {
-    await this._eventHandlerChain.handle(event);
+  async handleEvent(event: BaseEvent<string>) {
+    if (this._isGraphStructureEvent(event)) {
+      await this._eventHandlerChain.handle(event);
+    }
+  }
+
+  private _isGraphStructureEvent(
+    event: BaseEvent<string>,
+  ): event is GraphStructureEvent {
+    return event.name.startsWith('graph-structure');
   }
 
   private _initializeEventHandlerChain() {
@@ -113,8 +127,12 @@ export class Graph implements IGraph, IEventSubscriber<GraphStructureEvent> {
     if (event.name !== 'graph-structure-initialized') {
       return false;
     }
-    this._nodes = event.nodes;
-    this._edges = event.edges;
+    const { nodes, edges } = event;
+    this._nodes = new GraphStructureNodeList();
+    this._edges = new GraphStructureEdgeList();
+
+    nodes.forEach(() => this._nodes.addNode());
+    edges.forEach(edge => this._edges.addEdge(edge));
     return true;
   }
 

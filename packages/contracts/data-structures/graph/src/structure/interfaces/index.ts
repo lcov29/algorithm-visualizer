@@ -1,4 +1,11 @@
-export { IEdge } from './edge';
-export { IEdgeList, INavigableEdgesArgs, IReducedEdgeList } from './edge-list';
-export { IGraph } from './graph';
-export { INodeList, IReducedNodeList } from './node-list';
+export { IGraphStructureEdge } from './graph-structure-edge';
+export {
+  IGraphStructureEdgeList,
+  INavigableEdgesArgs,
+  IReducedGraphStructureEdgeList,
+} from './graph-structure-edge-list';
+export { IGraph } from './graph-structure';
+export {
+  IGraphStructureNodeList,
+  IReducedGraphStructureNodeList,
+} from './graph-structure-node-list';

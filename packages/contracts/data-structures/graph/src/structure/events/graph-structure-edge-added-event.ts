@@ -1,17 +1,17 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import { BaseEvent } from '@algorithm-visualizer/event-handling-contract';
 
-import { IEdge } from '../interfaces';
+import { IGraphStructureEdge } from '../interfaces';
 
 interface IGraphStructureEdgeAddedEventArgs {
-  edge: Omit<IEdge, 'id'>;
+  edge: Omit<IGraphStructureEdge, 'id'>;
 }
 
 /**
  * @throws InvalidOperationError
  */
 export class GraphStructureEdgeAddedEvent extends BaseEvent<'graph-structure-edge-added'> {
-  private _edge: Omit<IEdge, 'id'>;
+  private _edge: Omit<IGraphStructureEdge, 'id'>;
 
   constructor(args: IGraphStructureEdgeAddedEventArgs) {
     super('graph-structure-edge-added');
@@ -22,7 +22,7 @@ export class GraphStructureEdgeAddedEvent extends BaseEvent<'graph-structure-edg
     return structuredClone(this._edge);
   }
 
-  set edge(input: Omit<IEdge, 'id'>) {
+  set edge(input: Omit<IGraphStructureEdge, 'id'>) {
     throw new InvalidOperationError({
       message: 'Writing to readonly property edge is forbidden',
     });

@@ -1,1 +1,1 @@
-export { buildGraph } from './build-graph';
+export { buildGraphStructure } from './build-graph-structure';

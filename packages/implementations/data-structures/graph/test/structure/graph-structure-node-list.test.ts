@@ -1,13 +1,13 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { NodeList } from '../../src/structure/node-list';
+import { GraphStructureNodeList } from '../../src/structure/graph-structure-node-list';
 
-describe('NodeList', () => {
-  let nodeList: NodeList;
+describe('GraphStructureNodeList', () => {
+  let nodeList: GraphStructureNodeList;
 
   beforeEach(() => {
     jest.resetAllMocks();
-    nodeList = new NodeList();
+    nodeList = new GraphStructureNodeList();
     nodeList.addNode();
     nodeList.addNode();
   });

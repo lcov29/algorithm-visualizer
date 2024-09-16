@@ -1,16 +1,22 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
-import { IEdge } from '@algorithm-visualizer/graph-contract';
+import { IGraphStructureEdge } from '@algorithm-visualizer/graph-contract';
 
-import { EdgeList } from '../../src/structure/edge-list';
+import { GraphStructureEdgeList } from '../../src/structure/graph-structure-edge-list';
 
-describe('EdgeList', () => {
-  let edgeList: EdgeList;
-  const mockEdge1: Omit<IEdge, 'id'> = { startNodeId: 0, endNodeId: 1 };
-  const mockEdge2: Omit<IEdge, 'id'> = { startNodeId: 1, endNodeId: 2 };
+describe('GraphStructureEdgeList', () => {
+  let edgeList: GraphStructureEdgeList;
+  const mockEdge1: Omit<IGraphStructureEdge, 'id'> = {
+    startNodeId: 0,
+    endNodeId: 1,
+  };
+  const mockEdge2: Omit<IGraphStructureEdge, 'id'> = {
+    startNodeId: 1,
+    endNodeId: 2,
+  };
 
   beforeEach(() => {
     jest.restoreAllMocks();
-    edgeList = new EdgeList();
+    edgeList = new GraphStructureEdgeList();
     edgeList.addEdge(mockEdge1);
     edgeList.addEdge(mockEdge2);
   });

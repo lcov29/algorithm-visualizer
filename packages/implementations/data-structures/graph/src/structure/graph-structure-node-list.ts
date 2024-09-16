@@ -1,7 +1,7 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
-import { INodeList } from '@algorithm-visualizer/graph-contract';
+import { IGraphStructureNodeList } from '@algorithm-visualizer/graph-contract';
 
-interface INodeListArgs {
+interface IGraphStructureNodeListArgs {
   nodeIds: number[];
   nextAvailableNodeId: number;
 }
@@ -9,11 +9,11 @@ interface INodeListArgs {
 /**
  * Data structure representing the nodes of a {@link Graph}.
  */
-export class NodeList implements INodeList {
+export class GraphStructureNodeList implements IGraphStructureNodeList {
   private _nodeIds: number[];
   private _nextAvailableNodeId: number;
 
-  constructor(args?: INodeListArgs) {
+  constructor(args?: IGraphStructureNodeListArgs) {
     this._nodeIds = args?.nodeIds ?? [];
     this._nextAvailableNodeId = args?.nextAvailableNodeId ?? 0;
   }
@@ -34,7 +34,7 @@ export class NodeList implements INodeList {
     return newNodeId;
   }
 
-  deleteNode(id: number): NodeList {
+  deleteNode(id: number): GraphStructureNodeList {
     this._nodeIds = this._nodeIds.filter(nodeId => nodeId !== id);
     return this;
   }
@@ -44,7 +44,7 @@ export class NodeList implements INodeList {
   }
 
   clone() {
-    return new NodeList({
+    return new GraphStructureNodeList({
       nodeIds: structuredClone(this._nodeIds),
       nextAvailableNodeId: this._nextAvailableNodeId,
     });

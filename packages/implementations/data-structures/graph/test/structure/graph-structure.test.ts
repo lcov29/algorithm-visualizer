@@ -8,17 +8,18 @@ import {
   GraphStructureInitializedEvent,
   GraphStructureNodeAddedEvent,
   GraphStructureNodeDeletedEvent,
-  IEdge,
+  IGraphStructureEdge,
 } from '@algorithm-visualizer/graph-contract';
 
-import { EdgeList } from '../../src/structure/edge-list';
-import { Graph } from '../../src/structure/graph';
-import { NodeList } from '../../src/structure/node-list';
+import { IGraphStructureNode } from '../../../../../contracts/data-structures/graph/src/structure/interfaces/graph-structure-node';
+import { GraphStructure } from '../../src/structure/graph-structure';
+import { GraphStructureEdgeList } from '../../src/structure/graph-structure-edge-list';
+import { GraphStructureNodeList } from '../../src/structure/graph-structure-node-list';
 
 const mockNodes = [0, 1];
 
 function initializeMockNodes() {
-  const nodeList = new NodeList();
+  const nodeList = new GraphStructureNodeList();
   nodeList.addNode();
   nodeList.addNode();
   return nodeList;
@@ -42,7 +43,7 @@ const mockEdges = [
 ];
 
 function initializeMockEdges() {
-  const edgeList = new EdgeList();
+  const edgeList = new GraphStructureEdgeList();
   edgeList.addEdge({
     startNodeId: 1,
     endNodeId: 2,
@@ -58,10 +59,10 @@ function initializeMockEdges() {
   return edgeList;
 }
 
-describe('Graph', () => {
-  let graph: Graph;
-  let nodes: NodeList;
-  let edges: EdgeList;
+describe('GraphStructure', () => {
+  let graph: GraphStructure;
+  let nodes: GraphStructureNodeList;
+  let edges: GraphStructureEdgeList;
   let eventHandlerChain: EventHandlerChain<GraphStructureEvent>;
 
   beforeEach(() => {
@@ -72,17 +73,17 @@ describe('Graph', () => {
       abortAfterSuccess: true,
       validator: new FunctionValidator(),
     });
-    graph = new Graph({ nodes, edges, eventHandlerChain });
+    graph = new GraphStructure({ nodes, edges, eventHandlerChain });
   });
 
   describe('nodes()', () => {
-    it('returns a reduced clone of the node list', () => {
+    it('returns a list of the indexed nodes', () => {
       expect(graph.nodeList.nodeIds).toEqual(mockNodes);
     });
   });
 
   describe('edges()', () => {
-    it('returns a reduced clone of the edge list', () => {
+    it('returns a list of the indexed edges', () => {
       expect(graph.edgeList.edges).toEqual(mockEdges);
     });
   });
@@ -90,7 +91,7 @@ describe('Graph', () => {
   describe('handleEvent()', () => {
     describe('when passed an graph-structure-edge-added event', () => {
       it('adds a new edge to the graph', async () => {
-        const edge: Omit<IEdge, 'id'> = {
+        const edge: Omit<IGraphStructureEdge, 'id'> = {
           startNodeId: 1,
           endNodeId: 3,
           isDirected: false,
@@ -154,20 +155,17 @@ describe('Graph', () => {
 
     describe('when passed a graph-structure-initialized event', () => {
       it('sets the nodeList and edgeList', async () => {
-        const nodes = initializeMockNodes();
-        nodes.addNode();
-        const edges = initializeMockEdges();
-        edges.addEdge({
-          startNodeId: 4,
-          endNodeId: 5,
-        });
+        const nodes: IGraphStructureNode[] = [{ id: 0 }, { id: 1 }];
+        const edges: IGraphStructureEdge[] = [
+          { id: 1, startNodeId: 4, endNodeId: 5 },
+        ];
         const graphCreatedEvent = new GraphStructureInitializedEvent({
           nodes,
           edges,
         });
         await graph.handleEvent(graphCreatedEvent);
-        expect(graph.nodeList.nodeIds).toEqual(nodes.nodeIds);
-        expect(graph.edgeList.edges).toEqual(edges.edges);
+        expect(graph.nodeList.nodeIds).toEqual([0, 1]);
+        expect(graph.edgeList.edges).toEqual(edges);
       });
     });
 

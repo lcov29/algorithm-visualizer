@@ -1,9 +1,15 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 
-import { GraphStructureEdgeAddedEvent, IEdge } from '../../../src';
+import {
+  GraphStructureEdgeAddedEvent,
+  IGraphStructureEdge,
+} from '../../../src';
 
 describe('GraphStructureEdgeAddedEvent', () => {
-  const edge: Omit<IEdge, 'id'> = { startNodeId: 1, endNodeId: 2 };
+  const edge: Omit<IGraphStructureEdge, 'id'> = {
+    startNodeId: 1,
+    endNodeId: 2,
+  };
   const edgeAddedEvent = new GraphStructureEdgeAddedEvent({ edge });
 
   beforeEach(() => {

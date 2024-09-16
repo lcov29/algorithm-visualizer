@@ -1,40 +1,40 @@
 import { InvalidOperationError } from '@algorithm-visualizer/error-handling-contract';
 import {
-  IEdge,
-  IEdgeList,
+  IGraphStructureEdge,
+  IGraphStructureEdgeList,
   INavigableEdgesArgs,
 } from '@algorithm-visualizer/graph-contract';
 
-interface IEdgeListArgs {
-  edges: IEdge[];
+interface IGraphStructureEdgeListArgs {
+  edges: IGraphStructureEdge[];
   nextAvailableEdgeId: number;
 }
 
-export class EdgeList implements IEdgeList {
-  private _edges: IEdge[];
+export class GraphStructureEdgeList implements IGraphStructureEdgeList {
+  private _edges: IGraphStructureEdge[];
   private _nextAvailableEdgeId: number;
 
-  constructor(args?: IEdgeListArgs) {
+  constructor(args?: IGraphStructureEdgeListArgs) {
     this._edges = args?.edges ?? [];
     this._nextAvailableEdgeId = args?.nextAvailableEdgeId ?? 0;
   }
 
-  get edges(): IEdge[] {
+  get edges(): IGraphStructureEdge[] {
     return this._edges.map(edge => structuredClone(edge));
   }
 
-  set edges(edges: IEdge[]) {
+  set edges(edges: IGraphStructureEdge[]) {
     throw new InvalidOperationError({
       message: 'Writing to readonly property edges is forbidden',
     });
   }
 
-  edge(id: number): IEdge | null {
+  edge(id: number): IGraphStructureEdge | null {
     const edge = this._edges.find(edge => edge.id === id);
     return structuredClone(edge) ?? null;
   }
 
-  addEdge(edge: Omit<IEdge, 'id'>): number {
+  addEdge(edge: Omit<IGraphStructureEdge, 'id'>): number {
     const newEdgeId = this._nextAvailableEdgeId++;
     this._edges.push({
       id: newEdgeId,
@@ -51,19 +51,19 @@ export class EdgeList implements IEdgeList {
     }
   }
 
-  deleteEdge(id: number): IEdgeList {
+  deleteEdge(id: number): GraphStructureEdgeList {
     this._edges = this._edges.filter(edgeId => edgeId.id !== id);
     return this;
   }
 
   clone() {
-    return new EdgeList({
+    return new GraphStructureEdgeList({
       edges: structuredClone(this._edges),
       nextAvailableEdgeId: this._nextAvailableEdgeId,
     });
   }
 
-  getEdgesInvolving(nodeId: number): IEdge[] {
+  getEdgesInvolving(nodeId: number): IGraphStructureEdge[] {
     return this._edges
       .filter(({ startNodeId, endNodeId }) =>
         [startNodeId, endNodeId].includes(nodeId),
@@ -71,7 +71,7 @@ export class EdgeList implements IEdgeList {
       .map(edge => structuredClone(edge));
   }
 
-  getNavigableEdgesBetween(args: INavigableEdgesArgs): IEdge[] {
+  getNavigableEdgesBetween(args: INavigableEdgesArgs): IGraphStructureEdge[] {
     return this._edges
       .filter(({ startNodeId, endNodeId, isDirected }) => {
         const isEdgeBetweenStartEnd =

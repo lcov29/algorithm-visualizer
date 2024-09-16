@@ -1,7 +1,7 @@
 /**
  * An edge of a {@link Graph} data structure
  */
-export interface IEdge {
+export interface IGraphStructureEdge {
   id: number;
   startNodeId: number;
   endNodeId: number;
