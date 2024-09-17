@@ -8,12 +8,6 @@ describe('GraphStructureInitializedEvent', () => {
     { id: 0, startNodeId: 1, endNodeId: 2 },
     { id: 1, startNodeId: 2, endNodeId: 3 },
   ];
-  // const mockEdgeList = {
-  //   edges: [
-  //     { id: 0, startNodeId: 1, endNodeId: 2 },
-  //     { id: 1, startNodeId: 2, endNodeId: 3 },
-  //   ],
-  // } as IGraphStructureEdgeList;
   const nodeLabelChangedEvent = new GraphStructureInitializedEvent({
     nodes: mockGraphStructureNodes,
     edges: mockGraphStructureEdges,
