@@ -6,7 +6,7 @@ import {
 } from '@algorithm-visualizer/event-handling-contract';
 import {
   GraphStructureEvent,
-  IGraph,
+  IGraphStructure,
   IGraphStructureEdgeList,
   IGraphStructureNodeList,
   IReducedGraphStructureEdgeList,
@@ -29,7 +29,7 @@ interface IGraphStructureArgs {
  * @throws EventHandlingError
  */
 export class GraphStructure
-  implements IGraph, IEventSubscriber<GraphStructureEvent>
+  implements IGraphStructure, IEventSubscriber<GraphStructureEvent>
 {
   private _nodes: IGraphStructureNodeList;
   private _edges: IGraphStructureEdgeList;

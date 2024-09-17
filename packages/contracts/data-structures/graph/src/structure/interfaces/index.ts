@@ -4,7 +4,7 @@ export {
   INavigableEdgesArgs,
   IReducedGraphStructureEdgeList,
 } from './graph-structure-edge-list';
-export { IGraph } from './graph-structure';
+export { IGraphStructure } from './graph-structure';
 export {
   IGraphStructureNodeList,
   IReducedGraphStructureNodeList,

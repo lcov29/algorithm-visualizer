@@ -1,3 +1,3 @@
-import { IGraph } from '../interfaces';
+import { IGraphStructure } from '../interfaces';
 
-export type GraphStructureBuilder = () => IGraph;
+export type GraphStructureBuilder = () => IGraphStructure;

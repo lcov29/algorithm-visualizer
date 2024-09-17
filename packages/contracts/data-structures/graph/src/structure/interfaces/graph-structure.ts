@@ -10,7 +10,7 @@ import { IReducedGraphStructureNodeList } from './graph-structure-node-list';
  *
  * @throws EventHandlingError
  */
-export interface IGraph extends IEventSubscriber<GraphStructureEvent> {
+export interface IGraphStructure extends IEventSubscriber<GraphStructureEvent> {
   readonly nodeList: IReducedGraphStructureNodeList;
   readonly edgeList: IReducedGraphStructureEdgeList;
 }
