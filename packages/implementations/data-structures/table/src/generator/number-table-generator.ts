@@ -1,7 +1,5 @@
-import {
-  IEventSubscriber,
-  IEventSubscriberManager,
-} from '@algorithm-visualizer/event-handling-contract';
+import { EventEmitter } from '@algorithm-visualizer/event-handling';
+import { IEventSubscriberManager } from '@algorithm-visualizer/event-handling-contract';
 import {
   RandomIntegerGenerator,
   RandomListShuffler,
@@ -18,23 +16,17 @@ interface INumberTableGeneratorArgs {
   subscriberManager: IEventSubscriberManager;
 }
 
-export class NumberTableGenerator implements INumberTableGenerator {
+export class NumberTableGenerator
+  extends EventEmitter
+  implements INumberTableGenerator
+{
   private _getRandomInteger: RandomIntegerGenerator;
   private _getRandomShuffledList: RandomListShuffler;
-  private _subscriberManager: IEventSubscriberManager;
 
   constructor(args: INumberTableGeneratorArgs) {
+    super(args.subscriberManager);
     this._getRandomInteger = args.getRandomInteger;
     this._getRandomShuffledList = args.getRandomShuffledList;
-    this._subscriberManager = args.subscriberManager;
-  }
-
-  addSubscriber(subscriber: IEventSubscriber) {
-    return this._subscriberManager.addSubscriber(subscriber);
-  }
-
-  removeSubscriber(subscriberId: number) {
-    this._subscriberManager.removeSubscriber(subscriberId);
   }
 
   generateTable(config: NumberTableGeneratorConfig) {

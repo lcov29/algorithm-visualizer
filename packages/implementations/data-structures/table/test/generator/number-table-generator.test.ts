@@ -1,7 +1,4 @@
-import {
-  IEventSubscriber,
-  IEventSubscriberManager,
-} from '@algorithm-visualizer/event-handling-contract';
+import { IEventSubscriberManager } from '@algorithm-visualizer/event-handling-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
 import { NumberTableGeneratorConfig } from '@algorithm-visualizer/table-contract';
 
@@ -9,14 +6,11 @@ import { NumberTableGenerator } from '../../src';
 
 const mockGetRandomInteger = jest.fn();
 const mockGetRandomShuffledList = jest.fn();
-
-const mockAddSubscriber = jest.fn();
-const mockRemoveSubscriber = jest.fn();
 const mockNotifySubscribers = jest.fn();
 
 const mockSubscriberManager = {
-  addSubscriber: mockAddSubscriber,
-  removeSubscriber: mockRemoveSubscriber,
+  addSubscriber: jest.fn(),
+  removeSubscriber: jest.fn(),
   notifySubscribers: mockNotifySubscribers,
 } as Partial<IEventSubscriberManager> as IEventSubscriberManager;
 
@@ -36,32 +30,6 @@ describe('NumberTableGenerator', () => {
       subscriberManager: mockSubscriberManager,
     });
     mockGetRandomInteger.mockImplementation((min, max) => max);
-  });
-
-  describe('Subscriber Management', () => {
-    const mockSubscriber = {} as IEventSubscriber;
-
-    describe('addSubscriber()', () => {
-      it('passes the specified subscriber to the addSubscriber method of the subscriber manager', () => {
-        generator.addSubscriber(mockSubscriber);
-        expect(mockAddSubscriber).toHaveBeenCalledTimes(1);
-        expect(mockAddSubscriber).toHaveBeenCalledWith(mockSubscriber);
-      });
-
-      it('returns an id from the subscriber manager', () => {
-        mockAddSubscriber.mockReturnValueOnce(3);
-        const id = generator.addSubscriber(mockSubscriber);
-        expect(id).toBe(3);
-      });
-    });
-
-    describe('removeSubscriber()', () => {
-      it('passes the specified subscriber id to the removeSubscriber method of the subscriber manager', () => {
-        generator.removeSubscriber(8);
-        expect(mockRemoveSubscriber).toHaveBeenCalledTimes(1);
-        expect(mockRemoveSubscriber).toHaveBeenCalledWith(8);
-      });
-    });
   });
 
   describe('generateTable()', () => {

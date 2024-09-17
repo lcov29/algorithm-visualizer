@@ -23,7 +23,6 @@ import { NodeGenerator } from '../../src/generator/node-generator';
 describe('GraphGenerator', () => {
   let generator: IGraphGenerator;
   let config: GraphGeneratorConfig;
-  let subscriberId: number;
   let mockSubscriber: MockGraphGeneratedSubscriber;
   let graphGeneratedEvent: GraphGeneratorGraphGeneratedEvent | null;
 
@@ -64,27 +63,8 @@ describe('GraphGenerator', () => {
       allowRecursiveEdges: false,
       edgeDirection: 'unidirectional',
     });
-    subscriberId = generator.addSubscriber(mockSubscriber);
+    generator.addSubscriber(mockSubscriber);
     graphGeneratedEvent = null;
-  });
-
-  describe('addSubscriber()', () => {
-    it('adds a subscriber that will be notified about emitted events', () => {
-      generator.generateGraph(config);
-      expect(graphGeneratedEvent!.name).toBe('graph-generator-graph-generated');
-    });
-
-    it('returns the subscriber id', () => {
-      expect(Number.isInteger(subscriberId)).toBe(true);
-    });
-  });
-
-  describe('removeSubscriber()', () => {
-    it('removes the specified subscriber so it will not be notified about emitted events', () => {
-      generator.removeSubscriber(subscriberId);
-      generator.generateGraph(config);
-      expect(graphGeneratedEvent).toBeNull();
-    });
   });
 
   describe('generateGraph()', () => {
