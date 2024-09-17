@@ -1,12 +1,8 @@
 import { IEventEmitter } from '@algorithm-visualizer/event-handling-contract';
 
-import {
-  GraphGeneratorConfig,
-  GraphGeneratorGraphGeneratedEvent,
-} from '../data-transfer-objects';
+import { GraphGeneratorConfig } from '../data-transfer-objects';
 
-export interface IGraphGenerator
-  extends IEventEmitter<GraphGeneratorGraphGeneratedEvent> {
+export interface IGraphGenerator extends IEventEmitter {
   /**
    * Generates a random graph based on the specified GraphGeneratorConfig
    *

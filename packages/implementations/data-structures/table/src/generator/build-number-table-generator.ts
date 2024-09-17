@@ -3,15 +3,12 @@ import {
   getRandomIntegerBetween,
   getRandomShuffledList,
 } from '@algorithm-visualizer/randomization';
-import { TableGeneratedEvent } from '@algorithm-visualizer/table-contract';
 
 import { NumberTableGenerator } from './number-table-generator';
 
 export function buildNumberTableGenerator() {
   const getRandomInteger = getRandomIntegerBetween;
-  const subscriberManager = new EventSubscriberManager<
-    TableGeneratedEvent<number>
-  >();
+  const subscriberManager = new EventSubscriberManager();
   return new NumberTableGenerator({
     getRandomInteger,
     getRandomShuffledList,

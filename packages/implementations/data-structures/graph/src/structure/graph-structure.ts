@@ -2,7 +2,6 @@ import {
   BaseEvent,
   EventHandlingError,
   IEventHandlerChain,
-  IEventSubscriber,
 } from '@algorithm-visualizer/event-handling-contract';
 import {
   GraphStructureEvent,
@@ -28,9 +27,7 @@ interface IGraphStructureArgs {
  *
  * @throws EventHandlingError
  */
-export class GraphStructure
-  implements IGraphStructure, IEventSubscriber<GraphStructureEvent>
-{
+export class GraphStructure implements IGraphStructure {
   private _nodes: IGraphStructureNodeList;
   private _edges: IGraphStructureEdgeList;
   private _eventHandlerChain: IEventHandlerChain<GraphStructureEvent>;

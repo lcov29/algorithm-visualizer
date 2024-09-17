@@ -3,10 +3,7 @@ import {
   IEventSubscriberManager,
 } from '@algorithm-visualizer/event-handling-contract';
 import { IntegerRange } from '@algorithm-visualizer/integer-range-contract';
-import {
-  NumberTableGeneratorConfig,
-  TableGeneratedEvent,
-} from '@algorithm-visualizer/table-contract';
+import { NumberTableGeneratorConfig } from '@algorithm-visualizer/table-contract';
 
 import { NumberTableGenerator } from '../../src';
 
@@ -21,9 +18,7 @@ const mockSubscriberManager = {
   addSubscriber: mockAddSubscriber,
   removeSubscriber: mockRemoveSubscriber,
   notifySubscribers: mockNotifySubscribers,
-} as Partial<
-  IEventSubscriberManager<TableGeneratedEvent<number>>
-> as IEventSubscriberManager<TableGeneratedEvent<number>>;
+} as Partial<IEventSubscriberManager> as IEventSubscriberManager;
 
 function isValueBetween(args: { value: number; min: number; max: number }) {
   const { value, min, max } = args;
@@ -44,7 +39,7 @@ describe('NumberTableGenerator', () => {
   });
 
   describe('Subscriber Management', () => {
-    const mockSubscriber = {} as IEventSubscriber<TableGeneratedEvent<number>>;
+    const mockSubscriber = {} as IEventSubscriber;
 
     describe('addSubscriber()', () => {
       it('passes the specified subscriber to the addSubscriber method of the subscriber manager', () => {

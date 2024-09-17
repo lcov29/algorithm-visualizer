@@ -1,21 +1,26 @@
-import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract';
+import {
+  BaseEvent,
+  IEventSubscriber,
+} from '@algorithm-visualizer/event-handling-contract';
 
 import { EventSubscriberManager } from '../src/event-subscriber-manager';
+
+class MockEvent extends BaseEvent<'event-a'> {
+  constructor() {
+    super('event-a');
+  }
+}
 
 const mockHandleEventA = jest.fn();
 const mockHandleEventB = jest.fn();
 
-interface MockEvent {
-  eventName: string;
-}
-
 describe('EventSubscriberManager', () => {
   let mockEvent: MockEvent;
-  let subscriberA: IEventSubscriber<MockEvent>;
-  let subscriberB: IEventSubscriber<MockEvent>;
-  let manager: EventSubscriberManager<MockEvent>;
+  let subscriberA: IEventSubscriber;
+  let subscriberB: IEventSubscriber;
+  let manager: EventSubscriberManager;
 
-  function isSubscriberInList(subscriberIn: IEventSubscriber<MockEvent>) {
+  function isSubscriberInList(subscriberIn: IEventSubscriber) {
     return (
       // @ts-expect-error reference to a private property
       manager._subscribers.findIndex(
@@ -26,7 +31,7 @@ describe('EventSubscriberManager', () => {
 
   beforeEach(() => {
     jest.resetAllMocks();
-    mockEvent = { eventName: 'event-a' };
+    mockEvent = new MockEvent();
     subscriberA = { handleEvent: mockHandleEventA };
     subscriberB = { handleEvent: mockHandleEventB };
     manager = new EventSubscriberManager();

@@ -16,13 +16,13 @@ import { INodeGenerator } from './node-generator';
 interface IGraphGeneratorArgs {
   createEdgeGenerator: (nodes: IGeneratedNode[]) => IEdgeGenerator;
   createNodeGenerator: () => INodeGenerator;
-  subscriberManager: IEventSubscriberManager<GraphGeneratorGraphGeneratedEvent>;
+  subscriberManager: IEventSubscriberManager;
 }
 
 export class GraphGenerator implements IGraphGenerator {
   private _createEdgeGenerator: (nodes: IGeneratedNode[]) => IEdgeGenerator;
   private _createNodeGenerator: () => INodeGenerator;
-  private _subscriberManager: IEventSubscriberManager<GraphGeneratorGraphGeneratedEvent>;
+  private _subscriberManager: IEventSubscriberManager;
 
   constructor(args: IGraphGeneratorArgs) {
     this._createEdgeGenerator = args.createEdgeGenerator;
@@ -30,9 +30,7 @@ export class GraphGenerator implements IGraphGenerator {
     this._subscriberManager = args.subscriberManager;
   }
 
-  addSubscriber(
-    subscriber: IEventSubscriber<GraphGeneratorGraphGeneratedEvent>,
-  ) {
+  addSubscriber(subscriber: IEventSubscriber) {
     return this._subscriberManager.addSubscriber(subscriber);
   }
 

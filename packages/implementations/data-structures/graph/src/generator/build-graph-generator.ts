@@ -1,7 +1,6 @@
 import { EventSubscriberManager } from '@algorithm-visualizer/event-handling';
 import {
   GraphGeneratorBuilder,
-  GraphGeneratorGraphGeneratedEvent,
   IGeneratedNode,
 } from '@algorithm-visualizer/graph-contract';
 import {
@@ -30,8 +29,7 @@ export const buildGraphGenerator: GraphGeneratorBuilder = () => {
     });
   };
 
-  const subscriberManager =
-    new EventSubscriberManager<GraphGeneratorGraphGeneratedEvent>();
+  const subscriberManager = new EventSubscriberManager();
 
   return new GraphGenerator({
     createEdgeGenerator,

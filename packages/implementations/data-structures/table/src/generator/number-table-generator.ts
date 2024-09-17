@@ -15,15 +15,13 @@ import {
 interface INumberTableGeneratorArgs {
   getRandomInteger: RandomIntegerGenerator;
   getRandomShuffledList: RandomListShuffler;
-  subscriberManager: IEventSubscriberManager<TableGeneratedEvent<number>>;
+  subscriberManager: IEventSubscriberManager;
 }
 
 export class NumberTableGenerator implements INumberTableGenerator {
   private _getRandomInteger: RandomIntegerGenerator;
   private _getRandomShuffledList: RandomListShuffler;
-  private _subscriberManager: IEventSubscriberManager<
-    TableGeneratedEvent<number>
-  >;
+  private _subscriberManager: IEventSubscriberManager;
 
   constructor(args: INumberTableGeneratorArgs) {
     this._getRandomInteger = args.getRandomInteger;
@@ -31,7 +29,7 @@ export class NumberTableGenerator implements INumberTableGenerator {
     this._subscriberManager = args.subscriberManager;
   }
 
-  addSubscriber(subscriber: IEventSubscriber<TableGeneratedEvent<number>>) {
+  addSubscriber(subscriber: IEventSubscriber) {
     return this._subscriberManager.addSubscriber(subscriber);
   }
 

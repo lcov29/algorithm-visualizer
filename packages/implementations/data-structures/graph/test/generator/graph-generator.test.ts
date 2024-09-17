@@ -1,5 +1,8 @@
 import { EventSubscriberManager } from '@algorithm-visualizer/event-handling';
-import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract';
+import {
+  BaseEvent,
+  IEventSubscriber,
+} from '@algorithm-visualizer/event-handling-contract';
 import {
   GraphGeneratorConfig,
   GraphGeneratorGraphGeneratedEvent,
@@ -24,13 +27,17 @@ describe('GraphGenerator', () => {
   let mockSubscriber: MockGraphGeneratedSubscriber;
   let graphGeneratedEvent: GraphGeneratorGraphGeneratedEvent | null;
 
-  class MockGraphGeneratedSubscriber
-    implements IEventSubscriber<GraphGeneratorGraphGeneratedEvent>
-  {
-    async handleEvent(event: GraphGeneratorGraphGeneratedEvent) {
-      if (event.name === 'graph-generator-graph-generated') {
+  class MockGraphGeneratedSubscriber implements IEventSubscriber {
+    async handleEvent(event: BaseEvent<string>) {
+      if (this._isGraphGeneratorGraphGeneratedEvent(event)) {
         graphGeneratedEvent = event;
       }
+    }
+
+    private _isGraphGeneratorGraphGeneratedEvent(
+      event: BaseEvent<string>,
+    ): event is GraphGeneratorGraphGeneratedEvent {
+      return event.name === 'graph-generator-graph-generated';
     }
   }
 

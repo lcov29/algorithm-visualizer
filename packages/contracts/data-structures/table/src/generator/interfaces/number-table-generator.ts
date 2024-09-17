@@ -1,12 +1,8 @@
 import { IEventEmitter } from '@algorithm-visualizer/event-handling-contract';
 
-import {
-  NumberTableGeneratorConfig,
-  TableGeneratedEvent,
-} from '../data-transfer-objects';
+import { NumberTableGeneratorConfig } from '../data-transfer-objects';
 
-export interface INumberTableGenerator
-  extends IEventEmitter<TableGeneratedEvent<number>> {
+export interface INumberTableGenerator extends IEventEmitter {
   /**
    * Generates a random table based on the specified TableGeneratorConfig
    *

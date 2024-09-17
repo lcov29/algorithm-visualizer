@@ -1,3 +1,5 @@
-export interface IEventSubscriber<Events> {
-  handleEvent: (event: Events) => Promise<void>;
+import { BaseEvent } from '../data-transfer-objects';
+
+export interface IEventSubscriber {
+  handleEvent: (event: BaseEvent<string>) => Promise<void>;
 }

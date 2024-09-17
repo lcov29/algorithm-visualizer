@@ -1,6 +1,5 @@
 import { IEventSubscriber } from '@algorithm-visualizer/event-handling-contract';
 
-import { GraphStructureEvent } from '../types';
 import { IReducedGraphStructureEdgeList } from './graph-structure-edge-list';
 import { IReducedGraphStructureNodeList } from './graph-structure-node-list';
 
@@ -10,7 +9,7 @@ import { IReducedGraphStructureNodeList } from './graph-structure-node-list';
  *
  * @throws EventHandlingError
  */
-export interface IGraphStructure extends IEventSubscriber<GraphStructureEvent> {
+export interface IGraphStructure extends IEventSubscriber {
   readonly nodeList: IReducedGraphStructureNodeList;
   readonly edgeList: IReducedGraphStructureEdgeList;
 }
