@@ -16,6 +16,12 @@
     "resolveJsonModule": true,
     "paths": {
       // prevent VS Code autocompletion to display relative module paths
+      "@algorithm-visualizer/algorithm-execution-log": [
+        "../packages/implementations/algorithms/algorithm-execution-log"
+      ],
+      "@algorithm-visualizer/algorithm-execution-log-contract": [
+        "../packages/contracts/algorithms/algorithm-execution-log"
+      ],
       "@algorithm-visualizer/app": ["../packages/app"],
       "@algorithm-visualizer/data-validation": [
         "../packages/implementations/cross-cutting-concerns/data-validation"
@@ -46,6 +52,12 @@
       ],
       "@algorithm-visualizer/randomization-contract": [
         "../packages/contracts/cross-cutting-concerns/randomization"
+      ],
+      "@algorithm-visualizer/stack": [
+        "../packages/implementations/data-structures/stack"
+      ],
+      "@algorithm-visualizer/stack-contract": [
+        "../packages/contracts/data-structures/stack"
       ],
       "@algorithm-visualizer/table": [
         "../packages/implementations/data-structures/table"
